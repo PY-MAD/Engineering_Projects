@@ -35,8 +35,7 @@
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                set(ref(database, 'users/'+user.uid),{
-                    username: username,
+                set(ref(database, 'users/'+username),{
                     email: email,
                     password: password,
                     gender:getRadioValue()
