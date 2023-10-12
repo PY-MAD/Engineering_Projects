@@ -47,12 +47,16 @@ nav{
 .regs a{
     color: var(--third-color);
 }
-.login-side{
+.login-side , .user-side{
     display: flex;
     align-items: center;
 }
-.login-side div{
+.login-side div , .user-side div{
     margin: 0 15px;
+}
+.userAvatar {
+    display: flex;
+    align-items: center;
 }
 .logo{
     direction: ltr;

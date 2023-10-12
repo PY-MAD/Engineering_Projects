@@ -1,7 +1,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
   import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged   } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
   // Your web app's Firebase configuration
@@ -19,11 +19,39 @@
   const app = initializeApp(firebaseConfig);
   const database = getDatabase(app)
   const auth = getAuth();
+
+// get Ip to open سيشن
+function getIpAddress() {
+  return fetch('https://api64.ipify.org?format=json') // You can use any IP service you prefer
+    .then(response => response.json())
+    .then(data => data.ip)
+    .catch(error => {
+      console.error('Error fetching IP address:', error);
+      return 'Unknown'; // Return a default value in case of an error
+    });
+}
+
+
+  //get email
+  function newEmail(email){
+    let newEmail = "";
+    for(let i = 0; i < email.length; i++){
+        if(email[i] == "."){
+            continue;
+        }else{
+            newEmail+=email[i];
+        }
+    }
+    return newEmail;
+}
   signUpNew.addEventListener('click', (e) =>{
 
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let username = document.getElementById("name").value;
+
+    let accountCreated = document.querySelector(".Account-created");
+
     function getRadioValue(){
       let gender = document.getElementsByName("gender");
       for(let i = 0; i<gender.length; i++){
@@ -35,12 +63,20 @@
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                set(ref(database, 'users/'+username),{
-                    email: email,
+                set(ref(database, 'users/'+user.uid),{
+                    username: username,
                     password: password,
-                    gender:getRadioValue()
+                    gender:getRadioValue(),
+                    signInState: false,
+                    ipSignIn: [`${""}`],
+                    email:email
                 });
-                alert("Account created !")
+                Swal.fire({
+                  title: 'تم تسجيل حسابك بنجاح',
+                  html: 'تقدر الان تسوي تسجيل دخول',
+                  timer: 2000,
+                  timerProgressBar: true,
+                })
                 // ...
             })
             .catch((error) => {
@@ -65,11 +101,13 @@
       update(ref(database, 'users/'+user.uid),{
         last_login : dt,
     });
-    alert("User logged in!")
+    window.open("/user/home.html")
+
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       alert(errorMessage)
     });
+
   })
