@@ -67,16 +67,10 @@ function getIpAddress() {
                     username: username,
                     password: password,
                     gender:getRadioValue(),
-                    signInState: false,
-                    ipSignIn: [`${""}`],
-                    email:email
+                    email:email,
+                    favorite:[]
                 });
-                Swal.fire({
-                  title: 'تم تسجيل حسابك بنجاح',
-                  html: 'تقدر الان تسوي تسجيل دخول',
-                  timer: 2000,
-                  timerProgressBar: true,
-                })
+                Swal.fire("تم تسجيل حسابك بنجاح","تقدر الان تسوي تسجيل دخول","success")
                 // ...
             })
             .catch((error) => {

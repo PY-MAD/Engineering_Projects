@@ -17,12 +17,35 @@ const database = getDatabase(app)
 
 const dbRef = ref(database, '/cards/'); // Reference to the root of the database
 
+
+let preloader = document.getElementById("preloader");
+let blur = document.getElementById("blur");
+function BeforepreloaderPage(){
+  preloader.classList.add("show-preloader");
+  blur.classList.add("show-blur")
+}
+
+function AfterpreloaderPage(){
+  preloader.classList.add("none-preloader");
+  blur.classList.add("none-blur")
+}
+
+
+
+let body = document.getElementById("body");
+function blurBackground(){
+preloader.classList.add("none-preloader");
+blur.classList.add("show-blur")
+}
+
+BeforepreloaderPage();
 let holderSec = document.querySelector(".container")
 get(dbRef).then((snapshot) => {
         function createCards(name, pra, src_photo , uid){
+                
                 let card_template = `
                         <div class="card-container">
-                        <button id="${uid}"  class="fav"><img class="fav-img" src="/assets/svg/star.svg" alt=""></button>
+                        <button id="${uid}" onclick="getID(this)"  class="fav"><img id=${"img_"+uid} class="fav-img" src="/assets/svg/star.svg" alt=""></button>
                         <div class="card-content">
                         <div class="img-card">
                                 <img src="${src_photo}" alt="">
@@ -36,6 +59,7 @@ get(dbRef).then((snapshot) => {
                         </div>
                 </div>
                 `
+
                 return holderSec.innerHTML += card_template;
         }
 
@@ -62,7 +86,9 @@ function Cards_courses(name , pra , src_photo,uid){
         })
         alert("added done !")
 }
+
+
 // Cards_courses("جافا 1","هنا يتم تدريس جافا 1 جامعة الامام محمد بن سعود الإسلامية","/assets/svg/images/courses-templete/java.svg","java_1")
 // Cards_courses("جافا 2","هنا يتم تدريس جافا 2 جامعة الامام محمد بن سعود الإسلامية","/assets/svg/images/courses-templete/java.svg","java_2")
-
+// Cards_courses("تراكيب البيانات","هنا يتم شرح مادة تراكيب البيانات","/assets/svg/images/courses-templete/java.svg","data_str")
 

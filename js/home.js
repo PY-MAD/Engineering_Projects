@@ -1,4 +1,3 @@
-  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
   import { getDatabase, ref,onValue , get, child} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
   import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
@@ -38,6 +37,39 @@
     blur.classList.add("none-blur")
   }
 
+
+  let body = document.getElementById("body");
+function blurBackground(){
+  preloader.classList.add("none-preloader");
+  blur.classList.add("show-blur")
+}
+function AccountMissing(){
+  blurBackground()
+  return body.innerHTML+=`
+      <div class="container-missing-account">
+      <div class="card-missing-account">
+          <div class="content">
+              <div class="missing-account-img">
+                  <img src="/assets/svg/missing-account.min.svg" alt="">
+              </div>
+              <div class="text">
+                  <div class="big-font">
+                      أهلًا بصديقنا
+                  </div>
+                  <div class="middle-font">
+                              نتوقع أنك مو مسجل دخول في منصتنا <br>الرجاء التسجيل للإستفادة من كامل خدماتنا
+                  </div>
+                  <a class="link-sign" href="/authentication/login.html">التسجيل</a>
+              </div>
+          </div>
+      </div>
+    </div>
+  `
+}
+
+
+
+
 BeforepreloaderPage();
   auth.onAuthStateChanged(user =>{
 
@@ -74,67 +106,3 @@ BeforepreloaderPage();
       alert(error)
     });
   })
-// let email = "mad@gmail.com"
-
-// function newEmail(email){
-//     let newEmail = "";
-//     for(let i = 0; i < email.length; i++){
-//         if(email[i] == "@"){
-//             newEmail+="#"
-//         }else{
-//             newEmail+=email[i];
-//         }
-//     }
-//     return newEmail;
-// }
-// console.log(newEmail(email))
-
-
-// setTimeout(() => {
-//     console.log("this is the first message");
-//   }, 5000);
-//   setTimeout(() => {
-//     console.log("this is the second message");
-//   }, 3000);
-//   setTimeout(() => {
-//     console.log("this is the third message");
-//   }, 1000);
-  
-  // Output:
-  
-  // this is the third message
-  // this is the second message
-  // this is the first message
-  
-// api to get ipAddress
-// Function to get the user's IP address using a third-party service
-
-// Call the function to get the user's IP address
-let body = document.getElementById("body");
-function blurBackground(){
-  preloader.classList.add("none-preloader");
-  blur.classList.add("show-blur")
-}
-function AccountMissing(){
-  blurBackground()
-  return body.innerHTML+=`
-      <div class="container-missing-account">
-      <div class="card-missing-account">
-          <div class="content">
-              <div class="missing-account-img">
-                  <img src="/assets/svg/missing-account.min.svg" alt="">
-              </div>
-              <div class="text">
-                  <div class="big-font">
-                      أهلًا بصديقنا
-                  </div>
-                  <div class="middle-font">
-                              نتوقع أنك مو مسجل دخول في منصتنا <br>الرجاء التسجيل للإستفادة من كامل خدماتنا
-                  </div>
-                  <a class="link-sign" href="/authentication/login.html">التسجيل</a>
-              </div>
-          </div>
-      </div>
-    </div>
-  `
-}

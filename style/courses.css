@@ -60,5 +60,6 @@ section{
 }
 .card-content{
     overflow: hidden;
-    max-width: 400px !important;
+    height: 520px !important;
+    width: 400px !important;
 }

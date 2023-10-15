@@ -49,3 +49,6 @@ p{
 .drop-down-user .dropdown-item i{
     font-size: 18px;
 }
+.drop-down-anmi{
+    transition: 0.2s;
+}

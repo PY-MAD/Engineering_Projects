@@ -84,3 +84,29 @@ nav{
 .active {
     color: var(--secondary-color);
 }
+.dropdown-menu{
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+.dropdown-item{
+    color: white !important;
+}
+.dropdown-item:hover{
+    background-color: var(--primary-color) !important;
+    filter: brightness(0.9);
+}
+
+.drop-down-user, .drop-down-user div{
+    color: white !important;
+}
+.drop-down-user .dropdown-item{
+        display: flex;
+        align-items: center;
+}
+
+.drop-down-user .dropdown-item i{
+    font-size: 18px;
+}
+.drop-down-anmi{
+    transition: 0.2s;
+}
