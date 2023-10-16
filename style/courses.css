@@ -19,14 +19,14 @@ section{
     position: relative;
     overflow: hidden;
 }
-.card-container .fav{
+.card-container .fav .card-container label {
     position: absolute;
     top: -50px;
     right: 20px;
     transition: 0.2s;
 }
-.card-container:hover  .fav{
-    top: 20px;
+.card-container:hover  .fav , .card-container:hover label{
+    top: 20px !important;
 }
 .container{
     display: flex;
@@ -62,4 +62,21 @@ section{
     overflow: hidden;
     height: 520px !important;
     width: 400px !important;
+}
+.fav + label{
+    background:url('/assets/svg/star.svg') no-repeat;
+    height: 48px;
+    width: 48px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+    position: absolute;
+    top: -50px;
+    right: 20px;
+    transition: 0.2s;
+}
+.fav:checked + label{
+    background:url('/assets/svg/starFill.svg') no-repeat;
+}
+.fav {
+    display: none;
 }

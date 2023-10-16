@@ -1,0 +1,86 @@
+:root{
+    --primary-color: #4D9DE0;
+    --secondary-color: #F3722C;
+    --third-color: #FFFFFF;
+    --border-radius-big-card: 30px;
+    --border-radius-secondary-big-card: 40px;
+    --border-radius-btn-reg: 13px;
+}
+button{
+    background-color: transparent;
+    border: 0;
+}
+section{
+    max-width: 100%;
+    margin: 0 auto;
+    margin-top: 4%;
+    margin-bottom: 10rem;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 12rem;
+}
+
+.video-side{
+    height: 100%;
+    direction: rtl;
+    width: 100%;
+}
+.episode-side{
+    width: 100%;
+}
+.video{
+    height: 500px;
+    width: 900px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+iframe{
+    height: 100%;
+    width: 100%;
+}
+.title-video{
+    direction: rtl;
+    color: var(--secondary-color);
+    margin-top: 1rem;
+}
+.episode-side{
+    direction: rtl;
+    width: 100%;
+}
+.episode-side ul{
+    width: 100%;
+    padding-left: 0;
+}
+.episode-side ul li{
+    list-style: none;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    width: 100%;
+    padding: 16px 20px;
+    margin: 1px 0;
+    border: 3px solid var(--secondary-color);
+    border-left: 0;
+}
+.episode-side ul li:hover{
+    filter: brightness(0.9);
+}
+.episode-side ul li a{
+    color: white !important;
+}
+.active-episode{
+    background-color: var(--secondary-color) !important;
+    border: 3px solid var(--primary-color) !important;
+}
+.urls{
+    margin-top: 2rem;
+}
+.urls a{
+    background-color: var(--secondary-color);
+    color: white !important;
+    padding: 16px 12px;
+    border-radius: 12px !important;
+}
+.urls a:hover{
+    filter: brightness(0.9);
+}

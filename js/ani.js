@@ -41,11 +41,22 @@ blur.classList.add("show-blur")
 BeforepreloaderPage();
 let holderSec = document.querySelector(".container")
 get(dbRef).then((snapshot) => {
+        
+        function getId() {
+                let nameFav = document.querySelector(".fav");
+
+                for(let i = 0; i< nameFav.length; i++){
+                        if(nameFav[i].checked){
+                                console.log(nameFav[i])
+                        }
+                }
+        }
         function createCards(name, pra, src_photo , uid){
                 
                 let card_template = `
                         <div class="card-container">
-                        <button id="${uid}" onclick="getID(this)"  class="fav"><img id=${"img_"+uid} class="fav-img" src="/assets/svg/star.svg" alt=""></button>
+                        <input type="checkbox" id="${uid}" value="${uid}" class="fav" name="fav"/>
+                        <label for="${uid}"></label>
                         <div class="card-content">
                         <div class="img-card">
                                 <img src="${src_photo}" alt="">
@@ -62,7 +73,7 @@ get(dbRef).then((snapshot) => {
 
                 return holderSec.innerHTML += card_template;
         }
-
+        
         if (snapshot.exists()) {
           const data = snapshot.val();
           for (const key in data) {
@@ -92,3 +103,6 @@ function Cards_courses(name , pra , src_photo,uid){
 // Cards_courses("جافا 2","هنا يتم تدريس جافا 2 جامعة الامام محمد بن سعود الإسلامية","/assets/svg/images/courses-templete/java.svg","java_2")
 // Cards_courses("تراكيب البيانات","هنا يتم شرح مادة تراكيب البيانات","/assets/svg/images/courses-templete/java.svg","data_str")
 
+
+
+//<img id=${"img_"+uid} class="fav-img" src="/assets/svg/star.svg" alt="">
