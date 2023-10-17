@@ -19,50 +19,81 @@ const dbRef = ref(database, '/episode/'); // Reference to the root of the databa
 
 get(dbRef).then((snapshot) => {
         let tempEpisodes = document.getElementById("episode-list")
-    function getId() {
-            let nameFav = document.querySelector(".fav");
 
-            for(let i = 0; i< nameFav.length; i++){
-                    if(nameFav[i].checked){
-                            console.log(nameFav[i])
-                    }
-            }
-    }
-    function createEpisode(name, src, uid){
+        let tempVideo = document.getElementById("video-side");
+    function createEpisode(name, uid){
             
             let episode = `
-            <li>
-            <a href="${src}" id="${uid}">
+            <li class="${uid}">
                ${name}
-            </a>
         </li>
                   
             `
 
             return tempEpisodes.innerHTML += episode;
     }
+    function changeVideo(name , src_video , url){
+      let change = `
+      <div class="video">
+            ${src_video}
+          </div>
+          <div class="title-video">
+            ${name}
+          </div>
+          <div class="urls">
+            <a href="${url}">لتحميل الملفات أضغط هنا</a>
+          </div>
+      `
+      return tempVideo.innerHTML += change;
+    }
     
     if (snapshot.exists()) {
       const data = snapshot.val();
       for (const key in data) {
+        
         if (Object.prototype.hasOwnProperty.call(data, key)) {
           const childData = data[key];
-          createEpisode(childData.name,childData.src,childData.uid)
+          createEpisode(childData.name,childData.uid)
+          let checkName = childData.name;
+          let listItems = document.querySelectorAll("li");
+          listItems.forEach(function(item) {
+            item.onclick = function(e) {
+              // continue here
+              for(let key in data){
+              let liChecked = this.innerText;
+              console.log(liChecked)
+              if(liChecked == childData.name){
+                changeVideo(childData.name , childData.src_video , childData.url)
+              }
+            }
+            }
+          });
+
         }
       }
     } else {
       console.log('No data available.');
     }
+
+ 
+
+
   }).catch((error) => {
     console.error('Error fetching data:', error);
   });
 
-function newEpisode(name , src ,uid){
+function newEpisode(name,uid, src_video,url){
     set(ref(database,"episode/"+uid),{
             name:name,
-            src:src,
-            uid:uid
+            uid:uid,
+            src_video: src_video,
+            url: url
     })
     alert("added done !")
 }
-// newEpisode("أساسيات جافا 1 : المصفوفات | arrays","/user/java-1/arrays.html","arrays")
+
+
+
+// newEpisode("أساسيات جافا 1 : المصفوفات | arrays","arrays", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/ido9UlVCsVQ" title="طلال مداح | انتهينا .. وجفت الدمعة الحزينة ( خلصت القصة ) ! HQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
+// newEpisode("أساسيات جافا 1 : أنواع البيانات | data type","data-type", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/WQ7mvQFSmYc" title="Primitives Data Types In Java - All the Primitives And What They Do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
+// newEpisode("أساسيات جافا 1 : أنواع dsadasd | data type","data-type", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/WQ7mvQFSmYc" title="Primitives Data Types In Java - All the Primitives And What They Do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")

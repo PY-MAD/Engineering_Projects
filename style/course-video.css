@@ -61,6 +61,7 @@ iframe{
     margin: 1px 0;
     border: 3px solid var(--secondary-color);
     border-left: 0;
+    color: var(--third-color);
 }
 .episode-side ul li:hover{
     filter: brightness(0.9);

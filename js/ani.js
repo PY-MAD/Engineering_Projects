@@ -57,6 +57,7 @@ get(dbRef).then((snapshot) => {
                         <div class="card-container">
                         <input type="checkbox" id="${uid}" value="${uid}" class="fav" name="fav"/>
                         <label for="${uid}"></label>
+                        <a href=/user/${uid}/${uid}.html>
                         <div class="card-content">
                         <div class="img-card">
                                 <img src="${src_photo}" alt="">
@@ -68,6 +69,7 @@ get(dbRef).then((snapshot) => {
                                 ${pra}
                         </div>
                         </div>
+                        </a>
                 </div>
                 `
 
@@ -88,12 +90,12 @@ get(dbRef).then((snapshot) => {
       }).catch((error) => {
         console.error('Error fetching data:', error);
       });
-function Cards_courses(name , pra , src_photo,uid){
+function Cards_courses(name , pra , src_photo,uid , src){
         set(ref(database,"cards/"+uid),{
                 name:name,
                 pra:pra,
                 src_photo:src_photo,
-                uid:uid
+                uid:uid,
         })
         alert("added done !")
 }
