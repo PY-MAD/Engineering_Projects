@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 
-import { getDatabase, ref ,onValue, child, get, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getDatabase, ref ,onValue, child, get, set, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
@@ -16,6 +17,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app)
 
 const dbRef = ref(database, '/cards/'); // Reference to the root of the database
+const auth = getAuth();
 
 
 let preloader = document.getElementById("preloader");
@@ -75,7 +77,7 @@ get(dbRef).then((snapshot) => {
 
                 return holderSec.innerHTML += card_template;
         }
-        
+
         if (snapshot.exists()) {
           const data = snapshot.val();
           for (const key in data) {
@@ -84,6 +86,35 @@ get(dbRef).then((snapshot) => {
               createCards(childData.name,childData.pra,childData.src_photo,childData.uid)
             }
           }
+          auth.onAuthStateChanged(user =>{
+                if(user){
+                        const db = ref(database);
+                        const pushData = ref(database, `users/${user.uid}/fav`)
+                        get(child(db, `users/${user.uid}`)).then((snapshot) =>{
+                                const snap = snapshot.val();
+                                if(snapshot.exists()){
+                                        let allFav = document.querySelectorAll(".card-container")
+                                        allFav.forEach((item)=>{
+                                                let fav = item.querySelector(".fav")
+                                                item.addEventListener("click", ()=>{
+                                                        if(fav.checked){
+                                                                push(pushData,fav.id).then(() =>{
+                                                                        console.log("added !!")
+                                                                })
+                                                                
+                                                        }else{
+                                                                pop(pushData,fav.id).then(()=>{
+                                                                        console.log("removed is done !!")
+                                                                })
+                                                        }
+                                                        
+                                                })
+                                        })
+
+                                }
+                        })
+                }
+        })
         } else {
           console.log('No data available.');
         }

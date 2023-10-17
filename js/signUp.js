@@ -68,7 +68,7 @@ function getIpAddress() {
                     password: password,
                     gender:getRadioValue(),
                     email:email,
-                    favorite:[]
+                    fav:[]
                 });
                 Swal.fire("تم تسجيل حسابك بنجاح","تقدر الان تسوي تسجيل دخول","success")
                 // ...

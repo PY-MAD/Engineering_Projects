@@ -44,7 +44,7 @@ get(dbRef).then((snapshot) => {
             <a href="${url}">لتحميل الملفات أضغط هنا</a>
           </div>
       `
-      return tempVideo.innerHTML += change;
+      return tempVideo.innerHTML = change;
     }
     
     if (snapshot.exists()) {
@@ -54,16 +54,18 @@ get(dbRef).then((snapshot) => {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
           const childData = data[key];
           createEpisode(childData.name,childData.uid)
-          let checkName = childData.name;
-          let listItems = document.querySelectorAll("li");
+          let listItems = document.querySelectorAll("ul li");
           listItems.forEach(function(item) {
             item.onclick = function(e) {
               // continue here
               for(let key in data){
               let liChecked = this.innerText;
-              console.log(liChecked)
-              if(liChecked == childData.name){
-                changeVideo(childData.name , childData.src_video , childData.url)
+              let videoData = data[key];
+              
+              if(liChecked == videoData.name){
+                console.log(videoData.name)
+
+                changeVideo(videoData.name , videoData.src_video , videoData.url)
               }
             }
             }
@@ -96,4 +98,3 @@ function newEpisode(name,uid, src_video,url){
 
 // newEpisode("أساسيات جافا 1 : المصفوفات | arrays","arrays", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/ido9UlVCsVQ" title="طلال مداح | انتهينا .. وجفت الدمعة الحزينة ( خلصت القصة ) ! HQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
 // newEpisode("أساسيات جافا 1 : أنواع البيانات | data type","data-type", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/WQ7mvQFSmYc" title="Primitives Data Types In Java - All the Primitives And What They Do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
-// newEpisode("أساسيات جافا 1 : أنواع dsadasd | data type","data-type", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/WQ7mvQFSmYc" title="Primitives Data Types In Java - All the Primitives And What They Do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
