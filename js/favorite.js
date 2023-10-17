@@ -47,14 +47,47 @@ get(dbRef).then((snapshot) =>{
         return holderSec.innerHTML += card_template;
 }
 if (snapshot.exists()) {
+        let fav = [];
+        let CardId = [];
     const data = snapshot.val();
-    console.log(data)
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const childData = data[key];
+        const childData = data[key]
+                CardId.push(childData.uid)
+        }
+        
+    }
+//     console.log(CardId)
+    
+    auth.onAuthStateChanged(user =>{
+        if(user){
+                const db = ref(database);
+                get(child(db, `users/${user.uid}/fav`)).then((snapshot) =>{
+                        if(snapshot.exists()){
+                                const snap = snapshot.val();
+                                for (const key in snap) {
+                                        if (Object.prototype.hasOwnProperty.call(snap, key)) {
+                                          const childDataUser = snap[key];
+                                          fav.push(childDataUser)
+                                          
+                                        }
+                                }
+                                // console.log(fav)
+                                for(let i = 0; i<fav.length; i++){
+                                        let temp = fav[i]
+                                        for(let j = 1; j<fav.length; j++){
+                                                if(fav[i] == CardId[j]){
+                                                        console.log(fav)
+                                                        console.log(CardId)
+                                                        console.log(true)
+                                                }
+                                        }
+                                }
+                        }
+                })
+        }
 
-    }
-    }
+})
 }else {
     console.log('No data available.');
   }
