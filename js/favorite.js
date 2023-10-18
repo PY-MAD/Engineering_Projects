@@ -1,96 +1,104 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 
-import { getDatabase, ref ,onValue, child, get, set, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  set,
+  push,
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
-    authDomain: "test-ab03a.firebaseapp.com",
-    databaseURL: "https://test-ab03a-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "test-ab03a",
-    storageBucket: "test-ab03a.appspot.com",
-    messagingSenderId: "19444872261",
-    appId: "1:19444872261:web:69de8c91e006b58aa8df2c"
-    };
+  apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
+  authDomain: "test-ab03a.firebaseapp.com",
+  databaseURL:
+    "https://test-ab03a-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "test-ab03a",
+  storageBucket: "test-ab03a.appspot.com",
+  messagingSenderId: "19444872261",
+  appId: "1:19444872261:web:69de8c91e006b58aa8df2c",
+};
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app)
-const dbRefUser = ref(database , "users/")
-const dbRef = ref(database, '/cards/'); // Reference to the root of the database
+const database = getDatabase(app);
+
+const dbCard = ref(database, "/cards/"); // Reference to the root of the database
+const dbuser = ref(database, "/users/"); // Reference to the root of the database
 const auth = getAuth();
 
-let holderSec = document.getElementById("container")
-
-get(dbRef).then((snapshot) =>{
-    function createCards(name, pra, src_photo , uid){
-                
-        let card_template = `
-                <div class="card-container">
-                <input type="checkbox" id="${uid}" value="${uid}" class="fav" name="fav"/>
-                <label for="${uid}"></label>
-                <a href=/user/${uid}/${uid}.html>
-                <div class="card-content">
-                <div class="img-card">
-                        <img src="${src_photo}" alt="">
-                </div>
-                <div class="card-title">
-                        ${name}
-                </div>
-                <div class="card-pra">
-                        ${pra}
-                </div>
-                </div>
-                </a>
-        </div>
-        `
-
-        return holderSec.innerHTML += card_template;
+let preloader = document.getElementById("preloader");
+let blur = document.getElementById("blur");
+function BeforepreloaderPage() {
+  preloader.classList.add("show-preloader");
+  blur.classList.add("show-blur");
 }
-if (snapshot.exists()) {
-        let fav = [];
-        let CardId = [];
-    const data = snapshot.val();
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const childData = data[key]
-                CardId.push(childData.uid)
-        }
-        
-    }
-//     console.log(CardId)
-    
-    auth.onAuthStateChanged(user =>{
+
+function AfterpreloaderPage() {
+  preloader.classList.add("none-preloader");
+  blur.classList.add("none-blur");
+}
+
+let body = document.getElementById("body");
+function blurBackground() {
+  preloader.classList.add("none-preloader");
+  blur.classList.add("show-blur");
+}
+
+BeforepreloaderPage();
+let holderSec = document.querySelector(".fav-container");
+
+auth.onAuthStateChanged(user =>{
+
         if(user){
-                const db = ref(database);
-                get(child(db, `users/${user.uid}/fav`)).then((snapshot) =>{
-                        if(snapshot.exists()){
-                                const snap = snapshot.val();
-                                for (const key in snap) {
-                                        if (Object.prototype.hasOwnProperty.call(snap, key)) {
-                                          const childDataUser = snap[key];
-                                          fav.push(childDataUser)
-                                          
-                                        }
+                get(ref(database, `/users/${user.uid}`)).then((userData)=>{
+                                function createCards(name, pra, src_photo, uid) {
+                                        let card_template = `
+                                                        <div class="card-container">
+                                                        <input type="checkbox" id="${uid}" value="${uid}" class="fav" name="fav"/>
+                                                        <label for="${uid}" class="label-${uid}"></label>
+                                                        <a href=/user/${uid}/${uid}.html>
+                                                        <div class="card-content">
+                                                        <div class="img-card">
+                                                                <img src="${src_photo}" alt="">
+                                                        </div>
+                                                        <div class="card-title">
+                                                                ${name}
+                                                        </div>
+                                                        <div class="card-pra">
+                                                                ${pra}
+                                                        </div>
+                                                        </div>
+                                                        </a>
+                                                </div>
+                                                `;
+                                
+                                        return (holderSec.innerHTML += card_template);
                                 }
-                                // console.log(fav)
-                                for(let i = 0; i<fav.length; i++){
-                                        let temp = fav[i]
-                                        for(let j = 1; j<fav.length; j++){
-                                                if(fav[i] == CardId[j]){
-                                                        console.log(fav)
-                                                        console.log(CardId)
-                                                        console.log(true)
+                        let hasFav = []
+                        let user = userData.val().fav
+                        get(dbCard).then((snapshot)=>{
+                                let snap = snapshot.val();
+                                for(let item in user){
+                                        let userFav = user[item];
+                                        let card;
+                                        for(let item in snap){
+                                                card = snap[item].uid
+                                                let makeCard = snap[item];
+                                                if(card == userFav){
+                                                        createCards(makeCard.name, makeCard.pra , makeCard.src_photo , makeCard.uid)
+                                                }else{
+                                                        console.log(false)
                                                 }
                                         }
                                 }
-                        }
+                                
+                        })
                 })
         }
-
 })
-}else {
-    console.log('No data available.');
-  }
-}).catch((error) => {
-  console.error('Error fetching data:', error);
-});

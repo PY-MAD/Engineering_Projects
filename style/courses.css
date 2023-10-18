@@ -28,7 +28,7 @@ section{
 .card-container:hover  .fav , .card-container:hover label{
     top: 20px !important;
 }
-.container{
+.container, .fav-container{
     display: flex;
     justify-content: space-around;
     flex-direction: row !important;
@@ -74,9 +74,13 @@ section{
     right: 20px;
     transition: 0.2s;
 }
-.fav:checked + label{
+.fav-clicked + label{
     background:url('/assets/svg/starFill.svg') no-repeat;
 }
 .fav {
     display: none;
+}
+.hidden{
+    display: none !important;
+    transition: 0.2s;
 }
