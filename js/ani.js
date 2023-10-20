@@ -14,6 +14,8 @@ import {
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
   authDomain: "test-ab03a.firebaseapp.com",
@@ -42,7 +44,18 @@ function AfterpreloaderPage() {
   preloader.classList.add("none-preloader");
   blur.classList.add("none-blur");
 }
-
+function fetchingData(){
+  preloader.classList.add("show-preloader");
+  blur.classList.add("show-blur");
+  preloader.classList.remove("none-preloader");
+  blur.classList.remove("none-blur");
+}
+function fetchingDataDone(){
+  preloader.classList.remove("show-preloader");
+  blur.classList.remove("show-blur");
+  preloader.classList.add("none-preloader");
+  blur.classList.add("none-blur");
+}
 let body = document.getElementById("body");
 function blurBackground() {
   preloader.classList.add("none-preloader");
@@ -65,9 +78,11 @@ get(dbRef)
     function createCards(name, pra, src_photo, uid) {
       let card_template = `
                         <div class="card-container">
+                        <div class="favBtn-container">
                         <input type="checkbox" id="${uid}" value="${uid}" class="fav" name="fav"/>
-                        <label for="${uid}" class="label-${uid}"></label>
-                        <a href=/user/${uid}/${uid}.html>
+                        <label for="${uid}" class="label-${uid} ${uid}"></label>
+                        </div>
+                        <a href=/user/coursesPath/${uid}.html>
                         <div class="card-content">
                         <div class="img-card">
                                 <img src="${src_photo}" alt="">
@@ -105,20 +120,66 @@ get(dbRef)
           const pushData = ref(database, `users/${user.uid}/fav/`);
           get(child(db, userUid)).then((snapshot) => {
             if (snapshot.exists()) {
-              let allFav = document.querySelectorAll(".card-container");
+              let allFav = document.querySelectorAll(".favBtn-container");
               let snap = snapshot.val().fav;
               let favArray = []
+              let favdb = []
+
+              allFav.forEach((item) =>{
+                let fav = item.querySelector(".fav")
+                favArray.push(fav.id)
+              })
+
               allFav.forEach((item)=>{
                 let fav = item.querySelector(".fav")
                 let favLabel = item.querySelector(`.label-${fav.id}`)
+                let CheckClass = favLabel.classList.contains(`${fav.id}`)
+
                 item.addEventListener("click", ()=>{
                   if(fav.checked){
-                    push(ref(database, `users/${user.uid}/fav/`), fav.id)
-                    console.log("added is done")
-                    fav.remove()
-                    favLabel.remove()
+                    fetchingData()
+                    get( ref(database, `users/${user.uid}/fav/`)).then((snapshot) => {
+                      let snap = snapshot.val()
+                      let add = true
+                      
+                      setTimeout(function() {
+                        fetchingDataDone()
+                        for(let item in snap){
+                          favdb.push(snap[item])
+                        }
+                        for(let i = 0; i<favdb.length ; i++){
+                          for(let j = 0 ; j< favArray.length; j++){
+                            if(favdb[i] == fav.id){
+                              
+                              Swal.fire(
+                                'Cancelled',
+                                'تم وضع هذا المقرر في المفضلة بالفعل',
+                                'error'
+                              )
+                              add = false;
+                              break;
+                            }
+                          }
+                        }
+                        if(add){
+                          push(ref(database, `users/${user.uid}/fav/`), fav.id)
+                          
+                          Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'تم إضافته في المفضلة بنجاح ',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                        }
+                      }, 1000);
+                      
+                    })
+
+                    
                   }
                 })
+
               })
             }
           });
@@ -145,5 +206,3 @@ function Cards_courses(name, pra, src_photo, uid, src) {
 // Cards_courses("جافا 1","هنا يتم تدريس جافا 1 جامعة الامام محمد بن سعود الإسلامية","/assets/svg/images/courses-templete/java.svg","java_1")
 // Cards_courses("جافا 2","هنا يتم تدريس جافا 2 جامعة الامام محمد بن سعود الإسلامية","/assets/svg/images/courses-templete/java.svg","java_2")
 // Cards_courses("تراكيب البيانات","هنا يتم شرح مادة تراكيب البيانات","/assets/svg/images/courses-templete/java.svg","data_str")
-
-//<img id=${"img_"+uid} class="fav-img" src="/assets/svg/star.svg" alt="">

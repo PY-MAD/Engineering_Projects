@@ -21,14 +21,23 @@
   const auth = getAuth();
 
 // get Ip to open سيشن
-function getIpAddress() {
-  return fetch('https://api64.ipify.org?format=json') // You can use any IP service you prefer
-    .then(response => response.json())
-    .then(data => data.ip)
-    .catch(error => {
-      console.error('Error fetching IP address:', error);
-      return 'Unknown'; // Return a default value in case of an error
-    });
+
+let preloader = document.getElementById("preloader");
+let blur = document.getElementById("blur");
+function BeforepreloaderPage() {
+  preloader.classList.add("show-preloader");
+  blur.classList.add("show-blur");
+}
+
+function AfterpreloaderPage() {
+  preloader.classList.add("none-preloader");
+  blur.classList.add("none-blur");
+}
+
+let body = document.getElementById("body");
+function blurBackground() {
+  preloader.classList.add("none-preloader");
+  blur.classList.add("show-blur");
 }
 
 
@@ -44,6 +53,19 @@ function getIpAddress() {
     }
     return newEmail;
 }
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let username = document.getElementById("name").value;
+
+    let accountCreated = document.querySelector(".Account-created");
+
+    function getRadioValue(){
+      let gender = document.getElementsByName("gender");
+      for(let i = 0; i<gender.length; i++){
+        if(gender[i].checked)
+          return(gender[i].value);
+      }
+    }
   signUpNew.addEventListener('click', (e) =>{
 
     let email = document.getElementById("email").value;
@@ -82,26 +104,53 @@ function getIpAddress() {
   })
 
 // log in user
-  loginExistAccount.addEventListener('click',(e) =>{
+document.addEventListener("keypress",(key) =>{
+  BeforepreloaderPage()
+  if(key.keyCode  == 13){
 
-    let email = document.getElementById("email1").value;
-    let password = document.getElementById("password1").value;
+      let email = document.getElementById("email1").value;
+      let password = document.getElementById("password1").value;
+  
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        let dt = new Date();
+        update(ref(database, 'users/'+user.uid),{
+          last_login : dt,
+      });
+      window.open("/user/home.html", "_self")
+  
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage)
+      });
+  
+  }else{
+    loginExistAccount.addEventListener('click',(e) =>{
+      let email = document.getElementById("email1").value;
+      let password = document.getElementById("password1").value;
+  
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        let dt = new Date();
+        update(ref(database, 'users/'+user.uid),{
+          last_login : dt,
+      });
+      window.open("/user/home.html", "_self")
+  
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage)
+      });
 
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      let dt = new Date();
-      update(ref(database, 'users/'+user.uid),{
-        last_login : dt,
-    });
-    window.open("/user/home.html")
 
     })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage)
-    });
-
-  })
+  }
+})
