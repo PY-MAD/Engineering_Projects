@@ -71,6 +71,11 @@ auth.onAuthStateChanged((user)=>{
         let chatHandler = document.getElementById("chat")
         let btnSend = document.querySelector("#send")
         let text = document.getElementById("text").value
+        let name = "";
+        get(ref(database, "users/"+user.uid)).then((userData)=>{
+            let data = userData.val()
+            name = data.username;
+        let currentId = null;
         function createChat(name, uid){
             let chat =`
                 <li id=${uid}>${name}</li>
@@ -116,6 +121,7 @@ auth.onAuthStateChanged((user)=>{
             return chatHandler.innerHTML+= msgChat;
         }
         function createChannel(msg , name , id){
+            console.log(id)
             function genRandonString() {
                         var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
                         var charLength = 10;
@@ -135,72 +141,96 @@ auth.onAuthStateChanged((user)=>{
         
         let databaseRef = ref(getDatabase())
         get(ref(database, "/cards/")).then((cardData)=>{
-            let card = cardData.val();
-            
-            for(let i in card){
-                let name = card[i].name;
-                let id = card[i].uid;
-                createChat(name,id);
-            }
-        })
-        get(child(databaseRef,`users/${user.uid}`)).then((snapshot)=>{
-            let snap = snapshot.val();
-            let name = snap.username;
-            let allList = document.querySelectorAll("#listChat li");
-            allList.forEach((item)=>{
-                item.onclick = (e)=>{
-                    chatHandler.innerHTML = "";
-                    let text = item.textContent
-                    let id = item.id;
-                    allList.forEach((all)=>{
-                        let ides = all.id;
-                        if(ides == id){
-                            all.classList.add("active-chat");
-                        }else{
-                            all.classList.remove("active-chat");
-                        }
-                    })
-                    get(ref(database, "/chat/")).then((chatData)=>{
-                        let snapChatData =chatData.val()
-                        if(snapChatData == null){
-                            btnSend.addEventListener("click",()=>{
-                                let text = document.getElementById("text").value
-                                createChannel(text,name , id)
-                                document.getElementById("text").value = ""
-                            })
-                            document.addEventListener("keydown",(e)=>{
-                                let text = document.getElementById("text").value
-                                if(e.keyCode == 13){
-                                    createChannel(text,name , id)
-                                    document.getElementById("text").value = ""
-                                }
-                            })
-                        }else{
-                            btnSend.addEventListener("click",()=>{
-                                let text = document.getElementById("text").value
-                                createChannel(text,name , id)
-                                document.getElementById("text").value = ""
-                            })
-                            document.addEventListener("keydown",(e)=>{
-                                let text = document.getElementById("text").value
-                                if(e.keyCode == 13){
-                                    createChannel(text,name , id)
-                                    document.getElementById("text").value = ""
-                                }
-                            })
-                        }
-                        onChildAdded(ref(database, `/chat/${id}`), (data)=>{
-                            let chatData = data.val();
-                            if(chatData.name == name){
-                                createMsg(chatData.msg, chatData.name)
-                                
-                            }else{
-                                restiveMsg(chatData.msg, chatData.name) 
-                            }
-                        })
-                    })
+                let card = cardData.val();
+                for(let i in card){
+                    let name = card[i].name;
+                    let id = card[i].uid;
+                    createChat(name,id);
                 }
             })
+            fetchingData()
+            setTimeout(()=>{
+                let allList = document.querySelectorAll("#listChat li")
+                console.log(allList)
+
+                    setTimeout(()=>{
+
+
+                        fetchingDataDone()
+                        allList.forEach((item) => {
+
+                            item.addEventListener("click", (e) => {
+                                chatHandler.innerText = ""
+                                // Update the currentId when a list item is clicked
+                                currentId = item.id;
+                                console.log(currentId)
+                                // Highlight the selected list item
+                                allList.forEach((all) => {
+                                    let ides = all.id;
+                                    if (ides == currentId) {
+                                        all.classList.add("active-chat");
+                                    } else {
+                                        all.classList.remove("active-chat");
+                                    }
+                                });
+                                onChildAdded(ref(database, `/chat/${currentId}`), (data) => {
+                                    let chatData = data.val();
+                                    console.log(chatData)
+                                    if (chatData.name == name) {
+                                        createMsg(chatData.msg, chatData.name);
+                                    } else {
+                                        restiveMsg(chatData.msg, chatData.name);
+                                    }
+                                }); 
+                            
+                            
+                            });
+
+
+
+
+                        });
+                                
+                        
+                                // Rest of your code to handle the chat for the selected item
+                                get(ref(database, "/chat/")).then((chatData) => {
+                                    let snapChatData = chatData.val();
+                                    btnSend.addEventListener("click", () => {
+                                        let text = document.getElementById("text").value;
+                                        if (currentId) {
+                                            createChannel(text, name, currentId);
+                                        }
+                                        document.getElementById("text").value = "";
+                                    });
+                                    
+                                    document.addEventListener("keydown", (e) => {
+                                        let text = document.getElementById("text").value;
+                                        if (e.keyCode == 13) {
+                                            if (currentId) {
+                                                createChannel(text, name, currentId);
+                                            }
+                                            document.getElementById("text").value = "";
+                                        }
+                                    });
+
+                                });
+
+                    },2000)
+
+
+            },1000)
+
+
+
+        // end of fetch userData
         })
+
+
+
+
+
+
+
+        // end of auth user
     }
 })
