@@ -7,7 +7,7 @@
 
         <!-- style path  -->
         <link rel="stylesheet" href="/style/nav.css">
-        <link rel="stylesheet" href="/style/course-video.css">
+        <link rel="stylesheet" href="/style/homework.css">
         <link rel="stylesheet" href="/style/footer.css">
         <link rel="stylesheet" href="/style/missing-account.css">
         <link rel="stylesheet" href="/style/preloader.css">
@@ -23,7 +23,7 @@
         <!-- font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>أساسيات جافا 1 | ourClass</title>
+    <title>| ourClass</title>
 </head>
 <body id="body">
     <div class="" id="preloader"></div>
@@ -59,9 +59,9 @@
                 </div>
             </div>
         <div class="middle">
-            <a href="/user/courses.html" class="active" >الدروس</a>
+            <a href="/user/courses.html">الدروس</a>
             <a href="/user/conversation.html">المناقشات</a>
-            <a href="/user/homeworks.html">الواجبات</a>
+            <a href="/user/homeworks.html" class="active">الواجبات</a>
             <a href="/user/exams.html">الإختبارات</a>
         </div>
         <a href="/user/home.html">
@@ -72,11 +72,101 @@
         </nav>
     </header>
     <section>
-        <div class="video-side" id="video-side">
+        <div id="subjectsList">
+            <ul>
+                <li class="subjects activeList">
+                    تراكيب البيانات
+                </li>
+                <li class="subjects">
+                    جافا 1
+                </li>
+                <li class="subjects">
+                    جافا 2
+                </li>
+            </ul>
         </div>
-        <div class="episode-side">
-                <ul id="episode-list">
-                </ul>
+        <div id="homeWorkList">
+            <ul>
+                <li class="homeWork activeList">
+                    الواجب الاول
+                </li>
+                <li class="homeWork">
+                    الواجب الاول
+                </li>
+                <li class="homeWork">
+                    جافا الواجب الاول
+                </li>
+            </ul>
+        </div>
+        <div class="sectionHomeWork">
+            <div id="componentHomeWork">
+                <div class="top">
+                    <div id="title">
+                        الواجب الأول
+                    </div>
+                    <span class="grade">
+                        <span>3/3</span>
+                    </span>
+                </div>
+            </div>
+                <div class="homeWork">
+                    <div class="q">
+                        <div class="qus">
+                            السوأل الأول : طريقة تعريف متغيير ؟
+                        </div>
+                        <div class="option">
+                            <div>
+                                <input type="radio" name="q1" id="q1">
+                                <label for="q1">
+                                    <div class="optionValue">
+                                        String str = "Mohammed";
+                                    </div>
+                                    <div class="option-q">
+                                        A
+                                    </div>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="q1" id="q2">
+                                <label for="q2">
+                                    <div class="optionValue">
+                                        String str = "Mohammed";
+                                    </div>
+                                    <div class="option-q">
+                                        B
+                                    </div>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="radio" name="q1" id="q3">
+                                <label for="q3">
+                                    <div class="optionValue">
+                                        String str = "Mohammed";
+                                    </div>
+                                    <div class="option-q">
+                                        C
+                                    </div>
+                                </span></label>
+                            </div>
+                            <div>
+                                <input type="radio" name="q1" id="q4">
+                                <label for="q4">
+                                    <div class="optionValue">
+                                        String str = "Mohammed";
+                                    </div>
+                                    <div class="option-q">
+                                        D
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-submit">
+                        <button class="color-btn">إرسال</button>
+                        <button class="color-btn color-btn-rest">إعادة الواجب</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <footer>
@@ -106,6 +196,5 @@
 </body>
 <script src="/js/home.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-<script src="/js/ani.js" type="module"></script>
-<script src="/js/episode.js" type="module"></script>
+<script src="/js/homeworkSec.js" type="module"></script>
 </html>
