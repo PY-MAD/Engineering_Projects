@@ -25,6 +25,7 @@ li{
 }
 div ul{
     direction: rtl;
+    padding-left: 5px;
 }
 div ul li{
     background-color: var(--primary-color);
@@ -35,7 +36,7 @@ div ul li{
     padding-right: 6px;
     padding-left: 26px !important;
 }
-div ul .activeList{
+div ul .activeList , div .activeList{
     background-color: var(--secondary-color) !important;
 }
 div ul li:hover{
@@ -43,6 +44,7 @@ div ul li:hover{
 }
 #subjectsList , #homeWorkList{
     width: 20%;
+    position: relative;
 }
 .sectionHomeWork{
     width: 60%;
@@ -136,4 +138,19 @@ label div{
     padding-left: 2rem;
     position: absolute;
     left: 0;
+}
+#homeWorkList{
+    overflow-x: hidden;
+}
+#homeWorkList ul{
+    position: absolute;
+    left: 170px;
+    transition: 0.3s;
+}
+#homeWorkList .activeHomeWork{
+    left: 0px;
+    width: 100% !important;
+}
+#homeWorkList ul li{
+    width: 100%;
 }
