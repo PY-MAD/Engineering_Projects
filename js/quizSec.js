@@ -278,6 +278,77 @@ auth.onAuthStateChanged((user) => {
   fetchingData();
   setTimeout(() => {
     fetchingDataDone();
+
+    get(dbRef).then((snap) => {
+      let data = snap.val();
+      let ArrayOfName = [];
+      let ArrayOfId = [];
+  
+      for (let i in data) {
+        let name = data[i].name;
+        let id = data[i].uid;
+        ArrayOfName.push(name);
+        ArrayOfId.push(id);
+      }
+      btnAddHW.addEventListener("click", () => {
+        let i = 0;
+        AddNewHomeWork();
+        let submit = document.getElementById("submit-to-database");
+        let optionQ = document.getElementById("optionSubjects");
+        function listAddHomeworkSubjects(name, id) {
+          let q = `
+                <option value="${name}" id="${id}">${name}</option>
+                `;
+          return (optionQ.innerHTML += q);
+        }
+  
+        for (let i = 0; i < ArrayOfName.length; i++) {
+          listAddHomeworkSubjects(ArrayOfName[i], ArrayOfId[i]);
+        }
+        let BtnaddQ = document.getElementById("add-Q");
+  
+        BtnaddQ.addEventListener("click", () => {
+          ++i;
+  
+          addQ(i);
+          let nameOfSubjects = document.getElementById("optionSubjects");
+          let idSub = nameOfSubjects.options[nameOfSubjects.selectedIndex];
+          let id = idSub.id;
+          let nameOfHomework = document.getElementById("nameOfHomework").value;
+          let create = document.getElementById("submit-to-database");
+          let allInput = document.querySelectorAll(".titleHomeWork");
+          submit.addEventListener("click", () => {
+            for (let j = 1; j <= i; j++) {
+              let holderAll = document.querySelector(`#Q${j}`);
+              let nameQ = document.querySelector(`#Q${j} #EnterQ${j}`).value;
+              let qa = document.querySelector(`#Q${j} #A${j}`).value;
+              let qb = document.querySelector(`#Q${j} #B${j}`).value;
+              let qc = document.querySelector(`#Q${j} #C${j}`).value;
+              let qd = document.querySelector(`#Q${j} #D${j}`).value;
+              let coreectAnswer = document.querySelector(
+                `#Q${j} #coreectAnswer`
+              ).value;
+              createNewListHomeWork(nameOfHomework, id);
+              createQuestion(
+                nameOfHomework,
+                id,
+                nameQ,
+                coreectAnswer,
+                qa,
+                qb,
+                qc,
+                qd
+              );
+            }
+          });
+        });
+        Btnclose.addEventListener("click", () => {
+          CloseNewHomeWork();
+        });
+      });
+    });
+
+
     let allTheListSubjects = document.querySelectorAll("#subjectsList ul li");
     allTheListSubjects.forEach((item) => {
       item.addEventListener("click", () => {

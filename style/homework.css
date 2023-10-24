@@ -23,11 +23,11 @@ section{
 li{
     list-style: none;
 }
-div ul{
+section div ul{
     direction: rtl;
     padding-left: 5px;
 }
-div ul li{
+section div ul li{
     background-color: var(--primary-color);
     color: white;
     margin: 10px 0px;
