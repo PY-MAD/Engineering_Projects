@@ -69,7 +69,7 @@ auth.onAuthStateChanged((user) => {
   let body = document.getElementById("body");
   let btnAddHW = document.getElementById("btn");
   let Btnclose = document.getElementById("close");
-  
+  let m = moment()
   get(ref(database, `/users/${user.uid}`)).then((snapshot)=>{
     let data = snapshot.val()
     if(data.admin == null){
@@ -194,12 +194,14 @@ auth.onAuthStateChanged((user) => {
     let nameHomeWork = `<div id="title">${name}</div>`;
     return (titleHandling.innerHTML = nameHomeWork);
   }
-  function saveGrade(uidUser , nameOfhomeWork , grade , totalGrade , answers) {
-    update(ref(database, "users/" + uidUser + "/" + nameOfhomeWork), {
+  function saveGrade(uidUser , nameOfhomeWork , grade , totalGrade , answers, date, hour) {
+    update(ref(database, `users/${uidUser}/quiz/${nameOfhomeWork}`), {
       nameHomeWork: nameOfhomeWork,
       grade: grade,
       totalGrade: totalGrade,
-      Answers:answers
+      Answers:answers,
+      date:date,
+      hour:hour
     });
   }
   function AddNewHomeWork() {
@@ -430,9 +432,12 @@ auth.onAuthStateChanged((user) => {
                       }
                     }
                   }
+                  let date = m.date()+1;
+                  let hour = m.hour();
+                  console.log(date, hour)
                   setGrade(grade, totalGrade);
                   setNameOfHomework(nameOfhomeWork);
-                  saveGrade(uidUser , nameOfhomeWork, grade, totalGrade , ArrayOfChooseId)
+                  saveGrade(uidUser , nameOfhomeWork, grade, totalGrade , ArrayOfChooseId, date, hour)
                   send.style.display="none"
                 });
               });

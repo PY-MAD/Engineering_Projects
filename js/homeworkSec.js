@@ -69,7 +69,6 @@ auth.onAuthStateChanged((user) => {
   let body = document.getElementById("body");
   let btnAddHW = document.getElementById("btn");
   let Btnclose = document.getElementById("close");
-  
   get(ref(database, `/users/${user.uid}`)).then((snapshot)=>{
     let data = snapshot.val()
     if(data.admin == null){
@@ -199,7 +198,7 @@ auth.onAuthStateChanged((user) => {
       nameHomeWork: nameOfhomeWork,
       grade: grade,
       totalGrade: totalGrade,
-      Answers:answers
+      Answers:answers,
     });
   }
   function AddNewHomeWork() {

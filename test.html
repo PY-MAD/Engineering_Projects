@@ -74,19 +74,8 @@
 
 <body>
 
-  <button id="toast" onclick="executeExample('sweetAlert')">test</button>
-  <script type="module">
-    import Swal from '/node_modules/sweetalert2/dist/sweetalert2.js'
-
-    import '/node_modules/sweetalert2/src/sweetalert2.scss'
-
-    function executeExample(){
-      Swal.fire(
-      'Good job!',
-      'You clicked the button!',
-      'success'
-    )
-    }
-  </script>
+  <div class="countdown"></div>
+  <script src="/assets/lib/moment.js" ></script>
+  <script src="test.js"></script>
 </body>
 </html>
