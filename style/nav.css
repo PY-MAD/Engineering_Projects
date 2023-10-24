@@ -18,7 +18,14 @@ a{
 b{
     display: block;
 }
-
+::-webkit-scrollbar{
+    width: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.444) !important;
+    width: 10px; 
+    border-radius: 10px;
+}
 
 section{
     height: 60vh;

@@ -154,3 +154,82 @@ label div{
 #homeWorkList ul li{
     width: 100%;
 }
+.display_none{
+    display: none;
+}
+.add-homework{
+    background-color: rgba(0, 0, 0, 0.332);
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.background {
+    background-color: var(--primary-color);
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: auto !important;
+    flex-direction: column;
+    border-radius: 12px;
+}
+.background #option , .background #TypeQuiz{
+    display: flex;
+    flex-direction: column !important;
+    color: white !important;
+}
+.title-option{
+    color: white !important;
+}
+select{
+    margin-top: 1rem !important;
+}
+.content .q label , .content .q input{
+    flex-direction: column !important;
+}
+.content .q label{
+    background-color: transparent;
+}
+.background .content{
+    flex-direction: column !important;
+    direction: rtl;
+    
+}
+.background .content div{
+    margin: 10px 0px !important;
+}
+form.form-container {
+    width: 30% !important;
+    max-height: 70%;
+    overflow: auto;
+}
+.bg-Q{
+    background-color: var(--secondary-color);
+}
+#btn{
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px 4px;
+}
+#btn-addHomeWork{
+    position: relative;
+    top: -70px;
+    width: 10%;
+}
+#btn:hover{
+    filter: brightness(0.9);
+}
+.close{
+    padding: 10px 20px;
+    padding-bottom: 0;
+}
+.close button img{
+    width: 36px;
+}

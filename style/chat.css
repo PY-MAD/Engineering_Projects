@@ -129,6 +129,7 @@ button{
 #chat{
     overflow-y: auto;
     padding-bottom: 20px;
+    overflow-x: hidden;
 }
 .send-section{
     position: relative;
@@ -142,4 +143,9 @@ button{
     background-color: var(--secondary-color) !important;
     border: 1px solid var(--primary-color) !important;
     transition: 0.1s;
+}
+.msg-contaner {
+    max-width: 80%;
+    margin-left: auto;
+    overflow-wrap: anywhere;
 }

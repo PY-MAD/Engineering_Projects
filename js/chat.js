@@ -85,18 +85,18 @@ auth.onAuthStateChanged((user)=>{
         function createMsg(msg,name){
             let msgChat = `
             <div class="msg-continer">
-            <span class="avatar-msg">
+            <div class="avatar-msg">
                 <img src="/assets/svg/userAvater/male.svg" alt="">
 
-                <span class="msg-contaner">
+                <div class="msg-contaner">
                 <div class="name">
                     ${name}
                 </div>
-                    <span class="msg">
+                    <div class="msg">
                         ${msg}
-                    </span>
-                </span>
-            </span>
+                    </div>
+                </div>
+            </div>
         </div>
             `
             return chatHandler.innerHTML+= msgChat;
@@ -104,34 +104,25 @@ auth.onAuthStateChanged((user)=>{
         function restiveMsg(msg,name){
             let msgChat = `
             <div class="msg-continer received">
-            <span class="avatar-msg received-msg">
+            <div class="avatar-msg received-msg">
                 <img src="/assets/svg/userAvater/male.svg" alt="">
 
-                <span class="msg-contaner">
+                <div class="msg-contaner">
                 <div class="name">
                     ${name}
                 </div>
-                    <span class="msg">
+                    <div class="msg">
                         ${msg}
-                    </span>
-                </span>
-            </span>
+                    </div>
+                </div>
+            </div>
         </div>
             `
             return chatHandler.innerHTML+= msgChat;
         }
         function createChannel(msg , name , id){
-            console.log(id)
-            function genRandonString() {
-                        var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-                        var charLength = 10;
-                        var result = '';
-                        for ( var i = 0; i < charLength; i++ ) {
-                           result += chars.charAt(Math.floor(Math.random() * charLength));
-                        }
-                        return result;
-                     }
-            set(ref(database, `/chat/${id}/${genRandonString()}`),{
+            let nowDate = Date.now();
+            set(ref(database, `/chat/${id}/${nowDate}`),{
                 name:name,
                 msg:msg,
             })

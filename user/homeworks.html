@@ -23,7 +23,7 @@
         <!-- font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>| ourClass</title>
+    <title id="title">| ourClass</title>
 </head>
 <body id="body">
     <div class="" id="preloader"></div>
@@ -72,100 +72,35 @@
         </nav>
     </header>
     <section>
+        <div id="btn-addHomeWork">
+            <button id="btn">إضافة واجب</button>
+        </div>
         <div id="subjectsList">
             <ul>
-                <li class="subjects activeList">
-                    تراكيب البيانات
-                </li>
-                <li class="subjects">
-                    جافا 1
-                </li>
-                <li class="subjects">
-                    جافا 2
-                </li>
             </ul>
         </div>
         <div id="homeWorkList">
             <ul>
-                <li class="homeWork activeList">
-                    الواجب الاول
-                </li>
-                <li class="homeWork">
-                    الواجب الاول
-                </li>
-                <li class="homeWork">
-                    جافا الواجب الاول
-                </li>
+
             </ul>
         </div>
         <div class="sectionHomeWork">
+            <div class="top">
+                <div id="title">
+                    
+                </div>
+                <span class="grade">
+                        
+                </span>
+            </div>
             <div id="componentHomeWork">
-                <div class="top">
-                    <div id="title">
-                        الواجب الأول
-                    </div>
-                    <span class="grade">
-                        <span>3/3</span>
-                    </span>
+                <div class="homeWork">
+
                 </div>
             </div>
-                <div class="homeWork">
-                    <div class="q">
-                        <div class="qus">
-                            السوأل الأول : طريقة تعريف متغيير ؟
-                        </div>
-                        <div class="option">
-                            <div>
-                                <input type="radio" name="q1" id="q1">
-                                <label for="q1">
-                                    <div class="optionValue">
-                                        String str = "Mohammed";
-                                    </div>
-                                    <div class="option-q">
-                                        A
-                                    </div>
-                                </label>
-                            </div>
-                            <div>
-                                <input type="radio" name="q1" id="q2">
-                                <label for="q2">
-                                    <div class="optionValue">
-                                        String str = "Mohammed";
-                                    </div>
-                                    <div class="option-q">
-                                        B
-                                    </div>
-                                </label>
-                            </div>
-                            <div>
-                                <input type="radio" name="q1" id="q3">
-                                <label for="q3">
-                                    <div class="optionValue">
-                                        String str = "Mohammed";
-                                    </div>
-                                    <div class="option-q">
-                                        C
-                                    </div>
-                                </span></label>
-                            </div>
-                            <div>
-                                <input type="radio" name="q1" id="q4">
-                                <label for="q4">
-                                    <div class="optionValue">
-                                        String str = "Mohammed";
-                                    </div>
-                                    <div class="option-q">
-                                        D
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-submit">
-                        <button class="color-btn">إرسال</button>
-                        <button class="color-btn color-btn-rest">إعادة الواجب</button>
-                    </div>
-                </div>
+            <div class="btn-submit display_none">
+                <button id="send-homeWork" class="color-btn">إرسال</button>
+                <button id="reset-homeWork" class="color-btn color-btn-rest">إعادة الواجب</button>
             </div>
         </div>
     </section>
