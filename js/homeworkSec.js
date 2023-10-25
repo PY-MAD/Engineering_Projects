@@ -69,10 +69,15 @@ auth.onAuthStateChanged((user) => {
   let body = document.getElementById("body");
   let btnAddHW = document.getElementById("btn");
   let Btnclose = document.getElementById("close");
+  let doneHomeWork = []
   get(ref(database, `/users/${user.uid}`)).then((snapshot)=>{
     let data = snapshot.val()
+    let homeWork = data.homework;
     if(data.admin == null){
       document.getElementById("btn-addHomeWork").remove()
+    }
+    for(let i in homeWork){
+      doneHomeWork.push(i)
     }
   })
   function AddAdminQ(){
@@ -93,16 +98,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 
-  function createQuestion(
-    nameOfQuestion,
-    uid,
-    titleQ,
-    correctAnswer,
-    A,
-    B,
-    C,
-    D
-  ) {
+  function createQuestion(nameOfQuestion, uid, titleQ, correctAnswer, A, B, C ,D) {
     // Check if nameOfQuestion is not empty or a comment
     if (nameOfQuestion.trim() !== "") {
       set(ref(database, `/homework/${uid}/${nameOfQuestion}/${titleQ}`), {
@@ -113,7 +109,20 @@ auth.onAuthStateChanged((user) => {
       console.log("push is done!!!");
     }
   }
+  function AddQuestion(nameOfQuestion,uid,titleQ,correctAnswer,A,B,C,D) {
+    // Check if nameOfQuestion is not empty or a comment
+    if (nameOfQuestion.trim() !== "") {
+      get(ref(database, `/quiz/${uid}/${nameOfQuestion}/${titleQ}`)).then(()=>{
+        set(ref(database, `/quiz/${uid}/${nameOfQuestion}/${titleQ}`), {
+          titleQ: titleQ,
+          option: { A: A, B: B, C: C, D: D },
+          correctAnswer: correctAnswer,
+        });
+      })
 
+      console.log("push is done!!!");
+    }
+  }
   function addSubjects(name, uid) {
     let sub = `
     <li id="${uid}" class="subjects" >${name}</li>  
@@ -194,7 +203,7 @@ auth.onAuthStateChanged((user) => {
     return (titleHandling.innerHTML = nameHomeWork);
   }
   function saveGrade(uidUser , nameOfhomeWork , grade , totalGrade , answers) {
-    update(ref(database, "users/" + uidUser + "/" + nameOfhomeWork), {
+    update(ref(database, "users/" + uidUser + "/homework/" + nameOfhomeWork), {
       nameHomeWork: nameOfhomeWork,
       grade: grade,
       totalGrade: totalGrade,
@@ -260,14 +269,88 @@ auth.onAuthStateChanged((user) => {
   function CloseNewHomeWork() {
     return document.querySelector(".add-homework").remove();
   }
+  
+
   get(dbRef)
     .then((snapshot) => {
       let snap = snapshot.val();
+      let ArrayOfName = [];
+      let ArrayOfId = [];
       for (let item in snap) {
         let name = snap[item].name;
         let id = snap[item].uid;
         addSubjects(name, id);
+        ArrayOfName.push(name);
+        ArrayOfId.push(id);
       }
+
+      btnAddHW.addEventListener("click", () => {
+        let i = 0;
+        AddNewHomeWork();
+        let submit = document.getElementById("submit-to-database");
+        let optionQ = document.getElementById("optionSubjects");
+        function listAddHomeworkSubjects(name, id) {
+          let q = `
+                <option value="${name}" id="${id}">${name}</option>
+                `;
+          return (optionQ.innerHTML += q);
+        }
+  
+        for (let i = 0; i < ArrayOfName.length; i++) {
+          listAddHomeworkSubjects(ArrayOfName[i], ArrayOfId[i]);
+        }
+        let BtnaddQ = document.getElementById("add-Q");
+  
+        BtnaddQ.addEventListener("click", () => {
+          ++i;
+  
+          addQ(i);
+          let nameOfSubjects = document.getElementById("optionSubjects");
+          let idSub = nameOfSubjects.options[nameOfSubjects.selectedIndex];
+          let id = idSub.id;
+          let nameOfHomework = document.getElementById("nameOfHomework").value;
+          let create = document.getElementById("submit-to-database");
+          let allInput = document.querySelectorAll(".titleHomeWork");
+          submit.addEventListener("click", () => {
+            for (let j = 1; j <= i; j++) {
+              let nameQ = document.querySelector(`#Q${j} #EnterQ${j}`).value;
+              let qa = document.querySelector(`#Q${j} #A${j}`).value;
+              let qb = document.querySelector(`#Q${j} #B${j}`).value;
+              let qc = document.querySelector(`#Q${j} #C${j}`).value;
+              let qd = document.querySelector(`#Q${j} #D${j}`).value;
+              let coreectAnswer = document.querySelector(
+                `#Q${j} #coreectAnswer`
+              ).value;
+              createNewListHomeWork(nameOfHomework, id);
+              createQuestion(
+                nameOfHomework,
+                id,
+                nameQ,
+                coreectAnswer,
+                qa,
+                qb,
+                qc,
+                qd
+              );
+              if(j == 1){
+                createNewListHomeWork(nameOfHomework, id);
+                createQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd);
+              }else{
+                  AddQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd)
+              }
+              console.log(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd);
+            }
+            CloseNewHomeWork();
+          });
+        });
+        setTimeout(() => {
+          Btnclose.addEventListener("click", () => {
+            CloseNewHomeWork();
+          });
+        }, 2000);
+      });
+
+
     })
     .catch((error) => {
       console.error("Error getting data:", error);
@@ -278,6 +361,10 @@ auth.onAuthStateChanged((user) => {
     let allTheListSubjects = document.querySelectorAll("#subjectsList ul li");
     allTheListSubjects.forEach((item) => {
       item.addEventListener("click", () => {
+          let grade = document.getElementById("grade");
+          if(grade != null){
+            grade.remove();
+          }
         homeWorkHandling.innerHTML = "";
         setNameOfHomework("");
         sendsButton.classList.add("display_none");
@@ -295,74 +382,6 @@ auth.onAuthStateChanged((user) => {
         });
 
 
-        get(dbRef).then((snap) => {
-          let data = snap.val();
-          let ArrayOfName = [];
-          let ArrayOfId = [];
-      
-          for (let i in data) {
-            let name = data[i].name;
-            let id = data[i].uid;
-            ArrayOfName.push(name);
-            ArrayOfId.push(id);
-          }
-          btnAddHW.addEventListener("click", () => {
-            let i = 0;
-            AddNewHomeWork();
-            let submit = document.getElementById("submit-to-database");
-            let optionQ = document.getElementById("optionSubjects");
-            function listAddHomeworkSubjects(name, id) {
-              let q = `
-                    <option value="${name}" id="${id}">${name}</option>
-                    `;
-              return (optionQ.innerHTML += q);
-            }
-      
-            for (let i = 0; i < ArrayOfName.length; i++) {
-              listAddHomeworkSubjects(ArrayOfName[i], ArrayOfId[i]);
-            }
-            let BtnaddQ = document.getElementById("add-Q");
-      
-            BtnaddQ.addEventListener("click", () => {
-              ++i;
-      
-              addQ(i);
-              let nameOfSubjects = document.getElementById("optionSubjects");
-              let idSub = nameOfSubjects.options[nameOfSubjects.selectedIndex];
-              let id = idSub.id;
-              let nameOfHomework = document.getElementById("nameOfHomework").value;
-              let create = document.getElementById("submit-to-database");
-              let allInput = document.querySelectorAll(".titleHomeWork");
-              submit.addEventListener("click", () => {
-                for (let j = 1; j <= i; j++) {
-                  let holderAll = document.querySelector(`#Q${j}`);
-                  let nameQ = document.querySelector(`#Q${j} #EnterQ${j}`).value;
-                  let qa = document.querySelector(`#Q${j} #A${j}`).value;
-                  let qb = document.querySelector(`#Q${j} #B${j}`).value;
-                  let qc = document.querySelector(`#Q${j} #C${j}`).value;
-                  let qd = document.querySelector(`#Q${j} #D${j}`).value;
-                  let coreectAnswer = document.querySelector(
-                    `#Q${j} #coreectAnswer`
-                  ).value;
-                  createNewListHomeWork(nameOfHomework, id);
-                  createQuestion(
-                    nameOfHomework,
-                    id,
-                    nameQ,
-                    coreectAnswer,
-                    qa,
-                    qb,
-                    qc,
-                    qd
-                  );
-                }
-              });
-            });
-            Btnclose.addEventListener("click", () => {
-              CloseNewHomeWork();
-            });
-          });
-        });
 
 
 
@@ -384,6 +403,11 @@ auth.onAuthStateChanged((user) => {
             );
             
             allListHomeWork.forEach((item) => {
+              for(let i in doneHomeWork){
+                if(doneHomeWork[i] == item.textContent){
+                  item.classList.add("done-Quiz")
+                }
+              }
                 setTimeout(() => {
                   item.addEventListener("click", () => {
                     
@@ -518,7 +542,7 @@ auth.onAuthStateChanged((user) => {
                   grade = 0;
                   gradeSec.style.display = "none";
                   send.style.display = "block"
-                  get(ref(database, `/users/${uidUser}/${nameOfhomeWork}`)).then(
+                  get(ref(database, `/users/${uidUser}/homework/${nameOfhomeWork}`)).then(
                     (snap) => {
                       let data = snap.val();
                       for(let i in data.Answers){

@@ -5,6 +5,7 @@
     --border-radius-big-card: 30px;
     --border-radius-secondary-big-card: 40px;
     --border-radius-btn-reg: 13px;
+    --done-color: #86c159;
 }
 button{
     background-color: transparent;
@@ -232,4 +233,7 @@ form.form-container {
 }
 .close button img{
     width: 36px;
+}
+.done-Quiz{
+    background-color: var(--done-color);
 }

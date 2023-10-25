@@ -28,7 +28,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 const dbRef = ref(database, "/cards/"); // Reference to the root of the database
-const dbHW = ref(database, "/homework/"); // Reference to the root of the database
+const dbHW = ref(database, "/quiz/"); // Reference to the root of the database
 const auth = getAuth();
 
 let preloader = document.getElementById("preloader");
@@ -70,10 +70,16 @@ auth.onAuthStateChanged((user) => {
   let btnAddHW = document.getElementById("btn");
   let Btnclose = document.getElementById("close");
   let m = moment()
+
+  let doneQuiz = []
   get(ref(database, `/users/${user.uid}`)).then((snapshot)=>{
     let data = snapshot.val()
+    let quiz = data.quiz
     if(data.admin == null){
       document.getElementById("btn-addHomeWork").remove()
+    }
+    for(let i in quiz){
+      doneQuiz.push(i)
     }
   })
   function AddAdminQ(){
@@ -87,30 +93,35 @@ auth.onAuthStateChanged((user) => {
   function createNewListHomeWork(nameOfQuestion, uid) {
     // Check if nameOfQuestion is not empty or a comment
     if (nameOfQuestion.trim() !== "") {
-      set(ref(database, `/homework/${uid}/${nameOfQuestion}`), {
+      set(ref(database, `/quiz/${uid}/${nameOfQuestion}`), {
         name: nameOfQuestion,
       });
       console.log("push is done!!!");
     }
   }
 
-  function createQuestion(
-    nameOfQuestion,
-    uid,
-    titleQ,
-    correctAnswer,
-    A,
-    B,
-    C,
-    D
-  ) {
+  function createQuestion(nameOfQuestion,uid,titleQ,correctAnswer,A,B,C,D) {
     // Check if nameOfQuestion is not empty or a comment
     if (nameOfQuestion.trim() !== "") {
-      set(ref(database, `/homework/${uid}/${nameOfQuestion}/${titleQ}`), {
+      set(ref(database, `/quiz/${uid}/${nameOfQuestion}/${titleQ}`), {
         titleQ: titleQ,
         option: { A: A, B: B, C: C, D: D },
         correctAnswer: correctAnswer,
       });
+      console.log("push is done!!!");
+    }
+  }
+  function AddQuestion(nameOfQuestion,uid,titleQ,correctAnswer,A,B,C,D) {
+    // Check if nameOfQuestion is not empty or a comment
+    if (nameOfQuestion.trim() !== "") {
+      get(ref(database, `/quiz/${uid}/${nameOfQuestion}/${titleQ}`)).then(()=>{
+        set(ref(database, `/quiz/${uid}/${nameOfQuestion}/${titleQ}`), {
+          titleQ: titleQ,
+          option: { A: A, B: B, C: C, D: D },
+          correctAnswer: correctAnswer,
+        });
+      })
+
       console.log("push is done!!!");
     }
   }
@@ -325,21 +336,16 @@ auth.onAuthStateChanged((user) => {
               let qb = document.querySelector(`#Q${j} #B${j}`).value;
               let qc = document.querySelector(`#Q${j} #C${j}`).value;
               let qd = document.querySelector(`#Q${j} #D${j}`).value;
-              let coreectAnswer = document.querySelector(
-                `#Q${j} #coreectAnswer`
-              ).value;
-              createNewListHomeWork(nameOfHomework, id);
-              createQuestion(
-                nameOfHomework,
-                id,
-                nameQ,
-                coreectAnswer,
-                qa,
-                qb,
-                qc,
-                qd
-              );
+              let coreectAnswer = document.querySelector(`#Q${j} #coreectAnswer`).value;
+              if(j == 1){
+                createNewListHomeWork(nameOfHomework, id);
+                createQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd);
+              }else{
+                  AddQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd)
+              }
+              console.log(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd);
             }
+            CloseNewHomeWork();
           });
         });
         Btnclose.addEventListener("click", () => {
@@ -368,7 +374,7 @@ auth.onAuthStateChanged((user) => {
           }
         });
         fetchingData()
-        get(ref(database, `/homework/${idSubjects}`))
+        get(ref(database, `/quiz/${idSubjects}`))
           .then((snapshot) => {
             let snap = snapshot.val();
             let name = "";
@@ -381,6 +387,11 @@ auth.onAuthStateChanged((user) => {
             );
             
             allListHomeWork.forEach((item) => {
+                for(let i in doneQuiz){
+                  if(doneQuiz[i] == item.textContent){
+                    item.classList.add("done-Quiz")
+                  }
+                }
                 setTimeout(() => {
                   item.addEventListener("click", () => {
                     
@@ -415,7 +426,7 @@ auth.onAuthStateChanged((user) => {
                       }
                     });
                     get(
-                      ref(database, `/homework/${idSubjects}/${nameOfhomeWork}`)
+                      ref(database, `/quiz/${idSubjects}/${nameOfhomeWork}`)
                     ).then((snapshot) => {
                       let snap = snapshot.val();
                       let counter = 0;
@@ -425,7 +436,7 @@ auth.onAuthStateChanged((user) => {
                           get(
                             ref(
                               database,
-                              `/homework/${idSubjects}/${nameOfhomeWork}/${titleQ}`
+                              `/quiz/${idSubjects}/${nameOfhomeWork}/${titleQ}`
                             )
                           ).then((snapshot) => {
                             let snap = snapshot.val();
@@ -482,7 +493,7 @@ auth.onAuthStateChanged((user) => {
                 });
                 let gradeSec = document.querySelector("span #grade");
                 get(
-                  ref(database, `/homework/${idSubjects}/${nameOfhomeWork}`)
+                  ref(database, `/quiz/${idSubjects}/${nameOfhomeWork}`)
                 ).then((snapshot) => {
                   let snap = snapshot.val();
 
