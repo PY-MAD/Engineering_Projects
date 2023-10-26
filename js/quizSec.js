@@ -70,7 +70,7 @@ auth.onAuthStateChanged((user) => {
   let btnAddHW = document.getElementById("btn");
   let Btnclose = document.getElementById("close");
   let m = moment()
-
+  let timer = document.getElementById("timer")
   let doneQuiz = []
   get(ref(database, `/users/${user.uid}`)).then((snapshot)=>{
     let data = snapshot.val()
@@ -90,11 +90,13 @@ auth.onAuthStateChanged((user) => {
     `
     return document.getElementById("sec").innerHTML += q;
   }
-  function createNewListHomeWork(nameOfQuestion, uid) {
+  function createNewListHomeWork(nameOfQuestion, uid, mins, secs) {
     // Check if nameOfQuestion is not empty or a comment
     if (nameOfQuestion.trim() !== "") {
       set(ref(database, `/quiz/${uid}/${nameOfQuestion}`), {
         name: nameOfQuestion,
+        mins : mins,
+        secs: secs
       });
       console.log("push is done!!!");
     }
@@ -225,16 +227,25 @@ auth.onAuthStateChanged((user) => {
               </div>
                       <div class="content" id="form-addQ">
                           <div id="option" class=" d-flex w-100">
-                              <div class="title-option justify-content-end">
-                                  الرجاء أختيار المادة
-                              </div>
-                              <select class=" form-select" name="" id="optionSubjects">
-                                  <option value="" disabled selected>الرجاء الاختيار</option>
-                              </select>
+                          <div class="title-option justify-content-end">
+                              الرجاء أختيار المادة
+                          </div>
+                          <select class=" form-select" name="" id="optionSubjects">
+                              <option value="" disabled selected>الرجاء الاختيار</option>
+                          </select>
+                              
                           </div>
                           <div class="q d-flex flex-column w-100">
-                              <input type="text" name="titleHomeWork"class="titleHomeWork input-group form-control" id="nameOfHomework" placeholder="أدخل أسم الواجب">
-                          </div>
+                              <input name="titleHomeWork"class="titleHomeWork input-group form-control" id="nameOfHomework" placeholder="أدخل أسم الواجب" />
+                              <div id="timerValue" class="d-flex justify-content-around">
+                              <select class="w-25 form-select" id="mins">
+                                <option class="" disabled selected>أختر كم دقيقة</option>
+                              </select>
+                              <select class="w-25 form-select" id="sec">
+                                <option class="" disabled selected>أختر كم ثانية</option>
+                              </select>
+                              </div>  
+                              </div>
                           <div id="AddQ" class="w-100"></div>
                           <div class=" btn-group  d-flex w-100">
                               <div class="btn btn-primary justify-content-around" id="add-Q">إضافة سؤال</div>
@@ -274,6 +285,42 @@ auth.onAuthStateChanged((user) => {
   function CloseNewHomeWork() {
     return document.querySelector(".add-homework").remove();
   }
+  function addTimeOption(i, id){
+    let q = `
+        <option>${i}</option>
+    `
+    return id.innerHTML+=q;
+  }
+
+  function startCountdown(minutes, second) {
+    const endTime = moment().add(minutes, 'minutes').add(second, 'seconds');
+    const countdownElement = document.getElementById('clock');
+
+    function updateCountdown() {
+      const currentTime = moment();
+      const remainingTime = moment.duration(endTime - currentTime);
+      const minutes = remainingTime.minutes();
+      const seconds = remainingTime.seconds();
+
+      countdownElement.textContent = `${minutes} : ${seconds}`;
+
+      if (minutes === 0 && seconds === 0) {
+        countdownElement.textContent = 'Timer expired!';
+      }
+    }
+
+    updateCountdown(); // Initial call to display the countdown
+    setInterval(updateCountdown, 1000); // Update the countdown every second
+  }
+  function setTimer(mins , secs){
+      let q = `
+      <div class="clock" id="clock">
+                    ${mins}:${secs}    
+      </div>
+      `
+      return timer.innerHTML = q;
+  }
+
   get(dbRef)
     .then((snapshot) => {
       let snap = snapshot.val();
@@ -287,6 +334,8 @@ auth.onAuthStateChanged((user) => {
       console.error("Error getting data:", error);
     });
   fetchingData();
+
+
   setTimeout(() => {
     fetchingDataDone();
 
@@ -304,6 +353,16 @@ auth.onAuthStateChanged((user) => {
       btnAddHW.addEventListener("click", () => {
         let i = 0;
         AddNewHomeWork();
+        let idMin = document.getElementById("mins");
+        let idSec = document.getElementById("sec");
+        for(let i = 0 ; i<60; i++){
+            if(i != 0 && i>= 1){
+              addTimeOption(i , idMin)
+            }
+            addTimeOption(i , idSec)
+            
+        }
+      
         let submit = document.getElementById("submit-to-database");
         let optionQ = document.getElementById("optionSubjects");
         function listAddHomeworkSubjects(name, id) {
@@ -317,10 +376,11 @@ auth.onAuthStateChanged((user) => {
           listAddHomeworkSubjects(ArrayOfName[i], ArrayOfId[i]);
         }
         let BtnaddQ = document.getElementById("add-Q");
-  
+        
         BtnaddQ.addEventListener("click", () => {
           ++i;
-  
+          let mins = idMin.value
+          let secs =  idSec.value
           addQ(i);
           let nameOfSubjects = document.getElementById("optionSubjects");
           let idSub = nameOfSubjects.options[nameOfSubjects.selectedIndex];
@@ -328,6 +388,7 @@ auth.onAuthStateChanged((user) => {
           let nameOfHomework = document.getElementById("nameOfHomework").value;
           let create = document.getElementById("submit-to-database");
           let allInput = document.querySelectorAll(".titleHomeWork");
+          let timer = document.getElementById("timer")
           submit.addEventListener("click", () => {
             for (let j = 1; j <= i; j++) {
               let holderAll = document.querySelector(`#Q${j}`);
@@ -338,7 +399,7 @@ auth.onAuthStateChanged((user) => {
               let qd = document.querySelector(`#Q${j} #D${j}`).value;
               let coreectAnswer = document.querySelector(`#Q${j} #coreectAnswer`).value;
               if(j == 1){
-                createNewListHomeWork(nameOfHomework, id);
+                createNewListHomeWork(nameOfHomework, id, mins , secs);
                 createQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd);
               }else{
                   AddQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd)
@@ -361,7 +422,6 @@ auth.onAuthStateChanged((user) => {
         homeWorkHandling.innerHTML = "";
         setNameOfHomework("");
         sendsButton.classList.add("display_none");
-
         let idSubjects = item.id;
         let nameOfSubjects = item.textContent;
         homeworkListHandling.innerHTML = "";
@@ -394,7 +454,6 @@ auth.onAuthStateChanged((user) => {
                 }
                 setTimeout(() => {
                   item.addEventListener("click", () => {
-                    
                     let grade = document.getElementById("grade");
                     if(grade != null){
                       grade.remove();
@@ -402,18 +461,22 @@ auth.onAuthStateChanged((user) => {
                     sendsButton.classList.add("display_none");
                     homeWorkHandling.innerHTML = "";
                     nameOfhomeWork = item.textContent;
-                    get(ref(database, `/users/${uidUser}/${nameOfhomeWork}`)).then(
+                    get(ref(database, `/users/${uidUser}/quiz/${nameOfhomeWork}`)).then(
                       (snap) => {
                         let data = snap.val();
+                        console.log(data)
                         if(data != null)
                         if (data.grade != null) {
                           setGrade(data.grade, data.totalGrade);
                           setTimeout(() => {
                             for(let i in data.Answers){
                               document.querySelector(`#${data.Answers[i]}`).checked = true;
+                              
                             }
+                            send.style.display = "none"
+                            clock.style.display="none"
                           }, 700);
-                          send.style.display = "none"
+
                         }
                       }
                     );
@@ -425,22 +488,20 @@ auth.onAuthStateChanged((user) => {
                         all.classList.remove("activeList");
                       }
                     });
-                    get(
-                      ref(database, `/quiz/${idSubjects}/${nameOfhomeWork}`)
-                    ).then((snapshot) => {
+                    get(ref(database, `/quiz/${idSubjects}/${nameOfhomeWork}`)).then((snapshot) => {
                       let snap = snapshot.val();
                       let counter = 0;
+                      let mins = snap.mins
+                      let sec = snap.secs;
+                      setTimer(mins , sec);
+                      startCountdown(mins , sec)
                       for (let item in snap) {
-                        if (item != "name") {
+                        if (item != "name" && item != "mins" && item != "secs") {
                           titleQ = item;
-                          get(
-                            ref(
-                              database,
-                              `/quiz/${idSubjects}/${nameOfhomeWork}/${titleQ}`
-                            )
-                          ).then((snapshot) => {
+                          get(ref(database,`/quiz/${idSubjects}/${nameOfhomeWork}/${titleQ}`)).then((snapshot) => {
                             let snap = snapshot.val();
                             let q = snap.titleQ;
+                            console.log(snap)
                             nameOfQuestions.push(q);
                             let correctAnswer = snap.correctAnswer;
                             let A = null;
@@ -462,11 +523,11 @@ auth.onAuthStateChanged((user) => {
                             }
                             counter++;
                             let counterQ = `Q${counter}`;
-                            counetQ.push(counterQ);
                             createQ(q, A, B, C, D, counterQ);
                             setNameOfHomework(nameOfhomeWork);
                           });
                           sendsButton.classList.remove("display_none");
+                          
                         }
                       }
                     });
@@ -492,19 +553,18 @@ auth.onAuthStateChanged((user) => {
                   }
                 });
                 let gradeSec = document.querySelector("span #grade");
-                get(
-                  ref(database, `/quiz/${idSubjects}/${nameOfhomeWork}`)
-                ).then((snapshot) => {
+                get(ref(database, `/quiz/${idSubjects}/${nameOfhomeWork}`)).then((snapshot) => {
                   let snap = snapshot.val();
 
                   for (let i in snap) {
-                    if (i != "name") {
+                    if (i != "name" && i != "mins" && i != "secs") {
                       q.push(i);
                       let correct = snap[i].correctAnswer;
                       correctAnswer.push(correct);
                     }
                   }
                   let totalGrade = q.length;
+                  console.log(q)
                   for (let i = 0; i < q.length; i++) {
                     let nameq = q[i];
                     let nameOfQ = nameOfQuestions[i];
@@ -521,24 +581,9 @@ auth.onAuthStateChanged((user) => {
                   setNameOfHomework(nameOfhomeWork);
                   saveGrade(uidUser , nameOfhomeWork, grade, totalGrade , ArrayOfChooseId, date, hour)
                   send.style.display="none"
+                  clock.style.display="none"
                 });
               });
-              setTimeout(() => {
-                reset.addEventListener("click", () => {
-                  let gradeSec = document.querySelector("span #grade");
-                  grade = 0;
-                  gradeSec.style.display = "none";
-                  send.style.display = "block"
-                  get(ref(database, `/users/${uidUser}/${nameOfhomeWork}`)).then(
-                    (snap) => {
-                      let data = snap.val();
-                      for(let i in data.Answers){
-                        document.querySelector(`#${data.Answers[i]}`).checked = false;
-                      }
-                    }
-                  );
-                });
-              }, 1000);
             }, 1000);
           })
           .catch((error) => {

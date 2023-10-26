@@ -418,7 +418,7 @@ auth.onAuthStateChanged((user) => {
                     sendsButton.classList.add("display_none");
                     homeWorkHandling.innerHTML = "";
                     nameOfhomeWork = item.textContent;
-                    get(ref(database, `/users/${uidUser}/${nameOfhomeWork}`)).then(
+                    get(ref(database, `/users/${uidUser}/homework/${nameOfhomeWork}`)).then(
                       (snap) => {
                         let data = snap.val();
                         if(data != null)

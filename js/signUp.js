@@ -84,13 +84,17 @@ function blurBackground() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed up 
+                let dt = new Date();
                 const user = userCredential.user;
                 set(ref(database, 'users/'+user.uid),{
                     username: username,
                     password: password,
                     gender:getRadioValue(),
                     email:email,
-                    fav:[]
+                    fav:[],
+                    signUpDate : dt,
+                    major: major,
+                    score: 0,
                 });
                 Swal.fire("تم تسجيل حسابك بنجاح","تقدر الان تسوي تسجيل دخول","success")
                 // ...

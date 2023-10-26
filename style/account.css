@@ -5,6 +5,7 @@
     --border-radius-big-card: 30px;
     --border-radius-secondary-big-card: 40px;
     --border-radius-btn-reg: 13px;
+    --start-prograss : 0;
 }
 section{
     margin: 0 auto;
@@ -71,12 +72,13 @@ p{
     direction: ltr;
     display: flex;
     justify-content: space-around;
-    height: fit-content;
     position: relative;
     transition: 0.3s ease-in-out all;
     transform: scale(1);
     position: absolute;
     top: 0px;
+    max-height: 100%;
+    overflow-y: scroll;
 }
 aside{
     width: 20%;
@@ -84,7 +86,7 @@ aside{
     flex-direction: column;
     justify-content: center;
 }
-aside #user-data , aside #leaderboard{
+aside .name-data {
     width: 90%;
     margin-bottom: 1rem;
     display: flex;
@@ -106,7 +108,6 @@ aside #user-data , aside #leaderboard{
 .data-card{
     background-color: var(--secondary-color);
     width: 400px;
-    height: 100%;
     border-radius: 12px;
     box-shadow: 2px 2px 16px 2px var(--secondary-color);
     padding: 12px;
@@ -173,11 +174,12 @@ aside #user-data , aside #leaderboard{
 }
 .badges .prograss::after{
     content: "";
+    width: var(--start-prograss);
     display: flex;
-    width: 10%;
     height: 100%;
     background-color: #4D9DE0;
     border-radius: 0px 2px 2px 0px;
+    transition: 0.8s;
 }
 .prograss-number{
     display: flex;
@@ -222,25 +224,34 @@ table{
     width: 100%;
     direction: rtl;
 }
-tr:nth-child(even){
+tbody:nth-child(even){
     background-color: #4D9DE0;
     color: white !important;
 }
-tr:nth-child(odd){
+tbody:nth-child(odd){
     background-color: #4086bf;
     color: white !important;
+}
+tbody:hover{
+    filter: brightness(0.9);
+}
+tbody:last-child{
+    border-radius: 10px 10px 0px 0px;
 }
 .btn-primary{
     background-color: var(--primary-color) !important;
     border: 0 !important;
 }
-button:hover{
+.btn-edit button:hover{
     filter: brightness(0.9);
 }
 .active-li{
     background-color: rgba(0, 0, 0, 0.205);
     border-radius: 12px;
+    transition:  0.4s ease-in all;
+    animation: active 2s ease-in;
 }
+
 td , th{
     padding: 12px;
 }
@@ -254,11 +265,25 @@ td , th{
     z-index: -1;
     opacity: 0;
 }
-#sectionLeader{
+#sectionLeader , #sectionData{
     max-height: 900px;
     overflow: scroll;
 }
 #sectionLeader .head{
     position: sticky;
     top: -20px;
+}
+.border-right-counter{
+    border-left: 1px solid white !important;
+}
+.delete{
+    border: 0;
+    padding: 6px 8px;
+    border-radius: 12px;
+    background-color: transparent;
+    color: white;
+}
+.delete i:hover{
+    color: var(--secondary-color);
+    filter: brightness(1);
 }

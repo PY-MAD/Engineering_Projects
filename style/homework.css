@@ -237,3 +237,12 @@ form.form-container {
 .done-Quiz{
     background-color: var(--done-color);
 }
+.timer{
+    direction: ltr;
+}
+.top .timer .clock{
+    border: 1px solid var(--secondary-color);
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 8px;
+}

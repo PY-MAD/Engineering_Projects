@@ -24,6 +24,9 @@ auth.onAuthStateChanged((user)=>{
     let liCheck = document.querySelectorAll("aside div")
     let dataSec = document.getElementById("sectionData")
     let LeaderSec = document.getElementById("sectionLeader")
+    let prograssFrom = document.querySelector(".prograss-from");
+    let progressPar = document.querySelector(".prograss").querySelector("::after")
+
     function setProfile(name , email, rank , lastLogin , signUpDate){
         let q = `
         <div class="name">${name}</div>
@@ -41,12 +44,31 @@ auth.onAuthStateChanged((user)=>{
         `
         return queryDataUser.innerHTML += q;
     }
+    function addProgressPar(score) {
+
+        const root = document.querySelector(":root")
+        
+
+
+        let count = 0;
+        setInterval(function() {
+            if(count <= score){
+                prograssFrom.innerHTML = `${count}%`;
+                root.style.setProperty("--start-prograss", `${count}%`);
+                count++;
+            }
+        }, 40);
+        return ;
+      }
     get(getDataUser).then((dataUser)=>{
         let data = dataUser.val();
         let name = data.username;
         let email = data.email;
         let lastLoginFromDB = data.last_login;
+        let signUpDate = data.signUpDate;
         let last_login = "";
+        let signUp = "";
+        let userScore = data.score
         for(let i = 0; i<lastLoginFromDB.length; i++){
             if(lastLoginFromDB[i] == 'T'){
                 break;
@@ -54,31 +76,32 @@ auth.onAuthStateChanged((user)=>{
                 let char = lastLoginFromDB[i];
                 char = '/'
                 last_login+=char;
+                signUp+=char;
             }else{
                 last_login+=lastLoginFromDB[i];
+                signUp+=signUpDate[i];
             }
         }
-        setProfile(name , email, 12 , last_login, "12/12/1424")
+        setProfile(name , email, 12 , last_login, signUp)
+        addProgressPar(userScore)
     })
     liCheck.forEach((item)=>{
         item.addEventListener("click", ()=>{
             let id = item.id
-            console.log(id)
-            if(id == "user-data"){
-                LeaderSec.classList.add("unactive-Section")
-                dataSec.classList.remove("unactive-Section")
-                dataSec.classList.add("active-Section")
-            }else{
-                dataSec.classList.add("unactive-Section")
-                LeaderSec.classList.remove("unactive-Section")
-                LeaderSec.classList.add("active-Section")
-            }
+            let sectionId = document.getElementById(`section${id}`)
             liCheck.forEach((check)=>{
                 let holdId = check.id
+                let sectionId = document.getElementById(`section${check.id}`)
                 if(holdId == id){
                     check.classList.add("active-li", "active")
+                    sectionId = document.getElementById(`section${check.id}`)
+                    sectionId.classList.add("active-Section")
+                    sectionId.classList.remove("unactive-Section")
                 }else{
                     check.classList.remove("active-li", "active")
+                    console.log(sectionId)
+                    sectionId.classList.add("unactive-Section")
+                    sectionId.classList.remove("active-Section")
                 }
             })
 
