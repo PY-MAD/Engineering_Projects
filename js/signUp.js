@@ -56,7 +56,6 @@ function blurBackground() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let username = document.getElementById("name").value;
-
     let accountCreated = document.querySelector(".Account-created");
 
     function getRadioValue(){
@@ -71,9 +70,10 @@ function blurBackground() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     let username = document.getElementById("name").value;
-
+    let majorSelect = document.querySelector("#major");
+    let major = majorSelect.options[majorSelect.selectedIndex].value;
     let accountCreated = document.querySelector(".Account-created");
-
+    let signUpDate = moment().format()
     function getRadioValue(){
       let gender = document.getElementsByName("gender");
       for(let i = 0; i<gender.length; i++){
@@ -84,15 +84,15 @@ function blurBackground() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed up 
-                let dt = new Date();
+
                 const user = userCredential.user;
                 set(ref(database, 'users/'+user.uid),{
                     username: username,
                     password: password,
                     gender:getRadioValue(),
                     email:email,
-                    fav:[],
-                    signUpDate : dt,
+                    fav:[""],
+                    signUpDate : signUpDate,
                     major: major,
                     score: 0,
                 });
@@ -108,53 +108,64 @@ function blurBackground() {
   })
 
 // log in user
-document.addEventListener("keypress",(key) =>{
-  BeforepreloaderPage()
-  if(key.keyCode  == 13){
+// Listen for the "keypress" event on the document
+document.addEventListener("keypress", (key) => {
+  BeforepreloaderPage();
 
-      let email = document.getElementById("email1").value;
-      let password = document.getElementById("password1").value;
-  
-      signInWithEmailAndPassword(auth, email, password)
+  if (key.keyCode == 13) {
+    const email = document.getElementById("email1").value;
+    const password = document.getElementById("password1").value;
+
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
+        // Signed in
         const user = userCredential.user;
-        let dt = new Date();
-        update(ref(database, 'users/'+user.uid),{
-          last_login : dt,
-      });
-      window.open("/user/home.html", "_self")
-  
+        const signInTime = moment().format();
+
+        // Update the user's last_login timestamp in the database
+        const userRef = ref(database, 'users/' + user.uid);
+        update(userRef, {
+          last_login: signInTime,
+        });
+
+        setTimeout(() => {
+          window.open("/user/home.html", "_self");
+        }, 700);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage)
+        alert(errorMessage);
       });
-  
-  }else{
-    loginExistAccount.addEventListener('click',(e) =>{
-      let email = document.getElementById("email1").value;
-      let password = document.getElementById("password1").value;
-  
-      signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        let dt = new Date();
-        update(ref(database, 'users/'+user.uid),{
-          last_login : dt,
-      });
-      window.open("/user/home.html", "_self")
-  
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage)
-      });
-
-
-    })
   }
-})
+});
+
+// Assuming you have an HTML element with id "loginExistAccount"
+const loginExistAccount = document.getElementById("loginExistAccount");
+
+loginExistAccount.addEventListener('click', (e) => {
+  const email = document.getElementById("email1").value;
+  const password = document.getElementById("password1").value;
+  const signInTime = moment().format();
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+
+      // Update the user's last_login timestamp in the database
+      const userRef = ref(database, 'users/' + user.uid);
+      update(userRef, {
+        last_login: signInTime,
+      });
+
+      setTimeout(() => {
+        window.open("/user/home.html", "_self");
+      }, 700);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+    });
+});

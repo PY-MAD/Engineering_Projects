@@ -99,7 +99,6 @@ auth.onAuthStateChanged((user)=>{
                     sectionId.classList.remove("unactive-Section")
                 }else{
                     check.classList.remove("active-li", "active")
-                    console.log(sectionId)
                     sectionId.classList.add("unactive-Section")
                     sectionId.classList.remove("active-Section")
                 }

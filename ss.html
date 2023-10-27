@@ -4,76 +4,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/lib/evo-calendar/css/evo-calendar.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/lib/evo-calendar/css/evo-calendar.royal-navy.min.css"/>
     <title>Document</title>
 </head>
 <style>
-    .container-missing-account{
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;    
-    }
-    .card{
-        background-color: #F3722C;
-        border-radius: 20px;
-    }
-    .content{
-        display: flex;
-        align-items: center;
-        padding: 2rem 2rem;
-        justify-content: space-between;
-    }
-    .text{
-        direction: rtl;
-        color: white;
-    }
-    .big-font{
-        font-size: 36px;
-        font-weight: 700;
-    }
-    .middle-font{
-        margin: 2rem 0;
-        font-size: 16px;
-    }
-    .link-sign{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #4D9DE0;
-        width: 140px;
-        height: 26px;
-        border-radius: 6px;
-        transition: 0.3s;
-        -webkit-user-select: none;
-        -webkit-touch-callout: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    .link-sign:hover{
-        filter:brightness(0.80);
-    }
-
 </style>
 <body>
-    <div class="container-missing-account">
-        <div class="card">
-            <div class="content">
-                <div class="missing-account-img">
-                    <img src="/assets/svg/missing-account.min.svg" alt="">
-                </div>
-                <div class="text">
-                    <div class="big-font">
-                        أهلًا بصديقنا
-                    </div>
-                    <div class="middle-font">
-                                نتوقع أنك مو مسجل دخول في منصتنا <br>الرجاء التسجيل للإستفادة من كامل خدماتنا
-                    </div>
-                    <a class="link-sign">التسجيل</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+    <div id="calendar"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    <!-- Add the evo-calendar.js for.. obviously, functionality! -->
+    <script src="/assets/lib/evo-calendar/js/evo-calendar.min.js"></script>
+<script>
+    // initialize your calendar, once the page's DOM is ready
+    $('#calendar').evoCalendar({
+        theme: 'Royal Navy',
+        calendarEvents: [
+        {
+            name: "Vacation Leave",
+            badge: "02/13 - 02/15", // Event badge (optional)
+            date: ["February/13/2020", "February/15/2020"], // Date range
+            description: "Vacation leave for 3 days.", // Event description (optional)
+            type: "event",
+            color: "#63d867" // Event custom color (optional)
+        }
+        ]
+    })
+</script>
 </html>

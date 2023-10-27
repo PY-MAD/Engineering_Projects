@@ -26,6 +26,10 @@
         <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- schedule css -->
+    <link rel="stylesheet" type="text/css" href="/assets/lib/evo-calendar/css/evo-calendar.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/lib/evo-calendar/css/evo-calendar.royal-navy.min.css"/>
+
     <title>Profile | our class</title>
 </head>
 <body id="body">
@@ -82,6 +86,7 @@
     <section id="section" class="profile-section">
         <aside>
             <div id="user-data" class="name-data active-li active"><i class="fa-solid fa-user"></i>الحساب</div>
+            <div id="Schedule" class="name-data"><i class="bi bi-calendar-date"></i>الجدول</div>
             <div id="leaderboard" class="name-data"><i class="fa-solid fa-ranking-star"></i>المتصدرين</div>
             <div id="users" class="name-data"><i class="fa-solid fa-users"></i>الأعضاء</div>
             <div id="admin" class="name-data"><i class="fa-solid fa-user-gear"></i>المشرفين</div>
@@ -169,6 +174,55 @@
                     </div>
                 </div>
             </div>
+            <!-- Schedule -->
+            <div class="container-section flex-column unactive-Section" id="sectionSchedule">
+                <div class="addEvent mb-2">
+                    <button class="btn btn-primary rounded-2" id="addEvent">
+                        إضاف حدث
+                    </button>
+                    <div id="formDate" class="form w-50 p-3 rounded-3 unactive-formDate">
+                        <div class="w-100 p-2">
+                            <form id="addEventForm" class=" form-container">
+                                <div class="title-event">
+                                    <input type="text" class=" form-control" id="titleEvent" placeholder="أدخل أسم الحدث">
+                                </div>
+                                <div class="title-event mt-3">
+                                    <textarea class=" form-control" id="praEvent" placeholder="أدخل وصف الحدث"></textarea>
+                                </div>
+                                <!-- from date -->
+                                <div id="from" class="from-option w-100 d-flex mt-3">
+                                    <div class="from-date m-2">من</div>
+                                    <select name="day" id="Fromday" class="formDay form-select w-100 m-1" disabled>
+                                        <option value="" hidden disabled selected>أختر اليوم</option>
+                                    </select>
+                                    <select name="month" id="Frommonth" class="formmonth form-select w-100 m-1">
+                                        <option value="" hidden disabled selected>أختر الشهر</option>
+
+                                    </select>
+                                </div>
+                                <!-- to date-->
+                                <div id="to" class="to-option w-100 d-flex mt-3 mb-3">
+                                    <div class="to-date m-2">الى</div>
+                                    <select name="day" id="Today" disabled class="formDay form-select w-100 m-1">
+                                        <option value="" hidden disabled selected>أختر اليوم</option>
+                                    </select>
+                                    <select name="month" id="Tomonth" class="formmonth form-select w-100 m-1">
+                                        <option value="" hidden disabled selected>أختر الشهر</option>
+                                    </select>
+                                </div>
+                                <div class="color-picker d-flex align-item-center">
+                                    <div class="to-date m-2">أختر اللون</div>
+                                    <input type="color" id="picker-color" name="favcolor" class="color-btn" value="#ff0000"/>
+                                </div>
+                                <div class="btn-container d-flex justify-content-center">
+                                    <input type="button" id="AddbtnEvent" class="btn btn-primary" value="إضافة">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="calendar"></div>
+            </div>
             <!-- leaderboard -->
     
             <div class="container-section unactive-Section" id="sectionleaderboard">
@@ -207,7 +261,13 @@
                 </table>
             </div>
             <!-- admins -->
-            <div class="container-section unactive-Section" id="sectionadmin">
+            <div class="container-section unactive-Section flex-column" id="sectionadmin">
+                    <div class="addAdmin mb-3 d-flex" style="direction: rtl;">
+                        <div class="input" style="margin-left: 2%;"><input type="email" class=" form-control" style="direction: rtl;" name="" id="inputAdmin" placeholder="ضع إيميل الشخص هنا"></div>
+                        <div class="btn-add">
+                            <button id="add"><i class="bi bi-person-plus-fill"></i></button>
+                        </div>
+                    </div>
                 <table id="table-admin">
                     <tr class="head">
                         <th></th>
@@ -246,6 +306,12 @@
         </div>
     </footer>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+<!-- Add the evo-calendar.js for.. obviously, functionality! -->
+<script src="/assets/lib/evo-calendar/js/evo-calendar.min.js"></script>
 </body>
 <script src="/js/home.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -253,4 +319,6 @@
 <script src="/js/userData/grades.js" type="module"></script>
 <script src="/js/userData/users.js" type="module"></script>
 <script src="/js/userData/admins.js" type="module"></script>
+<script src="/js/userData/calander.js" type="module"></script>
+<script src="/assets/lib/moment.js"></script>
 </html>

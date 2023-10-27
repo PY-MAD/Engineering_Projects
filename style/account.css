@@ -287,3 +287,78 @@ td , th{
     color: var(--secondary-color);
     filter: brightness(1);
 }
+.btn-add button{
+    background-color: transparent;
+    border: 0;
+}
+.btn-add button i{
+    color: var(--primary-color);
+}
+
+.calendar-table tr{
+background-color: white !important;
+
+}
+.calendar-table tr:hover{
+    filter: brightness(1) !important;
+}
+.calendar-table tbody:hover{
+    filter: brightness(1) !important;
+}
+.month-list ul li{
+    color: white !important;
+}
+.icon-button {
+    color: white !important;
+}
+.calendar-sidebar > .calendar-year > p{
+    color: white !important;
+}
+#sidebarToggler button.icon-button , #eventListToggler button.icon-button{
+    border: none;
+    background-color: transparent;
+    width: 50% !important;
+    height: 100%;
+    padding: 0;
+    cursor: pointer;
+    top: 0 !important;
+    position: absolute !important;
+}
+.calendar-events , .calendar-sidebar{
+    background-color: var(--primary-color) !important;
+}
+.calendar-table tr td , .calendar-table td , .day , .calendar-table tbody tr th{
+    color: var(--secondary-color) !important;
+}
+.addEvent{
+    direction: rtl;
+}
+#addEvent{
+    font-size: 24px;
+}
+.form{
+    background-color: var(--secondary-color);
+    transition: 0.3s;
+}
+.from-date , .to-date{
+    color: white;
+}
+.color-btn{
+    height: 50px;
+    border: 0 !important;
+}
+#formDate{
+    transition: 0.2s ease-in-out;
+    height: 100%;
+}
+.unactive-formDate{
+    height: 0 !important;
+    opacity: 0;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+}
+#sectionSchedule{
+    overflow-y: scroll;
+    height: 100%;
+    justify-content: flex-start;
+}
