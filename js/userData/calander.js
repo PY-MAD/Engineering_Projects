@@ -34,109 +34,104 @@ $(document).ready(function() {
     });
 });
 
-
-
-
-
-
-
-let months = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" ];
-let month = document.querySelectorAll(".formmonth")
-let day = document.querySelectorAll(".formDay")
-
-function addMonth(){
-    for(let i = 0; i<day.length; i++){
-        let monthInput = month[i]
-        for(let j = 0 ; j<months.length; j++){
-            let q = `<option>${months[j]}</option>`
-            monthInput.innerHTML += q;
-        }
-    }
-}
-function addDay(num , FromORto){
-    FromORto.innerHTML = " ";
-    for(let j =1; j<=num; j++){
-        let q = `<option>${j}</option>`
-        FromORto.innerHTML += q;
-    }
-}
-addMonth()
-
-month.forEach((item)=>{
-    item.addEventListener("click",()=>{
-        if(item.value != ""){
-            let monthId = item.id;
-            let value = item.value;
-            let numDays = 0;
-            let fromDay = "";
-            if(monthId == "Frommonth"){
-                fromDay = document.getElementById("Fromday");
-                fromDay.removeAttribute("disabled")
-            }else{
-                fromDay = document.getElementById("Today");
-                fromDay.removeAttribute("disabled")
-            }
-            for(let i = 0 ; i<months.length; i++){
-                if(value == months[i]){
-                    if(value == "February"){
-                        numDays = 28;
-                    }else if(i % 2 == 0 ){
-                        numDays = 30;
-                    }else{
-                        numDays = 31
-                    }
-                }
-            }
-            addDay(numDays , fromDay)
-
-        }
-    })
-})
-
-let showEvent = document.getElementById("addEvent")
-let fromDate = document.getElementById("formDate")
-showEvent.addEventListener("click",()=>{
-    if(fromDate.classList.contains("unactive-formDate")){
-        fromDate.classList.remove("unactive-formDate")
-    }else{
-        fromDate.classList.add("unactive-formDate")
-    }
-})
-
-
-let year = moment().year();
-let from = "";
-let to = "";
-let add = document.getElementById("AddbtnEvent")
-add.addEventListener("click",()=>{
-    let titleDate = document.getElementById("titleEvent").value;
-    let color = document.getElementById("picker-color").value;
-    let praEvent = document.getElementById("praEvent").value
-    let from = ""
-    for(let i = 0; i<month.length; i++){
-        let monthD = month[i].value;
-        let dayD = day[i].value
-        if(i == 0){
-            from+= `${monthD}/${dayD}/${year}`
-        }else{
-            to+= `${monthD}/${dayD}/${year}`
-        }
-    }
-    
-    set(ref(database, `/event/${new Date().getTime()}`),{
-        titleDate: titleDate,
-        disc : praEvent,
-        from:from,
-        to:to,
-        color:color,
-    })
-})
-
-
-
 onChildAdded(ref(database, `/event/`) , (event)=>{
     let data = event.val()
     addEvent(data.titleDate , data.disc , data.from , data.to , data.color)
 })
 
 // addEvent(titleDate , from , to, praEvent, color )
+
+auth.onAuthStateChanged((user)=>{
+    let userId = user.uid;
+    let form = document.getElementById("fromAddEvent")
+    get(ref(database, `/users/${userId}/admin`)).then((data)=>{
+        let checkAdmin = data.val();
+        if(checkAdmin == true){
+            let months = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" ];
+            let month = document.querySelectorAll(".formmonth")
+            let day = document.querySelectorAll(".formDay")
+            
+            function addMonth(){
+                for(let i = 0; i<day.length; i++){
+                    let monthInput = month[i]
+                    for(let j = 0 ; j<months.length; j++){
+                        let q = `<option>${months[j]}</option>`
+                        monthInput.innerHTML += q;
+                    }
+                }
+            }
+            function addDay(num , FromORto){
+                FromORto.innerHTML = " ";
+                for(let j =1; j<=num; j++){
+                    let q = `<option>${j}</option>`
+                    FromORto.innerHTML += q;
+                }
+            }
+            addMonth()
+            
+            month.forEach((item)=>{
+                item.addEventListener("click",()=>{
+                    if(item.value != ""){
+                        let monthId = item.id;
+                        let value = item.value;
+                        let numDays = 0;
+                        let fromDay = "";
+                        if(monthId == "Frommonth"){
+                            fromDay = document.getElementById("Fromday");
+                            fromDay.removeAttribute("disabled")
+                        }else{
+                            fromDay = document.getElementById("Today");
+                            fromDay.removeAttribute("disabled")
+                        }
+                        for(let i = 0 ; i<months.length; i++){
+                            if(value == months[i]){
+                                if(value == "February"){
+                                    numDays = 28;
+                                }else if(i % 2 == 0 ){
+                                    numDays = 30;
+                                }else{
+                                    numDays = 31
+                                }
+                            }
+                        }
+                        addDay(numDays , fromDay)
+            
+                    }
+                })
+            })
+            
+            
+            let year = moment().year();
+            let from = "";
+            let to = "";
+            let add = document.getElementById("AddbtnEvent")
+            add.addEventListener("click",()=>{
+                let titleDate = document.getElementById("titleEvent").value;
+                let color = document.getElementById("picker-color").value;
+                let praEvent = document.getElementById("praEvent").value
+                let from = ""
+                for(let i = 0; i<month.length; i++){
+                    let monthD = month[i].value;
+                    let dayD = day[i].value
+                    if(i == 0){
+                        from+= `${monthD}/${dayD}/${year}`
+                    }else{
+                        to+= `${monthD}/${dayD}/${year}`
+                    }
+                }
+                
+                set(ref(database, `/event/${new Date().getTime()}`),{
+                    titleDate: titleDate,
+                    disc : praEvent,
+                    from:from,
+                    to:to,
+                    color:color,
+                })
+            })
+            
+            
+        }else{
+            form.remove();
+        }
+    })
+})

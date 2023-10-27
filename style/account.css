@@ -362,3 +362,6 @@ background-color: white !important;
     height: 100%;
     justify-content: flex-start;
 }
+.event-container{
+    direction: rtl !important;
+}

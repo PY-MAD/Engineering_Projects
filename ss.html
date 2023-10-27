@@ -9,28 +9,66 @@
     <title>Document</title>
 </head>
 <style>
+        .show-article{
+            min-height: 70vh;
+            background-color: beige;
+        }
 </style>
 <body>
-    <div id="calendar"></div>
+    <div>
+        <input type="text" id="titleText" placeholder="title">
+        <textarea name="dsad" id="inputArea" cols="30" rows="10"></textarea>
+        <input type="button" id="send" value="send">
+    </div>
+    <div class="show-article">
+        <div class="title" id="title"></div>
+        <div class="textera" id="textera"></div>
+    </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+import { getDatabase, ref,onValue, child, get, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getAuth,onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-    <!-- Add the evo-calendar.js for.. obviously, functionality! -->
-    <script src="/assets/lib/evo-calendar/js/evo-calendar.min.js"></script>
-<script>
-    // initialize your calendar, once the page's DOM is ready
-    $('#calendar').evoCalendar({
-        theme: 'Royal Navy',
-        calendarEvents: [
-        {
-            name: "Vacation Leave",
-            badge: "02/13 - 02/15", // Event badge (optional)
-            date: ["February/13/2020", "February/15/2020"], // Date range
-            description: "Vacation leave for 3 days.", // Event description (optional)
-            type: "event",
-            color: "#63d867" // Event custom color (optional)
-        }
-        ]
+const firebaseConfig = {
+    apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
+    authDomain: "test-ab03a.firebaseapp.com",
+    databaseURL: "https://test-ab03a-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "test-ab03a",
+    storageBucket: "test-ab03a.appspot.com",
+    messagingSenderId: "19444872261",
+    appId: "1:19444872261:web:69de8c91e006b58aa8df2c"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app)
+const auth = getAuth();
+let uniqId = new Date().getTime();
+
+send.addEventListener("click",()=>{
+    let title = document.getElementById("titleText").value;
+let area = document.getElementById("inputArea").value;
+let send = document.getElementById("send")
+    set(ref(database, `/blog/${uniqId}`),{
+        title: title,
+        blogText:area,
     })
+})
+let titleView = document.getElementById("title")
+let area = document.getElementById("textera")
+get(ref(database , "/blog/")).then((data)=>{
+    let s = data.val()
+    for(let i in s){
+        let t = s[i].title;
+        let ar = s[i].blogText
+        console.log(ar)
+        titleView.innerText = t;
+        area.innerText += ar
+    }
+})
+
+
+
 </script>
 </html>
