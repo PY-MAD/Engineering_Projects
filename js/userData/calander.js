@@ -68,7 +68,16 @@ auth.onAuthStateChanged((user)=>{
                 }
             }
             addMonth()
+            let addBtn = document.getElementById("addEvent");
             
+            addBtn.addEventListener("click",()=>{
+                let form = document.getElementById("formDate")
+                if(form.classList.contains("unactive-formDate")){
+                    form.classList.remove("unactive-formDate")
+                }else{
+                    form.classList.add("unactive-formDate")
+                }
+            })
             month.forEach((item)=>{
                 item.addEventListener("click",()=>{
                     if(item.value != ""){
