@@ -52,3 +52,42 @@ p{
 .drop-down-anmi{
     transition: 0.2s;
 }
+@media screen and (max-width: 425px) {
+    section{
+        max-width: max-content;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .top{
+        flex-direction: column;
+        max-width: max-content;
+    }
+    .img img{
+        width: 400px;
+    }
+    .text .top-title , .bottom-pra{
+        width: 100%;
+        text-align: center;
+    }
+    .benefit{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 6rem;
+    }
+    .img-benefit{
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        
+    }
+    .watch .img img{
+        width: 100%;
+    }
+    .title h1 {
+        color: var(--secondary-color);
+        font-size: 36px;
+        font-weight: 700;
+    }
+}

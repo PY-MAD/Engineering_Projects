@@ -365,3 +365,53 @@ background-color: white !important;
 .event-container{
     direction: rtl !important;
 }
+@media screen and (max-width: 425px) {
+    .profile-section, .container-sections {
+        width: 100% !important;
+        margin: 0 0;
+        display: block !important;
+        padding: 0 0 !important;
+        margin: 4rem 0 !important;
+        max-width: 100% !important;
+        overflow-y: scroll;
+
+    } 
+    aside{
+        flex-direction: row;
+        width: 100%;
+        justify-content: start;
+        overflow-x: scroll;
+    }
+    
+    .name-data{
+        font-size: 18px !important;
+    }
+    .container-section{
+        flex-direction: column;
+        transform: scale(1);
+        max-height: max-content;
+        padding: 0;
+        width: auto !important;
+        justify-content: center;
+        align-items: center;
+
+    }
+    #sectionuser-data{
+        overflow-x: hidden;
+        position: static;
+
+    }
+    #sectionuser-data > div{
+        transform: scale(0.7);
+    }
+    #sectionSchedule{
+        height: auto;
+    }
+    #sectionusers , #sectionadmin{
+        overflow: scroll;
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+    }
+}

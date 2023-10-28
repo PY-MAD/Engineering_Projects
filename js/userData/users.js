@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 
 import { getDatabase, ref,onValue, child, get, set, remove } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { getAuth,onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { getAuth,onAuthStateChanged,signOut , deleteUser} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
@@ -81,14 +81,24 @@ auth.onAuthStateChanged((user)=>{
                         item.addEventListener("click",()=>{
                             let userId = item.id
                             get(ref(database , `/users/${userId}/email`)).then((email)=>{    
+                                auth.deleteUser(userId).then((userRecord) => {
+                                  // See the UserRecord reference doc for the contents of userRecord.
+                                  console.log("deleted is done !!!")
+                                })
+                                .catch((error) => {
+                                  console.log('Error fetching user data:', error);
+                                });
+
                                 let getEmail = email.val();
                                 let holderTable = document.getElementById(getEmail);
                                 holderTable.remove();
                             })
+                           // Get the currently authenticated user
+                           
+                
                             remove(ref(database , `/users/${userId}`)).then(()=>{
                 
                             })
-                
                         })
                     })
                 })

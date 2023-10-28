@@ -85,3 +85,25 @@ iframe{
 .urls a:hover{
     filter: brightness(0.9);
 }
+@media screen and (max-width: 425px) {
+    section {
+        width: 100%;
+        margin: 0 0;
+        display: block;
+        justify-content: space-around;
+        padding: 0 0;
+        height: auto;
+    } 
+    .video-side{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 3rem 0;
+    }
+    .video{
+        width: -webkit-fill-available;
+        height: auto;
+    }
+}

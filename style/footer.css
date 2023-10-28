@@ -45,3 +45,16 @@ footer{
     direction: rtl;
     font-weight: 300;
 }
+@media screen and (max-width: 1024px) {
+    footer{
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    footer > div{
+        margin-bottom: 2rem;
+    }
+    .content-us .title , .soruce .title{
+        margin-bottom: 1rem;
+    }
+
+}

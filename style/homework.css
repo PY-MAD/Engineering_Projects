@@ -246,3 +246,25 @@ form.form-container {
     padding: 4px 12px;
     border-radius: 8px;
 }
+@media screen and (max-width: 425px) {
+    section {
+        width: 100%;
+        margin: 0 0;
+        display: block;
+        padding: 0 0;
+        height: 100%;
+        margin: 4rem 0;
+        max-width: 100% !important;
+    } 
+    section > div{
+        position: static !important;
+        width: 100% !important;
+        margin: 3rem 0;
+    }
+    .sectionHomeWork{
+        margin-top: 4rem
+    }
+    #homeWorkList ul{
+        position: static;
+    }
+}

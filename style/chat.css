@@ -149,3 +149,19 @@ button{
     margin-left: auto;
     overflow-wrap: anywhere;
 }
+@media screen and (max-width: 425px) {
+    section {
+        width: 100%;
+        margin: 0 0;
+        display: block;
+        padding: 0 0;
+        height: 100%;
+        margin: 4rem 0;
+    } 
+    .container{
+        flex-direction: column;
+    }
+    .left-side{
+        height: 450px;
+    }
+}

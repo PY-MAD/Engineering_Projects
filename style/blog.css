@@ -219,3 +219,36 @@ code{
     padding: 20px;
     color: var(--primary-color) !important;
 }
+div#content {
+    width: 100%;
+}
+@media screen and (max-width: 425px) {
+    .profile-section, .container-sections {
+        width: 100% !important;
+        margin: 0 0;
+        display: block !important;
+        padding: 0 0 !important;
+        margin: 4rem 0 !important;
+        max-width: 100% !important;
+    } 
+    aside{
+        flex-direction: row;
+        width: 100%;
+    }
+    .name-data{
+        font-size: 18px !important;
+    }
+    .container-sections{
+        margin-top: 4rem !important;
+    }
+    .content-title{
+        flex-direction: column;
+    }
+    #sectionAdd{
+        display: flex;
+        flex-direction: column;
+    }
+    .pra {
+        height: 460px !important;
+    }
+}

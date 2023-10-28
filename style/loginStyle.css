@@ -280,3 +280,97 @@ input[type=radio]{
 .hidden-content{
     display: none !important;
 }
+@media screen and (max-width: 1024px) {
+    .container{
+        transform: scale(0.7);
+        width: 1024px !important;
+        display: flex;
+        flex-direction: column !important;
+    }
+    .sign-up , .sign-in {
+        left: 0;
+        width: 100%;
+        opacity: 1;
+        z-index: 1;
+    }
+    .sign-up{
+        margin-bottom: 8rem;
+    }
+    .form-container {
+        position: static;
+        top: 0;
+        height: 100%;
+        transition: all 0.6s ease-in-out;
+    }
+    .toggle-container {
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        overflow: hidden;
+        transition: all 0.6s ease-in-out;
+        border-radius: 0 0 0 0px;
+        z-index: 998;
+    }
+    .toggle-left{
+        transform: translateY(-200%);
+    }
+    
+    .container.active .toggle-left{
+        transform: translateY(0);
+    }
+    
+    .toggle-right{
+        right: 0;
+        transform: translateY(0);
+    }
+    
+    .container.active .toggle-right{
+        transform: translateY(200%);
+    }
+    .container.active .toggle {
+        transform: translate(50%);
+        border-radius: 0;
+    }
+    .container.active .toggle-container{
+        transform: translateY(100%);
+        border-radius: 0 0px 0px 0;
+    }
+    .container.active .sign-up {
+        transform: translateY(0%);
+        opacity: 1;
+        z-index: 5;
+        animation: move 0.6s;
+    }
+    .container.active .sign-in {
+        transform: translateY(100%);
+    }
+    .toggle-panel {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0 30px;
+        text-align: center;
+        top: 0;
+        transform: translateY(0);
+        transition: all 0.6s ease-in-out;
+        color: var(--third-color) !important;
+    }
+    .sign-in{
+        padding-bottom: 3rem;
+    }
+    .toggle-right{
+        transform: translateY(0);
+    }
+    .sign-up{
+        padding-top: 3rem;
+    }
+    main{
+        height: max-content;
+    }
+}
