@@ -7,7 +7,7 @@
 
         <!-- style path  -->
         <link rel="stylesheet" href="/style/nav.css">
-        <link rel="stylesheet" href="/style/account.css">
+        <link rel="stylesheet" href="/style/blog.css">
         <link rel="stylesheet" href="/style/footer.css">
         <link rel="stylesheet" href="/style/preloader.css">
         <link rel="stylesheet" href="/style/missing-account.css">
@@ -32,7 +32,7 @@
         <link rel="stylesheet" type="text/css" href="/assets/lib/evo-calendar/css/evo-calendar.royal-navy.min.css"/>
     
 
-    <title>Document</title>
+    <title>المدونة | our class</title>
 </head>
 <body>
     <div class="" id="preloader"></div>
@@ -74,6 +74,7 @@
             </div>
         <div class="middle">
             <a href="/user/courses.html" >الدروس</a>
+            <a href="/user/blog.html" class="active">المدونة</a>
             <a href="/user/conversation.html">المناقشات</a>
             <a href="/user/homeworks.html">الواجبات</a>
             <a href="/user/exams.html">الإختبارات</a>
@@ -84,38 +85,92 @@
             </div>
         </a>
         </nav>
-    </header>
-    <section>
-        <input type="file" id="photo" /></br>
-        <button id="upload">Upload Image</button>
-    </section>
+    </header >
+    <section id="section" class="profile-section">
+        <aside>
+            <div id="java-1" class="name-data active-li active">جافا 1</div>
+            <div id="java-2" class="name-data">جافا 2</div>
+            <div id="data-str" class="name-data">تراكيب البيانات</div>
+            <div id="Add" class="name-data">إضافة</div>
+        </aside>
+        <div class="container-sections">
+            <div class="container-section" id="sectionjava-1">
+                <div class="cards">
+                </div>
+            </div>
+            
+            <div class="container-section unactive-Section" id="sectionjava-2">
+                <div class="cards">
 
-    <footer id="footer">
-        <div class="logo-footer">
-            OUR <br/> CLASS.
+                </div>
+            </div>
+            <div class="container-section  unactive-Section" id="sectiondata-str">
+                <div class="cards">
+
+                </div>
+            </div>
+            <div class="container-section flex-column unactive-Section" id="sectionAdd">
+                <div class="content-title">
+                    <input type="text" class="title" placeholder="عنوان ...">
+                    <select name="" id="subjects">
+                        <option selected hidden disabled>أختر مادة</option>
+                    </select>
+                    <div class="upload-img w-100">
+                        <label for="photo">أختار صورة للموضوع</label>
+                        <input type="file" id="photo" class="form-control" />
+                    </div>
+                </div>
+                <textarea name="" id="" class="pra" placeholder="المحتوى"></textarea>
+                <div class="btn-send w-100 d-flex justify-content-center">
+                    <input type="button" class="send btn btn-primary p-3" id="send-blog" value="إرسال"/>
+                </div>
+            </div>
+            <div class="container-section flex-column unactive-Section" id="sectionContent">
+                <div class="content">
+                    <div id="content">
+                        <div id="title" class="title">
+
+                        </div>
+                        <div id="pra" class="pra">
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="content-us">
-            <div class="title">
-                تواصل معنا !
-            </div>
-            <div class="social-icons">
-                <a href=""><img src="/assets/svg/social-icons/X.svg" alt=""></a>
-                <a href=""><img src="/assets/svg/social-icons/insgram.svg" alt=""></a>
-                <a href=""><img src="/assets/svg/social-icons/youtube.svg" alt=""></a>
-            </div>
+    </section>
+<footer id="footer">
+    <div class="logo-footer">
+        OUR <br/> CLASS.
+    </div>
+    <div class="content-us">
+        <div class="title">
+            تواصل معنا !
         </div>
-        <div class="soruce">
-            <div class="title">
-                المصادر
-            </div>
-            <div class="links">
-                <a href="">من نحن ؟</a>
-                <a href="">الشروط والأحكام</a>
-            </div>
+        <div class="social-icons">
+            <a href=""><img src="/assets/svg/social-icons/X.svg" alt=""></a>
+            <a href=""><img src="/assets/svg/social-icons/insgram.svg" alt=""></a>
+            <a href=""><img src="/assets/svg/social-icons/youtube.svg" alt=""></a>
         </div>
-    </footer>
+    </div>
+    <div class="soruce">
+        <div class="title">
+            المصادر
+        </div>
+        <div class="links">
+            <a href="">من نحن ؟</a>
+            <a href="">الشروط والأحكام</a>
+        </div>
+    </div>
+</footer>
+</div>
+<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 <script src="/js/home.js" type="module"></script>
 <script src="/js/blog/blog.js" type="module"></script>
+<script src="/js/blog/upload.js" type="module"></script>
+<script src="/js/blog/read.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </html>
