@@ -25,59 +25,35 @@
 <body id="body">
     <div class="" id="preloader"></div>
     <div class="blur" id="blur">
-        <header id="laptop">
-            <nav>
-                <div class="login-side">
-                    <div class="login">
-                        <a href="/authentication/login.html">تسجيل الدخول</a>
+        <header id="header">
+            <nav id="laptop">
+                <button class="navbar-toggler" id="navbar-toggler" type="button">
+                    <i class="bi bi-list color-nav"></i>
+                  </button>
+                  <div class="nav-side unactive-nav">
+                    <button id="close">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                    <div class="login-side mt-3">
+                        <div class="login">
+                            <a href="/authentication/login.html">تسجيل الدخول</a>
+                        </div>
                     </div>
+                <div class="middle">
+                    <a href="/user/courses.html" >الدروس</a>
+                    <a href="/user/blog.html" >المدونة</a>
+                    <a href="/user/conversation.html">المناقشات</a>
+                    <a href="/user/homeworks.html">الواجبات</a>
+                    <a href="/user/exams.html">الإختبارات</a>
                 </div>
-            <div class="middle">
-                <a href="/user/courses.html">الدروس</a>
-                <a href="#">المناقشات</a>
-                <a href="/user/homeworks.html">الواجبات</a>
-                <a href="/user/exams.html">الإختبارات</a>
-            </div>
-            <a href="index.html">
+                  </div>
+            <a href="/user/home.html">
                 <div class="logo">
                     OUR <div>CLASS.</div>
                 </div>
             </a>
             </nav>
         </header>
-        <header class="phone-s">
-            <!-- Button in the start -->
-            <nav>
-                <a href="index.html">
-                    <div class="logo">
-                        OUR <div>CLASS.</div>
-                    </div>
-                </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <i class="bi bi-list color-nav"></i>
-              </button>
-              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                  
-                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body d-flex flex-column align-items-end">
-                    <div class="middle flex-column align-items-end p-0">
-                        <a href="/user/courses.html">الدروس</a>
-                        <a href="/user/conversation.html">المناقشات</a>
-                        <a href="/user/homeworks.html">الواجبات</a>
-                        <a href="/user/exams.html">الإختبارات</a>
-                    </div>
-                    <div class="login-side mt-3">
-                        <div class="login">
-                            <a href="/authentication/login.html">تسجيل الدخول</a>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </nav>
-        </header>
-    <section>
         <main>
             <div class="container" id="container">
                 <div class="form-container sign-up">
@@ -154,4 +130,5 @@
 <script src="/js/signUp.js" type="module"></script>
 <script src="/assets/lib/moment.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="/index.js"></script>
 </html>
