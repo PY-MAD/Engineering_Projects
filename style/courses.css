@@ -107,6 +107,16 @@ section{
     margin-top: 2rem;
     color: var(--secondary-color);
 }
+.search-bar{
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 6px 12px;
+    margin: auto;
+}
+input:focus{
+    border: 0;
+    box-shadow: 0 0 0 0 white !important;
+}
 @media screen and (max-width: 425px) {
     section{
         height: 100%;

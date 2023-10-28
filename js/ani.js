@@ -87,9 +87,7 @@ get(dbRef)
                         <div class="img-card">
                                 <img src="${src_photo}" alt="">
                         </div>
-                        <div class="card-title">
-                                ${name}
-                        </div>
+                        <div class="card-title">${name}</div>
                         <div class="card-pra">
                                 ${pra}
                         </div>
