@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 
 import { getDatabase, ref ,onValue, child, get, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-
+import {getAuth,onAuthStateChanged,signOut, } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 const firebaseConfig = {
     apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
     authDomain: "test-ab03a.firebaseapp.com",
@@ -14,15 +14,26 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app)
-
+const auth = getAuth();
 const dbRef = ref(database, '/episode/'); // Reference to the root of the database
 let btnAdd = document.querySelector("#add");
 let form = document.querySelector(".form-addEpisode")
 let background = document.querySelector(".background-black")
+
+auth.onAuthStateChanged((user)=>{
+    let userUid = user.uid
+    get(ref(database, `/users/${userUid}/admin`)).then((snap)=>{
+        let data = snap.val()
+        if(data){
+
+        }else{
+            btnAdd.remove()
+        }
+    })
+})
 btnAdd.addEventListener("click",()=>{
     form.classList.add("active-form")
     background.classList.add("active-form")
-
 })
 
 
