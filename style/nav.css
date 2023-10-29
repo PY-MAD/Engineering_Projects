@@ -131,13 +131,19 @@ nav{
 .middle{
     margin-right: 20%;
 }
-@media screen and (max-width: 425px) {
-    #laptop{
-        display: block !important;
+@media screen and (max-width: 1440px){
+    .middle{
+        margin: 0;
+        padding: 0
     }
-    .phone-s{
-        display: block;
+    .middle{
+        justify-content: space-around;
     }
+    .logo{
+        margin-right: 5rem;
+    }
+}
+@media screen and (max-width: 450px) {
     .navbar-toggler-icon{
         color: var(--primary-color) !important;
     }

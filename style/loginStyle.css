@@ -280,7 +280,7 @@ input[type=radio]{
 .hidden-content{
     display: none !important;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 450px) {
     .container{
         transform: scale(0.7);
         width: 1024px !important;

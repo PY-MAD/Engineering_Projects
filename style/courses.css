@@ -117,7 +117,26 @@ input:focus{
     border: 0;
     box-shadow: 0 0 0 0 white !important;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1280px){
+    section{
+        height: 100%;
+        margin-bottom: 3rem;
+    }
+    .container{
+        padding: 0 !important;
+    }
+    .card-container{
+        transform: scale(0.8);
+        width: max-content !important;
+        padding-left: 20%;
+    }
+    .card-content {
+        overflow: hidden;
+        height: 520px !important;
+        width: 380px !important;
+    }
+}
+@media screen and (max-width: 450px) {
     section{
         height: 100%;
         padding: 2rem 0;

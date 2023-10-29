@@ -365,7 +365,49 @@ background-color: white !important;
 .event-container{
     direction: rtl !important;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1440px){
+    #btn-addHomeWork {
+        position: relative;
+        top: -50px;
+        width: 13%;
+    }
+    #calendar{
+        overflow: visible;
+    }
+    #user-table{
+        transform: scale(1);
+    }
+    aside{
+        width: 90%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .profile-section, .container-sections {
+        width: 95% !important;
+        margin: 4rem 0 !important;
+        max-width: 100% !important;
+        flex-direction: column;
+        align-items: center;
+    } 
+    .name-data{
+        font-size: 18px !important;
+    }
+    .container-sections{
+        margin-top: 4rem !important;
+       
+    }
+    .content-title{
+        flex-direction: column;
+    }
+    #sectionAdd{
+        display: flex;
+        flex-direction: column;
+    }
+    .pra {
+        height: 460px !important;
+    }
+}
+@media screen and (max-width: 450px) {
     .profile-section, .container-sections {
         width: 100% !important;
         margin: 0 0;

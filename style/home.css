@@ -52,7 +52,10 @@ p{
 .drop-down-anmi{
     transition: 0.2s;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1280px){
+    
+}
+@media screen and (max-width: 450px) {
     section{
         max-width: max-content;
         flex-direction: column;

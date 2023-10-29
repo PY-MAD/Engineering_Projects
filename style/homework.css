@@ -246,7 +246,14 @@ form.form-container {
     padding: 4px 12px;
     border-radius: 8px;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1440px){
+    #btn-addHomeWork {
+        position: relative;
+        top: -50px;
+        width: 13%;
+    }
+}
+@media screen and (max-width: 450px) {
     section {
         width: 100%;
         margin: 0 0;

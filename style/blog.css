@@ -222,7 +222,25 @@ code{
 div#content {
     width: 100%;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 1440px){
+    .name-data{
+        font-size: 18px !important;
+    }
+    .container-sections{
+        margin-top: 4rem !important;
+    }
+    .content-title{
+        flex-direction: column;
+    }
+    #sectionAdd{
+        display: flex;
+        flex-direction: column;
+    }
+    .pra {
+        height: 460px !important;
+    }
+}
+@media screen and (max-width: 450px) {
     .profile-section, .container-sections {
         width: 100% !important;
         margin: 0 0;

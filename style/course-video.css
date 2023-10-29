@@ -85,7 +85,7 @@ iframe{
 .urls a:hover{
     filter: brightness(0.9);
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 450px) {
     section {
         width: 100%;
         margin: 0 0;

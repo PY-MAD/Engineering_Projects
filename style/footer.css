@@ -45,7 +45,7 @@ footer{
     direction: rtl;
     font-weight: 300;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 450px) {
     footer{
         flex-direction: column;
         justify-content: space-around;
