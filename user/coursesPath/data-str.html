@@ -25,7 +25,7 @@
         <!-- font awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>أساسيات جافا 1 | ourClass</title>
+    <title>تراكيب البيانات | ourClass</title>
 </head>
 <body id="body">
     <div class="" id="preloader"></div>
@@ -92,10 +92,21 @@
         <div class="video-side" id="video-side">
         </div>
         <div class="episode-side">
-                <ul id="episode-list">
+                <ul id="episode-list" class="data-str">
                 </ul>
         </div>
     </section>
+    <div class="addEpisode">
+        <button class="data-str" id="add">
+            <i class="bi bi-plus-circle"></i>
+        </button>
+        <div class="background-black"></div>
+        <div class="form-addEpisode w-25 p-5 flex-column rounded-2" id="data-str">
+            <input type="text" class="form-control mb-5 " id="send" placeholder="أرجاء وضع عنوان للمقطع">
+            <input type="text" class="form-control mb-5" id="url" placeholder="أرفق رابط الموقع">
+            <input type="button" id="send" class="btn btn-primary w-25 justify-content-center align-items-center m-auto text-center" value="إرسال">
+        </div>
+    </div>
     <footer>
         <div class="logo-footer">
             OUR <br/> CLASS.
@@ -120,9 +131,14 @@
             </div>
         </div>
     </footer>
+    <!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 <script src="/js/home.js" type="module"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="/js/ani.js" type="module"></script>
 <script src="/js/episode.js" type="module"></script>
+<script src="/js/episode/addEpside.js" type="module"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
 </html>

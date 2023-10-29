@@ -85,6 +85,37 @@ iframe{
 .urls a:hover{
     filter: brightness(0.9);
 }
+.addEpisode button{
+    font-size: 50px;
+    position: fixed;
+    right: 50px;
+    bottom: 350px;
+    color: var(--secondary-color);
+}
+.form-addEpisode{
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 999;
+    direction: rtl;
+    display: none;
+}
+.background-black{
+    background-color: rgba(0, 0, 0, 0.57);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    display: none;
+
+}
+.active-form{
+    display: flex;
+}
 @media screen and (max-width: 450px) {
     section {
         width: 100%;

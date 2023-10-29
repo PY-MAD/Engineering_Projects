@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
 
-import { getDatabase, ref ,onValue, child, get, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getDatabase, ref ,onValue, child, get, set,onChildAdded } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
@@ -24,9 +24,9 @@ get(dbRef).then((snapshot) => {
     function createEpisode(name, uid){
             
             let episode = `
-            <li class="${uid}">
+            <li id="${uid}">
                ${name}
-        </li>
+            </li>
                   
             `
 
@@ -46,55 +46,33 @@ get(dbRef).then((snapshot) => {
       `
       return tempVideo.innerHTML = change;
     }
-    
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      for (const key in data) {
+    let subjectsCode = tempEpisodes.classList
+    onChildAdded(ref(database, `/episode/${subjectsCode}`),(snap)=>{
+      let data = snap.val()
+      createEpisode(data.title, data.title)
+    })
+      
+    setTimeout(() => {
+      let checklist = document.querySelectorAll("#episode-list li")
+      console.log(checklist)
+      get(ref(database, `/episode/${subjectsCode}`)).then((snap)=>{
+        let data = snap.val()
         
-        if (Object.prototype.hasOwnProperty.call(data, key)) {
-          const childData = data[key];
-          createEpisode(childData.name,childData.uid)
-          let listItems = document.querySelectorAll("ul li");
-          listItems.forEach(function(item) {
-            item.onclick = function(e) {
-              // continue here
-              for(let key in data){
-              let liChecked = this.innerText;
-              let videoData = data[key];
-              
-              if(liChecked == videoData.name){
-                console.log(videoData.name)
-
-                changeVideo(videoData.name , videoData.src_video , videoData.url)
+        checklist.forEach((item)=>{
+          item.addEventListener("click",()=>{
+              let videoName = item.id;
+              console.log(videoName)
+              for(let i in data){
+                if(data[i].title == videoName){
+                  console.log("hi")
+                  changeVideo(data[i].title, data[i].embed, data[i].url)
+                }
               }
-            }
-            }
-          });
-
-        }
-      }
-    } else {
-      console.log('No data available.');
-    }
-
- 
-
-
+          
+            })
+        })
+      })
+    }, 600);
   }).catch((error) => {
     console.error('Error fetching data:', error);
   });
-
-function newEpisode(name,uid, src_video,url){
-    set(ref(database,"episode/"+uid),{
-            name:name,
-            uid:uid,
-            src_video: src_video,
-            url: url
-    })
-    alert("added done !")
-}
-
-
-
-// newEpisode("أساسيات جافا 1 : المصفوفات | arrays","arrays", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/ido9UlVCsVQ" title="طلال مداح | انتهينا .. وجفت الدمعة الحزينة ( خلصت القصة ) ! HQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
-// newEpisode("أساسيات جافا 1 : أنواع البيانات | data type","data-type", `<iframe width="1257" height="707" src="https://www.youtube.com/embed/WQ7mvQFSmYc" title="Primitives Data Types In Java - All the Primitives And What They Do" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`, "#")
