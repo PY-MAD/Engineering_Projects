@@ -164,15 +164,23 @@ auth.onAuthStateChanged((user)=>{
                                         all.classList.remove("active-chat");
                                     }
                                 });
-                                onChildAdded(ref(database, `/chat/${currentId}`), (data) => {
-                                    let chatData = data.val();
-                                    console.log(chatData)
-                                    if (chatData.name == name) {
-                                        createMsg(chatData.msg, chatData.name);
-                                    } else {
-                                        restiveMsg(chatData.msg, chatData.name);
-                                    }
-                                }); 
+                                const scrollChatToBottom = () => {
+                                    chatHandler.scrollTop = chatHandler.scrollHeight;
+                                };
+                                    setTimeout(() => {
+                                        onChildAdded(ref(database, `/chat/${currentId}`), (data) => {
+                                            let chatData = data.val();
+                                            console.log(chatData)
+                                            if (chatData.name == name) {
+                                                createMsg(chatData.msg, chatData.name);
+                                            } else {
+                                                restiveMsg(chatData.msg, chatData.name);
+                                                
+                                            }
+                                            scrollChatToBottom()
+        
+                                        }); 
+                                    }, 2000);
                             
                             
                             });
@@ -191,7 +199,12 @@ auth.onAuthStateChanged((user)=>{
                                         if (currentId) {
                                             createChannel(text, name, currentId);
                                         }
+                                        
                                         document.getElementById("text").value = "";
+                                        setTimeout(() => {
+                                                
+                                        }, 2000);
+                                        
                                     });
                                     
                                     document.addEventListener("keydown", (e) => {
@@ -200,7 +213,11 @@ auth.onAuthStateChanged((user)=>{
                                             if (currentId) {
                                                 createChannel(text, name, currentId);
                                             }
+                                            
                                             document.getElementById("text").value = "";
+                                            setTimeout(() => {
+                                                
+                                            }, 2000);
                                         }
                                     });
 
