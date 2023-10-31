@@ -63,7 +63,6 @@ auth.onAuthStateChanged((user) => {
   let top = document.querySelector(".top");
   let titleHandling = document.querySelector(".top #title");
   let sendsButton = document.querySelector(".btn-submit");
-  let reset = document.getElementById("reset-homeWork");
   let gradeHandling = document.querySelector(".grade");
   let grade = 0;
   let body = document.getElementById("body");
@@ -110,7 +109,7 @@ auth.onAuthStateChanged((user) => {
         option: { A: A, B: B, C: C, D: D },
         correctAnswer: correctAnswer,
       });
-      console.log("push is done!!!");
+
     }
   }
   function AddQuestion(nameOfQuestion,uid,titleQ,correctAnswer,A,B,C,D) {
@@ -124,7 +123,7 @@ auth.onAuthStateChanged((user) => {
         });
       })
 
-      console.log("push is done!!!");
+
     }
   }
 
@@ -208,13 +207,18 @@ auth.onAuthStateChanged((user) => {
     return (titleHandling.innerHTML = nameHomeWork);
   }
   function saveGrade(uidUser , nameOfhomeWork , grade , totalGrade , answers, date, hour) {
-    update(ref(database, `users/${uidUser}/quiz/${nameOfhomeWork}`), {
+    set(ref(database, `users/${uidUser}/quiz/${nameOfhomeWork}`), {
       nameHomeWork: nameOfhomeWork,
       grade: grade,
       totalGrade: totalGrade,
       Answers:answers,
       date:date,
       hour:hour
+    }).then(() => {
+      alert("Done");
+    })
+    .catch((error) => {
+      alert("Error writing data to Firebase:", error);
     });
   }
   function AddNewHomeWork() {
@@ -292,7 +296,7 @@ auth.onAuthStateChanged((user) => {
     return id.innerHTML+=q;
   }
 
-  function startCountdown(minutes, second) {
+    function startCountdown(minutes, second) {
     const endTime = moment().add(minutes, 'minutes').add(second, 'seconds');
     const countdownElement = document.getElementById('clock');
 
@@ -306,6 +310,7 @@ auth.onAuthStateChanged((user) => {
 
       if (minutes === 0 && seconds === 0) {
         countdownElement.textContent = 'Timer expired!';
+        send.style.display ="none"
       }
     }
 
@@ -333,11 +338,11 @@ auth.onAuthStateChanged((user) => {
     .catch((error) => {
       console.error("Error getting data:", error);
     });
-  fetchingData();
+  
 
 
   setTimeout(() => {
-    fetchingDataDone();
+    
 
     get(dbRef).then((snap) => {
       let data = snap.val();
@@ -404,7 +409,6 @@ auth.onAuthStateChanged((user) => {
               }else{
                   AddQuestion(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd)
               }
-              console.log(nameOfHomework,id,nameQ,coreectAnswer,qa,qb,qc,qd);
             }
             CloseNewHomeWork();
           });
@@ -433,7 +437,6 @@ auth.onAuthStateChanged((user) => {
             all.classList.remove("activeList");
           }
         });
-        fetchingData()
         get(ref(database, `/quiz/${idSubjects}`))
           .then((snapshot) => {
             let snap = snapshot.val();
@@ -464,17 +467,19 @@ auth.onAuthStateChanged((user) => {
                     get(ref(database, `/users/${uidUser}/quiz/${nameOfhomeWork}`)).then(
                       (snap) => {
                         let data = snap.val();
-                        console.log(data)
+                      
                         if(data != null)
                         if (data.grade != null) {
                           setGrade(data.grade, data.totalGrade);
                           setTimeout(() => {
-                            for(let i in data.Answers){
-                              document.querySelector(`#${data.Answers[i]}`).checked = true;
-                              
+                            if(data.Answers[0] !== ""){
+                              for(let i in data.Answers){
+                                  document.querySelector(`#${data.Answers[i]}`).checked = true;
+                                  
+                                }
+                                  send.style.display = "none"
+                                  clock.style.display="none"
                             }
-                            send.style.display = "none"
-                            clock.style.display="none"
                           }, 700);
 
                         }
@@ -501,7 +506,6 @@ auth.onAuthStateChanged((user) => {
                           get(ref(database,`/quiz/${idSubjects}/${nameOfhomeWork}/${titleQ}`)).then((snapshot) => {
                             let snap = snapshot.val();
                             let q = snap.titleQ;
-                            console.log(snap)
                             nameOfQuestions.push(q);
                             let correctAnswer = snap.correctAnswer;
                             let A = null;
@@ -532,12 +536,12 @@ auth.onAuthStateChanged((user) => {
                       }
                     });
                   });
-                  fetchingDataDone()
+                  
                 }, 2000);
             });
-            fetchingData();
+            
             setTimeout(() => {
-              fetchingDataDone();
+              
               send.addEventListener("click", () => {
                 let allRadio = document.querySelectorAll("input");
                 let ArrayOfQ = [];
@@ -564,7 +568,6 @@ auth.onAuthStateChanged((user) => {
                     }
                   }
                   let totalGrade = q.length;
-                  console.log(q)
                   for (let i = 0; i < q.length; i++) {
                     let nameq = q[i];
                     let nameOfQ = nameOfQuestions[i];
@@ -574,12 +577,12 @@ auth.onAuthStateChanged((user) => {
                       }
                     }
                   }
-                  let date = m.date()+1;
+                  let date = moment();
+                  let tomorrow = date.format("YYYY-MM-DD")
                   let hour = m.hour();
-                  console.log(date, hour)
                   setGrade(grade, totalGrade);
                   setNameOfHomework(nameOfhomeWork);
-                  saveGrade(uidUser , nameOfhomeWork, grade, totalGrade , ArrayOfChooseId, date, hour)
+                  saveGrade(uidUser , nameOfhomeWork, grade, totalGrade , ArrayOfChooseId, tomorrow, hour)
                   send.style.display="none"
                   clock.style.display="none"
                 });
