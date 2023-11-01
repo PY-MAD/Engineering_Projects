@@ -267,6 +267,6 @@ div#content {
         flex-direction: column;
     }
     .pra {
-        height: 200px !important;
+        max-height: 200px !important;
     }
 }
