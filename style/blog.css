@@ -237,7 +237,7 @@ div#content {
         flex-direction: column;
     }
     .pra {
-        height: 460px !important;
+        height: 400px !important;
     }
 }
 @media screen and (max-width: 450px) {
