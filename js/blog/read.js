@@ -59,8 +59,6 @@ get(ref(database, "/blog/")).then((snap)=>{
                             }
                             pra.innerHTML+=" "+split[i]
                         }
-                        let code = document.querySelector("#sectionContent .pra code")
-                        code.textContent += textNotHtml;
                     })
                 })
             })
