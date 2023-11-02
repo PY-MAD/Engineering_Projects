@@ -16,42 +16,35 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 let liCheck = document.querySelectorAll("aside div")
-get(ref(database, "/blog/")).then((snap)=>{
-        let name = "جافا 1";
-        let id = "java-1"
-        let section = document.querySelectorAll(`#section${id} .card-continer`);
-        let title = document.querySelector("#title")
-        let pra = document.querySelector("#pra")
-        liCheck.forEach((item)=>{
-            item.addEventListener("click", ()=>{
+let name = "جافا 1";
+let id = "java-1"
+let section = document.querySelectorAll(`#section${id} .card-continer`);
+let title = document.querySelector("#title")
+let pra = document.querySelector("#pra")
+liCheck.forEach((item)=>{
+    item.addEventListener("click", ()=>{
                 id = item.id
                 name = item.textContent;
                 item.classList.remove("unactive-Section")
                 document.querySelector("#sectionContent").classList.add("unactive-Section")
-                setInterval(()=>{
-                    section = document.querySelectorAll(`#section${id} .card-continer`)
-                    section.forEach((item)=>{
-                        item.addEventListener("click",()=>{
-                            let idCard = item.id;
-                            console.log(idCard)
-                            get(ref(database,`/blog/${name}/${idCard}`)).then((snap)=>{
-                                let data = snap.val();
-                                let titleDb = data.title;
-                                let praDb = data.pra
-                                let section = document.querySelector("#sectionContent")
-                                section.classList.remove("unactive-Section")
-                                document.querySelector(`#section${id}`).classList.add("unactive-Section")
-                                title.innerHTML = titleDb
-                                pra.innerHTML = praDb
-                            })
-            
-                        })
-                    })
-                },100)
+    })
+})
+setInterval(() => {
+    section = document.querySelectorAll(`#section${id} .card-continer`)
+    section.forEach((item)=>{
+        item.addEventListener("click",()=>{
+            let idCard = item.id;
+            get(ref(database,`/blog/${name}/${idCard}`)).then((snap)=>{
+                    let data = snap.val();
+                    let titleDb = data.title;
+                    let praDb = data.pra
+                    let section = document.querySelector("#sectionContent")
+                    section.classList.remove("unactive-Section")
+                    document.querySelector(`#section${id}`).classList.add("unactive-Section")
+                    title.innerHTML = titleDb
+                    pra.innerHTML = praDb
+                })
+
             })
         })
-        
-
-        
-    
-})
+}, 100);
