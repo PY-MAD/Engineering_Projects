@@ -19,7 +19,7 @@ const database = getDatabase(app)
 const auth = getAuth();
 
 auth.onAuthStateChanged((user)=>{
-    if(user.uid == "eerdwp4wdQTB5QmVycv05Iqhyoe2"){
+    if(user.uid == "8lI7rJ9056gjYDLsHAqE48EC2s73"){
         get(ref(database, "/users/")).then((users)=>{
             let userTable = document.getElementById("table-admin")
             const data = users.val()

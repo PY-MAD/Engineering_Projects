@@ -365,6 +365,9 @@ background-color: white !important;
 .event-container{
     direction: rtl !important;
 }
+#sectionroad-map{
+    direction: rtl;
+}
 @media screen and (max-width: 1440px){
     #btn-addHomeWork {
         position: relative;
