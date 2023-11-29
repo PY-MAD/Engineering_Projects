@@ -112,6 +112,7 @@ while i <= total:
         table = driver.find_element(By.TAG_NAME, "tbody")
         rows = table.find_elements(By.TAG_NAME, "tr")
         # Create a dictionary for each course
+        time.sleep(4)
         for row in rows:
             course_data = {}
             course_data["title"] = row.find_element(By.XPATH, ".//td[@xe-field='courseTitle']").text

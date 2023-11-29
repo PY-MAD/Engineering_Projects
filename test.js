@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { readFile } from 'fs/promises'; // Use 'fs/promises' for asynchronous file operations
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAPs6u-21i0E9mxGXWhdlFiCKpkuhrPpBc",
@@ -15,31 +14,32 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-async function readAndWriteData() {
-  try {
-    const data = await readFile('./course_data.json', 'utf8');
-    const jsonData = JSON.parse(data);
 
-    for (const item of jsonData) {
-      const title = item.title.replace("\nنظري - محاضرة", " ");
-      const source_code = item.source_code;
-      const code = item.code;
-      const teacher = item.teacher;
-      const free = item.free;
-
-      await set(ref(database, `/schedule/${source_code}`), {
-        title: title,
-        source_code: source_code,
-        code: code,
-        teacher: teacher,
-        free: free,
-      });
+get(ref(database,"/schedule/")).then((snap)=>{
+  let ul = document.querySelector("table")
+  function addList(title , code , source_code , date ,free, teacher){
+    let q = `
+        <td>${title}</td>
+        <td>${code}</td>
+        <td>${source_code}</td>
+        <td>${date}</td>
+        <td>${free}</td>
+        <td>${teacher}</td>
+    `
+    return ul.innerHTML += q;
+  }
+  let data = snap.val();
+  let newData = ["مشروع تخرج "]
+  for(let i in data){
+    let title = data[i].title 
+    let newTitle = title.replace("\nنظري - محاضرة"," ");
+    for(let j = 0; j<newData.length; j++){
+      if(newTitle == newData[j]){
+        console.log(newTitle,"\n",data[i].source_code)
+        addList(newTitle, data[i].code , data[i].source_code, data[i].date, data[i].free , data[i].teacher)
+      }
     }
 
-    console.log("done !!!");
-  } catch (err) {
-    console.error('Error reading or writing data:', err);
-  }
-}
 
-readAndWriteData();
+  }
+})
