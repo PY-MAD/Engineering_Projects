@@ -174,6 +174,29 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         })
                                     }
                                 })
+                                get(ref(database, `users/${uid}/nextSemester`)).then((snap)=>{
+                                    let data = snap.val();
+                                    for(let i in data){
+                                        lv.forEach((item)=>{
+                                            if(data[i] == item.id){
+                                                item.classList.remove("active_orange")
+                                                item.classList.add("active_red")
+                                                let child = item.children
+                                                let sub = child[0].textContent
+                                                let code = child[1].textContent
+                                                let hour = child[2].textContent
+                                                let totalHour = document.getElementById("total-hours-update");
+                                                let fixHour = fixNumbers(hour)
+                                                if((Number(totalHour.textContent) + Number(fixHour)) <= 16){
+                                                        item.classList.remove("active_orange")
+                                                        item.classList.add("active_red")
+                                                        addCureentSub(sub,code,hour,"current_level")
+                                                        totalHour.innerHTML = Number(totalHour.textContent) + Number(fixHour);
+                                                }
+                                            }
+                                        })
+                                    }
+                                })
                             })
                             let lv = document.querySelectorAll(`.level div`)
                             lv.forEach((item)=>{
@@ -191,6 +214,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                     for(let i in data){
                                                         if(data[i] == id){
                                                             remove(ref(database, `users/${uid}/SubjectsDone/${i}`));
+                                                            remove(ref(database, `users/${uid}/nextSemester/${i}`));
                                                         }
                                                     }
                                                 })
@@ -212,6 +236,14 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             auth.onAuthStateChanged((user)=>{
                                                 let uid = user.uid
                                                 push(ref(database, `users/${uid}/SubjectsDone`),id);
+                                                get(ref(database, `users/${uid}/nextSemester`)).then((snap)=>{
+                                                    let data = snap.val();
+                                                    for(let i in data){
+                                                        if(data[i] == id){
+                                                            remove(ref(database, `users/${uid}/nextSemester/${i}`));
+                                                        }
+                                                    }
+                                                })
                                             })
                                         }
                                         else if(item.classList.contains("active_orange")){
@@ -226,6 +258,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                     item.classList.add("active_red")
                                                     addCureentSub(sub,code,hour,"current_level")
                                                     totalHour.innerHTML = Number(totalHour.textContent) + Number(fixHour);
+                                                    push(ref(database, `users/${uid}/nextSemester`),code)
                                             }else{
                                                 const Toast = Swal.mixin({
                                                     toast: true,
@@ -234,14 +267,14 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                     timer: 3000,
                                                     timerProgressBar: true,
                                                     didOpen: (toast) => {
-                                                      toast.onmouseenter = Swal.stopTimer;
-                                                      toast.onmouseleave = Swal.resumeTimer;
+                                                        toast.onmouseenter = Swal.stopTimer;
+                                                        toast.onmouseleave = Swal.resumeTimer;
                                                     }
-                                                  });
-                                                  Toast.fire({
+                                                });
+                                                Toast.fire({
                                                     icon: "error",
                                                     title: "الساعات تعدت الحد المسموح ولا يمكن إضافة هذي المادة"
-                                                  });
+                                                });
                                             }
     
                                         }
@@ -348,6 +381,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                 for(let i in data){
                                                     if(data[i] == id){
                                                         remove(ref(database, `users/${uid}/SubjectsDone/${i}`));
+                                                        remove(ref(database, `users/${uid}/nextSemester/${i}`));
                                                     }
                                                 }
                                             })
@@ -357,8 +391,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         item.classList.remove("active_red")
                                         item.classList.add("active_green")
                                         let child = item.children
-                                        let sub = child[0].textContent
-                                        let code = child[1].textContent
                                         let hour = child[2].textContent
                                         let id = item.id;
                                         let childNode = document.querySelector(`#current_level #current_${id}`)
@@ -369,6 +401,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         auth.onAuthStateChanged((user)=>{
                                             let uid = user.uid
                                             push(ref(database, `users/${uid}/SubjectsDone`),id);
+                                            remove(ref(database, `users/${uid}/nextSemester/${i}`));
                                         })
                                     }
                                     else if(item.classList.contains("active_orange")){
@@ -383,6 +416,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                 item.classList.add("active_red")
                                                 addCureentSub(sub,code,hour,"current_level")
                                                 totalHour.innerHTML = Number(totalHour.textContent) + Number(fixHour);
+                                                push(ref(database, `users/${uid}/nextSemester`),id);
                                         }else{
                                             const Toast = Swal.mixin({
                                                 toast: true,
@@ -391,14 +425,14 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                 timer: 3000,
                                                 timerProgressBar: true,
                                                 didOpen: (toast) => {
-                                                  toast.onmouseenter = Swal.stopTimer;
-                                                  toast.onmouseleave = Swal.resumeTimer;
+                                                    toast.onmouseenter = Swal.stopTimer;
+                                                    toast.onmouseleave = Swal.resumeTimer;
                                                 }
-                                              });
-                                              Toast.fire({
+                                            });
+                                            Toast.fire({
                                                 icon: "error",
                                                 title: "الساعات تعدت الحد المسموح ولا يمكن إضافة هذي المادة"
-                                              });
+                                            });
                                         }
 
                                     }
