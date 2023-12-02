@@ -81,6 +81,7 @@ function blurBackground() {
           return(gender[i].value);
       }
     }
+    let getStartCode = document.getElementById("startCode").value
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed up 
@@ -95,6 +96,7 @@ function blurBackground() {
                     signUpDate : signUpDate,
                     major: major,
                     score: 0,
+                    startCode:getStartCode
                 });
                 Swal.fire("تم تسجيل حسابك بنجاح","تقدر الان تسوي تسجيل دخول","success")
                 // ...

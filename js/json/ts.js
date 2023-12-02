@@ -393,7 +393,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         let child = item.children
                                         let hour = child[2].textContent
                                         let id = item.id;
-                                        let childNode = document.querySelector(`#current_level #current_${id}`)
+                                        let childNode = document.getElementById(`current_${id}`)
                                         let totalHour = document.getElementById("total-hours-update");
                                         let fixHour = fixNumbers(hour)
                                         totalHour.innerHTML = Number(totalHour.textContent) - Number(fixHour)
@@ -409,6 +409,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         let sub = child[0].textContent
                                         let code = child[1].textContent
                                         let hour = child[2].textContent
+                                        let id = item.id
                                         let totalHour = document.getElementById("total-hours-update");
                                         let fixHour = fixNumbers(hour)
                                         if((Number(totalHour.textContent) + Number(fixHour)) <= 16){
@@ -416,7 +417,10 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                 item.classList.add("active_red")
                                                 addCureentSub(sub,code,hour,"current_level")
                                                 totalHour.innerHTML = Number(totalHour.textContent) + Number(fixHour);
-                                                push(ref(database, `users/${uid}/nextSemester`),id);
+                                                auth.onAuthStateChanged((user)=>{
+                                                     let uid = user.uid;
+                                                     push(ref(database, `users/${uid}/nextSemester`),id);
+                                                })
                                         }else{
                                             const Toast = Swal.mixin({
                                                 toast: true,
