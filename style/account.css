@@ -6,6 +6,10 @@
     --border-radius-secondary-big-card: 40px;
     --border-radius-btn-reg: 13px;
     --start-prograss : 0;
+    --color-dark: #37474F;
+    --color-red : #A02724;
+    --color-green: #90BE6D;
+    --color-orange: #F3722C;
 }
 section{
     margin: 0 auto;
@@ -367,6 +371,176 @@ background-color: white !important;
 }
 #sectionroad-map{
     direction: rtl;
+}
+.level_box{
+    background-color: var(--primary-color);
+    height: 200px;
+    width : 200px;
+    border-radius: 12px;
+    font-size: 36px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+.level_box::before{
+    content: "";
+    background-color: var(--secondary-color) !important;
+    height: 200px;
+    width : 200px;
+    font-size: 36px;
+    color: white;
+    display: flex;
+    z-index: -500;
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-end-start-radius: 12px;
+    border-start-start-radius: 12px;
+}
+.subjects_box_end{
+    height: 200px;
+    width : 200px;
+    border-end-end-radius: 12px;
+    border-start-end-radius: 12px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.subjects_box{
+    height: 200px;
+    width : 200px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+    cursor: pointer;
+}
+.subjects_box span , .subjects_box_end span{
+    margin-bottom: 1rem;
+    font-size: 20px;
+    text-align: center;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.active_green{
+    background-color: #90BE6D;
+    transition: 0.3s;
+}
+.box_level_active_green{
+    background-color: var(--primary-color);
+    transition: 0.3s;
+}
+.box_level_active_green::before{
+    content: "";
+    background-color: var(--color-green) !important;
+    transition: 0.3s;
+}
+.active_red{
+    background-color: #A02724;
+    transition: 0.3s;
+}
+.box_level_active_red{
+    background-color: var(--primary-color);
+    transition: 0.3s;
+}
+.box_level_active_red::before{
+    content: "";
+    background-color: var(--color-red) !important;
+    transition: 0.3s;
+}
+.active_orange{
+    background-color: #F3722C;
+    transition: 0.3s;
+}
+.box_level_active_orange{
+    background-color: var(--primary-color);
+    transition: 0.3s;
+}
+.box_level_active_orange::before{
+    content: "";
+    background-color: var(--color-orange) !important;
+    transition: 0.3s;
+}
+.active_black{
+    background-color: #37474F;
+    transition: 0.3s;
+}
+.box_level_active_black{
+    background-color: var(--primary-color);
+    transition: 0.3s;
+}
+.box_level_active_black::before{
+    content: "";
+    background-color: var(--color-black) !important;
+    transition: 0.3s;
+}
+.box-color{
+    width: 50px;
+    height: 50px;
+    margin-left: 1rem;
+}
+.name-box{
+    color: var(--color-dark);
+}
+.level {
+    flex-wrap: wrap;
+}
+.level_box{
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.pd-top{
+    padding-top: 2rem;
+}
+.pd-bottom{
+    padding-bottom: 0.25rem;
+}
+div#sectionroad-map {
+    height: 870px;
+    overflow: auto;
+}
+.container-levels-current{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    height: 500px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.103);
+}
+.total-hour{
+    font-size: 30px;
+    font-weight: 700;
+    background-color: var(--color-orange);
+    width: fit-content;
+    padding: 0 20px;
+    border-radius: 10px;
+    color: white;
+}
+.choose-plane option{
+    color: black;
+}
+.title-section{
+    color: var(--color-dark);
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
 }
 @media screen and (max-width: 1440px){
     #btn-addHomeWork {

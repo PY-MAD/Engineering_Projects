@@ -103,7 +103,7 @@
             <div id="admin" class="name-data"><i class="fa-solid fa-user-gear"></i>المشرفين</div>
         </aside>
         <div class="container-sections">
-            <div class="container-section" id="sectionuser-data">
+            <div class="container-section  unactive-Section" id="sectionuser-data">
                 <div class="container-card">
                     <div class="data-card">
                         <div class="img">
@@ -234,12 +234,58 @@
                 </div>
                 <div id="calendar"></div>
             </div>
-            <!-- planner -->
-            <div class="container-section flex-column unactive-Section" id="sectionroad-map">
-                <div class="choose-plane">
-                    <select name="" id="" class=" form-select w-50">
-                        <option value=""></option>
-                    </select>
+            <!-- road map -->
+            <div class="container-section flex-column" style="justify-content: flex-start; background-color: transparent;"  id="sectionroad-map">
+                <div class="container-section flex-column h-100 position-static"  style="justify-content: flex-start; direction:rtl">
+                    <div class="choose-plane">
+                        <select name="" id="getMajor" class="form-select w-25">
+                            <option disabled hidden selected>إختر تخصصك</option>
+                            <option disabled>علوم الحاسب</option>
+                            <option value="CS_443">443 - CS</option>
+                            <option value="CS_444">444 - CS</option>
+                            <option value="CS_444">445 - CS</option>
+                            <option disabled>نظم المعلومات</option>
+                            <option value="IS_443">443 - IS</option>
+                            <option value="IS_444">444 - IS</option>
+                            <option value="IS_444">445 - IS</option>
+                            <option disabled>تقنية المعلومات</option>
+                            <option value="IT_443">443 - IT</option>
+                            <option value="IT_444">444 - IT</option>
+                            <option value="IT_444">445 - IT</option>
+    
+                        </select>
+                    </div>
+                    <div class="defined mt-4 mb-5">
+                        <div class="box d-flex align-items-center mb-1">
+                            <div class="box-color active_black"></div>
+                            <div class="name-box">المادة لديها مطلب لم يجتاز</div>
+                        </div>
+                        <div class="box d-flex align-items-center mb-1">
+                            <div class="box-color active_orange"></div>
+                            <div class="name-box">المادة متاحة</div>
+                        </div>
+                        <div class="box d-flex align-items-center mb-1">
+                            <div class="box-color active_red"></div>
+                            <div class="name-box">مادة الترم القادم</div>
+                        </div>
+                        <div class="box d-flex align-items-center mt-1">
+                            <div class="box-color active_green"></div>
+                            <div class="name-box">تجاوزت المادة</div>
+                        </div>
+                    </div>
+                    <div class="container-levels">
+                    </div>
+                </div>
+                <div class="container-section flex-column current-level h-50 position-static mt-5" style="justify-content: flex-start; direction:rtl">
+                    <div class="title-section">قم بتحضير جدولك الترم القادم</div>
+                    <div class="total-hour mt-5 mb-2" id="total-hours">
+                        <span>مجموع الساعات : </span>
+                        <span id="total-hours-update">0</span>
+                    </div>
+                    <div class="level d-flex align-items-center mb-5" id="current_level">
+                        <div class="level_box ml-2">المستوى القادم</div>
+                        
+                    </div>
                 </div>
             </div>
             <!-- leaderboard -->
@@ -299,6 +345,10 @@
                     </tr>
                 </table>
             </div>
+
+
+
+
     </section>
     <footer id="footer">
         <div class="logo-footer">
@@ -328,6 +378,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Add the evo-calendar.js for.. obviously, functionality! -->
 <script src="/assets/lib/evo-calendar/js/evo-calendar.min.js"></script>
@@ -339,5 +390,6 @@
 <script src="/js/userData/users.js" type="module"></script>
 <script src="/js/userData/admins.js" type="module"></script>
 <script src="/js/userData/calander.js" type="module"></script>
+<script src="/js/json/ts.js" type="module"></script>
 <script src="/assets/lib/moment.js"></script>
 </html>

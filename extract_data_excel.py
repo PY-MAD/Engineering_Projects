@@ -1,8 +1,11 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import json
-# readPdf = pd.read_excel("test.xlsx")
-# readPdf.to_html("hi.html")
+
+readPdf = pd.read_excel("خطة تقنية المعلومات 1445هـ.xlsx")
+readPdf.to_html("hi.html")
+
+
 
 # Open the HTML file
 with open('hi.html', 'r', encoding='utf-8') as file:
@@ -13,10 +16,11 @@ with open('hi.html', 'r', encoding='utf-8') as file:
     soup = BeautifulSoup(html_content, 'html.parser')
 
     # Initialize a list to store the extracted data
-    ignore = ["NaN", "الوحدات", "اسم المقرر", "رمز المقرر"]
+    ignore = ["NaN", "الوحدات", "اسم المقرر", "رمز المقرر", "الساعات", "م"]
     hour = []
     code = []
     subjects = []
+    subWant = ["النحو","التوحيد","ندوة","تعلم الة","العقيدة","الفقه", "انجلزي 1","انجلزي 2"]
     # Find all <tr> elements
     for row in soup.find_all('tr'):
         # Extract data from each <td> element within the <tr>
@@ -24,11 +28,16 @@ with open('hi.html', 'r', encoding='utf-8') as file:
             # Check if the row contains valid data and has at least 6 columns
             if columns.string not in ignore:
                 if columns.string.isnumeric():
+                    print(columns.string)
                     if(int(columns.string)):
                         hour.append(columns.string)
-                elif columns.string == "ندوة":
+                elif len(columns.string) == 3:
+                    convert = float(columns.string)
+                    convertInt = int(convert)
+                    hour.append(columns.string)
+                elif columns.string in subWant:
                     subjects.append(columns.string)
-                elif len(columns.string) <=8 and not columns.string.isnumeric() :
+                elif len(columns.string) <=8 and not columns.string.isnumeric() and len(columns.string) > 3:
                     code.append(columns.string)
                 else:
                     subjects.append(columns.string)
@@ -46,7 +55,8 @@ for i in subjects:
 print(len(hour))
 print(len(code))
 print(len(newSub))
-print(subjects[5])
+for i in code:
+    print(i)
 for i in newSub:
         j = newSub.index(i)
         data_dict = {
@@ -57,20 +67,18 @@ for i in newSub:
         data_list.append(data_dict)
 # Print the extracted data (for debugging purposes)
 # print("Extracted Data:", data_list)
-# Convert data_list to JSON
+
+json_level = json.dumps(level,ensure_ascii=False, indent=4)
 json_data = json.dumps(data_list, ensure_ascii=False, indent=4)
+level_dict = {}
+print(json_data)
 
+# # Convert the dictionary to a JSON file
+# ss = json.dump(level_dict, json_file, ensure_ascii=False, indent=2)
+# print(ss)
+# with open('output.json', 'w', encoding='utf-8') as json_file:
 # Write JSON data to a file
-with open('sss.json', 'w', encoding='utf-8') as json_file:
+with open('IT444.json', 'w', encoding='utf-8') as json_file:
     json_file.write(json_data)
-    
-with open('sss.json', 'r', encoding='utf-8') as json_file:
-    data = json.load(json_file)
-levels = [5, 4, 4, 4, 4, 3, 4, 3, 2, 2, 2, 2]
-index = 0
 
-for count in levels:
-    for _ in range(count):
-        print(data[_])
-    print("################")
-    index += 1
+#_________________________________________________________________________
