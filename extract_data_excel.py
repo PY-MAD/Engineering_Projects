@@ -2,7 +2,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import json
 
-readPdf = pd.read_excel("خطة تقنية المعلومات 1445هـ.xlsx")
+readPdf = pd.read_excel("خطة تقنية المعلومات-1445-المتطلبات.xlsx")
 readPdf.to_html("hi.html")
 
 
@@ -14,7 +14,7 @@ with open('hi.html', 'r', encoding='utf-8') as file:
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(html_content, 'html.parser')
-
+    print(soup)
     # Initialize a list to store the extracted data
     ignore = ["NaN", "الوحدات", "اسم المقرر", "رمز المقرر", "الساعات", "م"]
     hour = []
