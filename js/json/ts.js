@@ -45,7 +45,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
     }
     function addLevelCont(e, h){
         let q = `
-            <div class="level_box ml-2">المستوى ${e}</div>
+            <div class="level_box ml-2 ${h}">المستوى ${e}</div>
             `
         return document.getElementById(h).innerHTML += q;
     }
@@ -157,9 +157,65 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         let q = lv.length - 1
                                         lv[q].classList.add("subjects_box_end")
                                         lv[q].classList.add("active_orange")
-                                        lv[q].classList.remove("subjects_box")
                                 }
                             }
+                            let lvLevel = document.querySelectorAll(`.level .level_box`);
+                            lvLevel.forEach((item)=>{
+                                item.addEventListener("click",()=>{
+                                    let classLists = item.classList;
+                                    let len = classLists.length;
+                                    let id = classLists[len-1]
+                                    let subjects = document.querySelectorAll(`#${id} .subjects_box`)
+                                    let orange = [];
+                                    let green = []
+                                    subjects.forEach((item)=>{
+                                        if(item.classList.contains("active_orange")){
+                                            orange.push(item.id);
+                                        }else if(item.classList.contains("active_green")){
+                                            green.push(item.id);
+                                        }
+                                    })
+                                    if(subjects.length == green.length){
+                                        subjects.forEach((item)=>{
+                                            item.classList.remove("active_green")
+                                            item.classList.add("active_orange")
+                                            auth.onAuthStateChanged((user)=>{
+                                                let uid = user.uid;
+                                                get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
+                                                    let data = snap.val();
+                                                    for(let i in data){
+                                                        if(data[i] == item.id)
+                                                            remove(ref(database, `users/${uid}/SubjectsDone/${i}`))
+                                                    }
+                                                })
+                                            })
+                                        })
+                                    }else{
+                                        subjects.forEach((item)=>{
+                                            if(item.classList.contains("active_red")){
+                                                item.classList.remove("active_red")
+                                                auth.onAuthStateChanged((user)=>{
+                                                    let uid = user.uid;
+                                                    get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
+                                                        let data = snap.val();
+                                                        for(let i in data){
+                                                            if(data[i] == item.id)
+                                                                remove(ref(database, `users/${uid}/nextSemester/${i}`))
+                                                        }
+                                                    })
+                                                })
+                                            }
+                                            item.classList.add("active_green")
+                                            item.classList.remove("active_orange")
+                                            auth.onAuthStateChanged((user)=>{
+                                                let uid = user.uid;
+                                                push(ref(database, `users/${uid}/SubjectsDone/`),item.id)
+                                            })
+                                        })
+                                    }
+                                    
+                                })
+                            })
                             auth.onAuthStateChanged((user)=>{
                                 let uid = user.uid;
                                 let lv = document.querySelectorAll(`.level div`);
@@ -347,9 +403,65 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                     let q = lv.length - 1
                                     lv[q].classList.add("subjects_box_end")
                                     lv[q].classList.add("active_orange")
-                                    lv[q].classList.remove("subjects_box")
                             }
                         }
+                        let lvLevel = document.querySelectorAll(`.level .level_box`);
+                        lvLevel.forEach((item)=>{
+                            item.addEventListener("click",()=>{
+                                let classLists = item.classList;
+                                let len = classLists.length;
+                                let id = classLists[len-1]
+                                let subjects = document.querySelectorAll(`#${id} .subjects_box`)
+                                let orange = [];
+                                let green = []
+                                subjects.forEach((item)=>{
+                                    if(item.classList.contains("active_orange")){
+                                        orange.push(item.id);
+                                    }else if(item.classList.contains("active_green")){
+                                        green.push(item.id);
+                                    }
+                                })
+                                if(subjects.length == green.length){
+                                    subjects.forEach((item)=>{
+                                        item.classList.remove("active_green")
+                                        item.classList.add("active_orange")
+                                        auth.onAuthStateChanged((user)=>{
+                                            let uid = user.uid;
+                                            get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
+                                                let data = snap.val();
+                                                for(let i in data){
+                                                    if(data[i] == item.id)
+                                                        remove(ref(database, `users/${uid}/SubjectsDone/${i}`))
+                                                }
+                                            })
+                                        })
+                                    })
+                                }else{
+                                    subjects.forEach((item)=>{
+                                        if(item.classList.contains("active_red")){
+                                            item.classList.remove("active_red")
+                                            auth.onAuthStateChanged((user)=>{
+                                                let uid = user.uid;
+                                                get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
+                                                    let data = snap.val();
+                                                    for(let i in data){
+                                                        if(data[i] == item.id)
+                                                            remove(ref(database, `users/${uid}/nextSemester/${i}`))
+                                                    }
+                                                })
+                                            })
+                                        }
+                                        item.classList.add("active_green")
+                                        item.classList.remove("active_orange")
+                                        auth.onAuthStateChanged((user)=>{
+                                            let uid = user.uid;
+                                            push(ref(database, `users/${uid}/SubjectsDone/`),item.id)
+                                        })
+                                    })
+                                }
+                                
+                            })
+                        })
                         auth.onAuthStateChanged((user)=>{
                             let uid = user.uid;
                             let lv = document.querySelectorAll(`.level div`);
@@ -444,12 +556,12 @@ get(ref(database, "roadmap/")).then((snap)=>{
 
                             })
                         })
+
                     })
+                    
                 }
             }
         }
         
     })
-
-    
 })

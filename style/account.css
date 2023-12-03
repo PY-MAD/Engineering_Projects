@@ -451,7 +451,7 @@ background-color: white !important;
     transition: 0.3s;
 }
 .active_red{
-    background-color: #A02724;
+    background-color: #A02724 !important;
     transition: 0.3s;
 }
 .box_level_active_red{
@@ -473,7 +473,7 @@ background-color: white !important;
 }
 .box_level_active_orange::before{
     content: "";
-    background-color: var(--color-orange) !important;
+    background-color: var(--color-orange);
     transition: 0.3s;
 }
 .active_black{
