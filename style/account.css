@@ -10,6 +10,7 @@
     --color-red : #A02724;
     --color-green: #90BE6D;
     --color-orange: #F3722C;
+    --box-sizing: 160px;
 }
 section{
     margin: 0 auto;
@@ -374,8 +375,8 @@ background-color: white !important;
 }
 .level_box{
     background-color: var(--primary-color);
-    height: 200px;
-    width : 200px;
+    height: var(--box-sizing);
+    width : var(--box-sizing);
     border-radius: 12px;
     font-size: 36px;
     color: white;
@@ -389,8 +390,8 @@ background-color: white !important;
 .level_box::before{
     content: "";
     background-color: var(--secondary-color) !important;
-    height: 200px;
-    width : 200px;
+    height: var(--box-sizing);
+    width : var(--box-sizing);
     font-size: 36px;
     color: white;
     display: flex;
@@ -405,8 +406,8 @@ background-color: white !important;
     border-start-start-radius: 12px;
 }
 .subjects_box_end{
-    height: 200px;
-    width : 200px;
+    height: var(--box-sizing);
+    width : var(--box-sizing);
     border-end-end-radius: 12px;
     border-start-end-radius: 12px;
     color: white;
@@ -417,8 +418,8 @@ background-color: white !important;
     cursor: pointer;
 }
 .subjects_box{
-    height: 200px;
-    width : 200px;
+    height: var(--box-sizing);
+    width : var(--box-sizing);
     color: white;
     display: flex;
     flex-direction: column;
@@ -427,11 +428,12 @@ background-color: white !important;
     border-left: 2px solid white;
     border-bottom: 2px solid white;
     border-top: 2px solid white;
+    padding-top: 1.75rem;
     cursor: pointer;
 }
 .subjects_box span , .subjects_box_end span{
     margin-bottom: 1rem;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     user-select: none;
     -moz-user-select: none;
@@ -490,8 +492,8 @@ background-color: white !important;
     transition: 0.3s;
 }
 .box-color{
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     margin-left: 1rem;
 }
 .name-box{

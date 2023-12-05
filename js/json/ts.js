@@ -206,6 +206,9 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                 })
                                             }
                                             item.classList.add("active_green")
+                                            let totalHourDone = document.getElementById("total-hours-done")
+                                            let fixHour = fixNumbers(hour)
+                                            totalHourDone.innerHTML = Number(totalHourDone.textContent) + Number(fixHour)
                                             item.classList.remove("active_orange")
                                             auth.onAuthStateChanged((user)=>{
                                                 let uid = user.uid;
@@ -509,6 +512,8 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         let totalHour = document.getElementById("total-hours-update");
                                         let fixHour = fixNumbers(hour)
                                         totalHour.innerHTML = Number(totalHour.textContent) - Number(fixHour)
+                                        let totalHourDone = document.getElementById("total-hours-done")
+                                        totalHourDone.innerHTML = Number(totalHourDone.textContent) + Number(fixHour)
                                         currentLevel.removeChild(childNode)
                                         auth.onAuthStateChanged((user)=>{
                                             let uid = user.uid
