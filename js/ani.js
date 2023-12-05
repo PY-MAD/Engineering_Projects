@@ -77,7 +77,7 @@ get(dbRef)
     }
     function createCards(name, pra, src_photo, uid) {
       let card_template = `
-                        <div class="card-container">
+                      <div class="card-container">
                         <div class="favBtn-container">
                         <input type="checkbox" id="${uid}" value="${uid}" class="fav" name="fav"/>
                         <label for="${uid}" class="label-${uid} ${uid}"></label>
@@ -93,7 +93,7 @@ get(dbRef)
                         </div>
                         </div>
                         </a>
-                </div>
+                      </div>
                 `;
 
       return (holderSec.innerHTML += card_template);

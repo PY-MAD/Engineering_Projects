@@ -229,6 +229,7 @@ table{
     width: 90%;
     direction: rtl;
     height: max-content;
+    border-radius: 12px;
 }
 tbody:nth-child(even){
     background-color: #4D9DE0;
