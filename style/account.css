@@ -226,8 +226,9 @@ aside .name-data {
     color: white !important;
 }
 table{
-    width: 100%;
+    width: 90%;
     direction: rtl;
+    height: max-content;
 }
 tbody:nth-child(even){
     background-color: #4D9DE0;
@@ -543,6 +544,9 @@ div#sectionroad-map {
     text-align: center;
     font-size: 30px;
     font-weight: 600;
+}
+div#sectionusers {
+    padding-bottom: 3rem;
 }
 @media screen and (max-width: 1440px){
     #btn-addHomeWork {
