@@ -179,6 +179,11 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         subjects.forEach((item)=>{
                                             item.classList.remove("active_green")
                                             item.classList.add("active_orange")
+                                            let totalHourDone = document.getElementById("total-hours-done")
+                                            let child = item.children
+                                            let hour = child[2].textContent
+                                            let fixHour = fixNumbers(hour)
+                                            totalHourDone.innerHTML = Number(totalHourDone.textContent) - Number(fixHour)
                                             auth.onAuthStateChanged((user)=>{
                                                 let uid = user.uid;
                                                 get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
@@ -207,6 +212,8 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             }
                                             item.classList.add("active_green")
                                             let totalHourDone = document.getElementById("total-hours-done")
+                                            let child = item.children
+                                            let hour = child[2].textContent
                                             let fixHour = fixNumbers(hour)
                                             totalHourDone.innerHTML = Number(totalHourDone.textContent) + Number(fixHour)
                                             item.classList.remove("active_orange")
@@ -229,6 +236,11 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             if(data[i] == item.id){
                                                 item.classList.remove("active_orange")
                                                 item.classList.add("active_green")
+                                                let totalHourDone = document.getElementById("total-hours-done")
+                                                let child = item.children
+                                                let hour = child[2].textContent
+                                                let fixHour = fixNumbers(hour)
+                                                totalHourDone.innerHTML = Number(totalHourDone.textContent) + Number(fixHour)
                                             }
                                         })
                                     }
@@ -265,6 +277,14 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         if(item.classList.contains("active_green")){
                                             item.classList.remove("active_green");
                                             item.classList.add("active_orange");
+
+                                            let totalHourDone = document.getElementById("total-hours-done")
+                                            let child = item.children
+                                            let hour = child[2].textContent
+                                            let fixHour = fixNumbers(hour)
+                                            totalHourDone.innerHTML = Number(totalHourDone.textContent) - Number(fixHour)
+
+
                                             let id = item.id;
                                             auth.onAuthStateChanged((user)=>{
                                                 let uid = user.uid;
@@ -283,8 +303,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             item.classList.remove("active_red")
                                             item.classList.add("active_green")
                                             let child = item.children
-                                            let sub = child[0].textContent
-                                            let code = child[1].textContent
                                             let hour = child[2].textContent
                                             let id = item.id;
                                             let childNode = document.getElementById(`current_${id}`)
@@ -292,6 +310,10 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             let fixHour = fixNumbers(hour)
                                             totalHour.innerHTML = Number(totalHour.textContent) - Number(fixHour)
                                             currentLevel.removeChild(childNode)
+
+                                            let totalHourDone = document.getElementById("total-hours-done")
+                                            totalHourDone.innerHTML = Number(totalHourDone.textContent) + Number(fixHour)
+
                                             auth.onAuthStateChanged((user)=>{
                                                 let uid = user.uid
                                                 push(ref(database, `users/${uid}/SubjectsDone`),id);
@@ -428,6 +450,11 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                     subjects.forEach((item)=>{
                                         item.classList.remove("active_green")
                                         item.classList.add("active_orange")
+                                        let totalHourDone = document.getElementById("total-hours-done")
+                                        let child = item.children
+                                        let hour = child[2].textContent
+                                        let fixHour = fixNumbers(hour)
+                                        totalHourDone.innerHTML = Number(totalHourDone.textContent) - Number(fixHour)
                                         auth.onAuthStateChanged((user)=>{
                                             let uid = user.uid;
                                             get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
@@ -488,6 +515,15 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                     if(item.classList.contains("active_green")){
                                         item.classList.remove("active_green");
                                         item.classList.add("active_orange");
+
+                                        let totalHourDone = document.getElementById("total-hours-done")
+                                        let child = item.children
+                                        let hour = child[2].textContent
+                                        let fixHour = fixNumbers(hour)
+                                        totalHourDone.innerHTML = Number(totalHourDone.textContent) - Number(fixHour)
+
+
+
                                         let id = item.id;
                                         auth.onAuthStateChanged((user)=>{
                                             let uid = user.uid;
