@@ -33,13 +33,22 @@ get(ref(database, "roadmap/")).then((snap)=>{
         `
         return container.innerHTML += q;
     }
-    function addSubjects(s,c,ho , h){
+    function addSubjects(s,c,ho , h,){
         let q = `
+        <div class="position-relative">
+            <div class="request position-absolute list_${c}">
+                <div class="border-top rounded-5 border-edit"></div>
+                <span class="mt-3">المتطلبات</span>
+                <ul class="list" id="list_${c}">
+
+                </ul>
+            </div>
             <div class="subjects_box d-flex flex-column active_orange ${h}" id="${c}">
                 <span class="pd-top-bottom">${s}</span>
                 <span>${c}</span>
                 <span class="pd-bottom">${ho}</span>
             </div>
+        </div>
         `
         return document.getElementById(h).innerHTML += q;
     }
@@ -53,12 +62,27 @@ get(ref(database, "roadmap/")).then((snap)=>{
     function addCureentSub(s,c,ho , h){
         let q = `
         <div class="subjects_box d-flex flex-column active_orange ${h}" id="current_${c}">
+            <i class="bi bi-caret-up"></i>
             <span class="pd-top-bottom">${s}</span>
             <span>${c}</span>
             <span class="pd-bottom">${ho}</span>
         </div>
         `
         return currentLevel.innerHTML += q;
+    }
+    function addGreenBox(item){
+        item.classList.add("active_green")
+        item.classList.remove("active_red")
+    }
+    function addRedBox(item){
+        item.classList.remove("active_orange")
+        item.classList.add("active_red")
+    }
+    function addReq(req, level){
+        let q = `
+            <li class="mt-1 mb-1">${req}</li>
+        `
+        return document.getElementById(`list_${level}`).innerHTML += q;
     }
     var
     persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
@@ -103,7 +127,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
                 let data = snap.val();
                 for(let i in data){
                     if(i == shortCutMajor){
-                        console.log("hi")
                         document.querySelector(".container-levels").innerHTML = ""
                         get(ref(database, `roadmap/${i}`)).then((snap)=>{
                             let data = snap.val();
@@ -149,7 +172,18 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                     sub = data[level][i].sub
                                     code = data[level][i].code
                                     hour = data[level][i].hour
-                                    addSubjects(sub , code , hour , level)
+                                    let req = data[level][i].req
+                                    let len = 50
+                                    if(req != undefined){
+                                        addSubjects(sub , code , hour , level)
+                                        for(let i in req){
+                                            addReq(req[i], code)
+                                            
+                                        }
+                                    }else{
+                                        addSubjects(sub , code , hour , level)
+                                    }
+                                    
                                 }
                                 let lv = document.querySelectorAll(`#${level} .subjects_box`)
                                 for(let i = 0; i<lv.length; i++){
@@ -197,6 +231,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         })
                                     }else{
                                         subjects.forEach((item)=>{
+                                            console.lot(item)
                                             if(item.classList.contains("active_red")){
                                                 item.classList.remove("active_red")
                                                 auth.onAuthStateChanged((user)=>{
@@ -250,8 +285,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                     for(let i in data){
                                         lv.forEach((item)=>{
                                             if(data[i] == item.id){
-                                                item.classList.remove("active_orange")
-                                                item.classList.add("active_red")
                                                 let child = item.children
                                                 let sub = child[0].textContent
                                                 let code = child[1].textContent
@@ -259,8 +292,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                                 let totalHour = document.getElementById("total-hours-update");
                                                 let fixHour = fixNumbers(hour)
                                                 if((Number(totalHour.textContent) + Number(fixHour)) <= 16){
-                                                        item.classList.remove("active_orange")
-                                                        item.classList.add("active_red")
+                                                        addRedBox(item)
                                                         addCureentSub(sub,code,hour,"current_level")
                                                         totalHour.innerHTML = Number(totalHour.textContent) + Number(fixHour);
                                                 }
@@ -300,8 +332,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             })
                                         }
                                         else if(item.classList.contains("active_red")){
-                                            item.classList.remove("active_red")
-                                            item.classList.add("active_green")
+                                            addGreenBox(item)
                                             let child = item.children
                                             let hour = child[2].textContent
                                             let id = item.id;
@@ -359,10 +390,62 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             }
     
                                         }
+
                                     }
-    
+                                })
+
+                            })
+                            let req = document.querySelectorAll(".request")
+                            req.forEach((item)=>{
+                                let len = item.classList.length;
+                                let classList = item.classList[len - 1]
+                                let li = document.getElementById(classList);
+                                if(li != null){
+                                    if(li.childElementCount == 0){
+                                        item.style.display = "none"
+                                    }
+                                }
+                                item.addEventListener("click",()=>{
+                                    if(item.classList.contains("open_req")){
+                                        item.style.top = `-20px`;
+                                        item.classList.remove("open_req")
+                                    }else{
+                                        let len = item.classList.value;
+                                        let id = ""
+                                        let sp = len.split(" ")
+                                        let top = 100
+                                        let get ;
+                                        if(sp.length == 4){
+                                            for(let i = 2 ; i < sp.length; i++){
+                                                if(i == 2){
+                                                    id += sp[i]
+                                                }else{
+                                                    id += " " + sp[i]
+                                                }
+                                            }
+                                            get = document.getElementById(id)
+                                        }else if(sp.length == 3){
+                                            id = sp[2]
+                                            get = document.getElementById(id)
+                                        }
+                                        let ChildGet = get.children.length;
+                                        if(ChildGet > 1){
+                                            for(let i = 1; i<ChildGet; i++){
+                                                top += 25;
+                                            }
+                                        }
+                                        item.style.top = `-${top}px`;
+                                        item.classList.add("open_req")
+
+                                    }
+
                                 })
                             })
+                            let levels = document.querySelectorAll(".level .position-relative")
+                            for(let i = 0; i< levels.length; i++){
+                                levels[i].style.zIndex = i;
+                            }
+
                         })
                     }
                 }
@@ -371,7 +454,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
     })
     getMajor.addEventListener("click",()=>{
         if(getMajor.value != checkMajor){
-            console.log(getMajor.value)
             checkMajor = getMajor.value;
             for(let i in data){
                 if(i == checkMajor){
@@ -420,7 +502,17 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                 sub = data[level][i].sub
                                 code = data[level][i].code
                                 hour = data[level][i].hour
-                                addSubjects(sub , code , hour , level)
+                                let req = data[level][i].req
+                                let len = 50
+                                if(req != undefined){
+                                    addSubjects(sub , code , hour , level)
+                                    for(let i in req){
+                                        addReq(req[i], code)
+                                        
+                                    }
+                                }else{
+                                    addSubjects(sub , code , hour , level)
+                                }
                             }
                             let lv = document.querySelectorAll(`#${level} .subjects_box`)
                             for(let i = 0; i<lv.length; i++){
@@ -521,9 +613,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         let hour = child[2].textContent
                                         let fixHour = fixNumbers(hour)
                                         totalHourDone.innerHTML = Number(totalHourDone.textContent) - Number(fixHour)
-
-
-
                                         let id = item.id;
                                         auth.onAuthStateChanged((user)=>{
                                             let uid = user.uid;
@@ -592,14 +681,82 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                             });
                                         }
 
+
                                     }
                                 }
 
                             })
                         })
+                        
+                        let req = document.querySelectorAll(".request")
+                        req.forEach((item)=>{
+                            let len = item.classList.length;
+                            let classList = item.classList[len - 1]
+                            let split = item.classList.value.split(" ")
+                            let id = ""
+                            let li ;
+                            if(split.length == 4){
+                                for(let i = 2 ; i<split.length ; i++){
+                                    if(i == 2){
+                                        id += split[i]
+                                    }else{
+                                        id += " "+ split[i]
+                                    }
+                                }
+                                li = document.getElementById(id);
+                            }else{
+                                id = classList;
+                                li = document.getElementById(id);
+                            }
+                            if(li != null){
+                                console.log(li.childElementCount)
+                                if(li.childElementCount <= 0){
+                                    item.style.display = "none"
+                                }
+                            }
+                            item.addEventListener("click",()=>{
+                                if(item.classList.contains("open_req")){
+                                    item.style.top = `-20px`;
+                                    item.classList.remove("open_req")
+                                }else{
+                                    let len = item.classList.value;
+                                    let id = ""
+                                    let sp = len.split(" ")
+                                    let top = 100
+                                    let get ;
+                                    if(sp.length == 4){
+                                        for(let i = 2 ; i < sp.length; i++){
+                                            if(i == 2){
+                                                id += sp[i]
+                                            }else{
+                                                id += " " + sp[i]
+                                            }
+                                        }
+                                        get = document.getElementById(id)
+                                    }else if(sp.length == 3){
+                                        id = sp[2]
+                                        get = document.getElementById(id)
+                                    }
+                                    let ChildGet = get.children.length;
+                                    if(ChildGet > 1){
+                                        for(let i = 1; i<ChildGet; i++){
+                                            top += 25;
+                                        }
+                                    }
+                                    item.style.top = `-${top}px`;
+                                    item.classList.add("open_req")
+
+                                }
+
+                            })
+                        })
+                        let levels = document.querySelectorAll(".level .position-relative")
+                        for(let i = 0; i< levels.length; i++){
+                            levels[i].style.zIndex = i;
+                        }
+                        
 
                     })
-                    
                 }
             }
         }

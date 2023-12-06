@@ -432,6 +432,8 @@ background-color: white !important;
     border-top: 2px solid white;
     padding-top: 1.75rem;
     cursor: pointer;
+    z-index: 3;
+    position: relative;
 }
 .subjects_box span , .subjects_box_end span{
     margin-bottom: 1rem;
@@ -546,6 +548,32 @@ div#sectionroad-map {
     font-size: 30px;
     font-weight: 600;
 }
+.request {
+    background-color: var(--secondary-color);
+    top: -20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 0;
+    color: white;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    cursor: pointer;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    transition: 0.3s ease-in-out;
+}
+.request ul li{
+    font-size: 17px;
+}
+.border-edit{
+    height: 3px;
+    width: 70% !important;
+    background-color: white;
+}
 div#sectionusers {
     padding-bottom: 3rem;
 }
@@ -639,5 +667,8 @@ div#sectionusers {
         display: flex;
         justify-content: center;
         align-items: end;
+    }
+    .level{
+        justify-content: center;
     }
 }
