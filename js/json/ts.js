@@ -231,7 +231,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                         })
                                     }else{
                                         subjects.forEach((item)=>{
-                                            console.lot(item)
                                             if(item.classList.contains("active_red")){
                                                 item.classList.remove("active_red")
                                                 auth.onAuthStateChanged((user)=>{
