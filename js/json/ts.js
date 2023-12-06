@@ -62,7 +62,6 @@ get(ref(database, "roadmap/")).then((snap)=>{
     function addCureentSub(s,c,ho , h){
         let q = `
         <div class="subjects_box d-flex flex-column active_orange ${h}" id="current_${c}">
-            <i class="bi bi-caret-up"></i>
             <span class="pd-top-bottom">${s}</span>
             <span>${c}</span>
             <span class="pd-bottom">${ho}</span>
