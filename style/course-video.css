@@ -73,18 +73,6 @@ iframe{
     background-color: var(--secondary-color) !important;
     border: 3px solid var(--primary-color) !important;
 }
-.urls{
-    margin-top: 2rem;
-}
-.urls a{
-    background-color: var(--secondary-color);
-    color: white !important;
-    padding: 16px 12px;
-    border-radius: 12px !important;
-}
-.urls a:hover{
-    filter: brightness(0.9);
-}
 .addEpisode button{
     font-size: 50px;
     position: fixed;
@@ -115,6 +103,12 @@ iframe{
 }
 .active-form{
     display: flex;
+}
+.dics {
+    white-space: pre-wrap;
+}
+.dics a{
+    color: #F3722C !important;
 }
 @media screen and (max-width: 450px) {
     section {

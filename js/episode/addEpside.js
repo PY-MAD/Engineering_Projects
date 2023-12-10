@@ -61,10 +61,13 @@ sendBtn.addEventListener("click",()=>{
     let title = document.getElementById("title").value
     let url = document.getElementById("url").value
     let embed = generateEmbedCode(url)
+    let disc = document.getElementById("disc");
+    console.log(disc)
     set(ref(database,`/episode/${form.id}/${title}`),{
         title:title,
         url:url,
-        embed:embed
+        embed:embed,
+        disc: disc.value
     })
     form.classList.remove("active-form")
     background.classList.remove("active-form")

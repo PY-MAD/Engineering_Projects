@@ -32,7 +32,7 @@ get(dbRef).then((snapshot) => {
 
             return tempEpisodes.innerHTML += episode;
     }
-    function changeVideo(name , src_video , url){
+    function changeVideo(name , src_video){
       let change = `
       <div class="video">
             ${src_video}
@@ -40,8 +40,7 @@ get(dbRef).then((snapshot) => {
           <div class="title-video">
             ${name}
           </div>
-          <div class="urls">
-            <a href="${url}">لتحميل الملفات أضغط هنا</a>
+          <div class="dics">
           </div>
       `
       return tempVideo.innerHTML = change;
@@ -61,11 +60,25 @@ get(dbRef).then((snapshot) => {
         checklist.forEach((item)=>{
           item.addEventListener("click",()=>{
               let videoName = item.id;
-              console.log(videoName)
               for(let i in data){
                 if(data[i].title == videoName){
-                  console.log("hi")
-                  changeVideo(data[i].title, data[i].embed, data[i].url)
+                  changeVideo(data[i].title, data[i].embed)
+                  let a = document.querySelector("#video-side .dics");
+                  a.innerHTML = data[i].disc
+                  let url = a.textContent;
+                  let chek = url.split("\n")
+                  for(let i in chek){
+                    if(chek[i].startsWith(" http") || chek[i].startsWith("http")){
+                      let attrA = chek[i];
+                      let findsA = document.querySelectorAll(".dics a");
+                      findsA.forEach((item)=>{
+                        if(item.textContent == attrA){
+                          item.setAttribute("href",attrA);
+                          item.setAttribute("target", "_blank")
+                        }
+                      })
+                    }
+                  }
                 }
               }
           
