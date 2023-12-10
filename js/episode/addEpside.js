@@ -62,8 +62,8 @@ sendBtn.addEventListener("click",()=>{
     let url = document.getElementById("url").value
     let embed = generateEmbedCode(url)
     let disc = document.getElementById("disc");
-    console.log(disc)
-    set(ref(database,`/episode/${form.id}/${title}`),{
+    let uniqueId = new Date().getTime();
+    set(ref(database,`/episode/${form.id}/${uniqueId}`),{
         title:title,
         url:url,
         embed:embed,
