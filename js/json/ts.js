@@ -402,6 +402,7 @@ get(ref(database, "roadmap/")).then((snap)=>{
                                     if(li.childElementCount == 0){
                                         item.style.display = "none"
                                     }
+                                    
                                 }
                                 item.addEventListener("click",()=>{
                                     if(item.classList.contains("open_req")){
@@ -443,6 +444,12 @@ get(ref(database, "roadmap/")).then((snap)=>{
                             for(let i = 0; i< levels.length; i++){
                                 levels[i].style.zIndex = i;
                             }
+                            auth.onAuthStateChanged((user)=>{
+                                let uid = user.uid;
+                                get(ref(database, `users/${uid}/SubjectsDone`)).then((snap)=>{
+                                    let data = snap.val();
+                                })
+                            })
 
                         })
                     }
