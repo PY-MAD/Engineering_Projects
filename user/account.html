@@ -98,12 +98,13 @@
             <div id="user-data" class="name-data active-li active"><i class="fa-solid fa-user"></i>الحساب</div>
             <div id="Schedule" class="name-data"><i class="bi bi-calendar-date"></i>الجدول</div>
             <div id="road-map" class="name-data"><i class="bi bi-calendar-range-fill"></i>الخطة الدراسية</div>
+            <div id="hours-map" class="name-data"><i class="bi bi-hourglass-split"></i>حساب ساعات الغياب</div>
             <div id="leaderboard" class="name-data"><i class="fa-solid fa-ranking-star"></i>المتصدرين</div>
             <div id="users" class="name-data"><i class="fa-solid fa-users"></i>الأعضاء</div>
             <div id="admin" class="name-data"><i class="fa-solid fa-user-gear"></i>المشرفين</div>
         </aside>
         <div class="container-sections">
-            <div class="container-section " id="sectionuser-data">
+            <div class="container-section" id="sectionuser-data">
                 <div class="container-card">
                     <div class="data-card">
                         <div class="img">
@@ -252,7 +253,6 @@
                             <option value="IT_443">443 - IT</option>
                             <option value="IT_444">444 - IT</option>
                             <option value="IT_444">445 - IT</option>
-    
                         </select>
                     </div>
                     <div class="defined mt-4 mb-5">
@@ -292,6 +292,33 @@
                     </div>
                 </div>
             </div>
+
+            <!-- hours -->
+
+            <div class="container-section flex-column  unactive-Section" style="direction:rtl;"  id="sectionhours-map">
+                <div class="add-subjects w-25 d-flex">
+                    <input type="text" name="" id="get-nameSubjects-hours" class="form-control" placeholder="أسم المادة">
+                    <input type="number" pattern="[0-9]*" inputmode="numeric" name="" id="get-hours" class="form-control" placeholder="ساعات المادة" max="5" min="0">
+                    <i class="bi bi-plus-lg pe-2" id="add-subjects-hours"></i>
+                </div>
+                <div class="container-subjects-hours mt-5">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>أسم المادة</th>
+                                <th>عدد ساعات المادة في الأسبوع</th>
+                                <th>عدد الغيابات</th>
+                                <th>عدد الغيابات المسموحة</th>
+                                <th>غياب ساعة</th>
+                                <th></th>
+                            </tr>
+                        </tbody>
+                        <tbody id="container-subjects"></tbody>
+                    </table>
+                </div>
+            </div>
+
+
             <!-- leaderboard -->
     
             <div class="container-section unactive-Section" id="sectionleaderboard">
@@ -395,5 +422,6 @@
 <script src="/js/userData/admins.js" type="module"></script>
 <script src="/js/userData/calander.js" type="module"></script>
 <script src="/js/json/ts.js" type="module"></script>
+<script src="/js/hours/add-subjects.js" type="module"></script>
 <script src="/assets/lib/moment.js"></script>
 </html>

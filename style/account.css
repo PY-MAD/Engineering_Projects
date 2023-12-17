@@ -577,6 +577,12 @@ div#sectionroad-map {
 div#sectionusers {
     padding-bottom: 3rem;
 }
+.delete-icon , #add-subjects-hours{
+    cursor: pointer;
+}
+.delete-icon:hover , .delete-icon i:hover{
+    color: var(--color-orange);
+}
 @media screen and (max-width: 1440px){
     #btn-addHomeWork {
         position: relative;
