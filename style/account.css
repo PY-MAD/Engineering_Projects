@@ -583,6 +583,9 @@ div#sectionusers {
 .delete-icon:hover , .delete-icon i:hover{
     color: var(--color-orange);
 }
+.add-subjects{
+    width: 25% !important;
+}
 @media screen and (max-width: 1440px){
     #btn-addHomeWork {
         position: relative;
@@ -676,5 +679,15 @@ div#sectionusers {
     }
     .level{
         justify-content: center;
+    }
+    .container-subjects-hours tr , .container-subjects-hours td{
+        font-size: 12px;
+    }
+    #sectionhours-map{
+        margin-top: 5rem;
+    }
+    .add-subjects{
+        margin-top: 3rem;
+        width: 75% !important;
     }
 }

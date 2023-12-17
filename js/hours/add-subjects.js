@@ -48,15 +48,22 @@ auth.onAuthStateChanged((user)=>{
     add.addEventListener("click",()=>{
         let sub = document.getElementById("get-nameSubjects-hours").value;
         let hour = document.getElementById("get-hours").value;
-        set(ref(database, `users/${uid}/subjectsHours/${sub}`),{
-            "name":sub,
-            "hour":hour,
-            "absent":hour*3,
-            "absented":0
-        })
-        addSubjects(sub , hour, hour*3,0);
-        sub = ""
-        hour = 0;
+        if(document.getElementById(sub) == null){
+            set(ref(database, `users/${uid}/subjectsHours/${sub}`),{
+                "name":sub,
+                "hour":hour,
+                "absent":hour*3,
+                "absented":0
+            })
+            addSubjects(sub , hour, hour*3,0);
+            sub = ""
+            hour = 0;
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: `المادة موجودة بالفعل ${sub} !!!`,
+                });
+        }
     })
     // test
     get(ref(database, `users/${uid}/subjectsHours`)).then((snap)=>{
@@ -96,7 +103,6 @@ auth.onAuthStateChanged((user)=>{
                 let preId = item.id;
                 let id = preId.split("-")[1];
                 remove(ref(database, `users/${uid}/subjectsHours/${id}`))
-                let container = document.getElementById("container-subjects");
                 let child = document.getElementById(id)
                 container.removeChild(child);
             })
