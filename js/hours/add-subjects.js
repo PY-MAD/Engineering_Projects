@@ -36,7 +36,7 @@ function addSubjects(sub , hour , hourAbsent, hourAbsented){
         <td id="${sub}-hour">${hour}</td>
         <td id="${sub}-abbsent">${hourAbsented}</td>
         <td id="${sub}-accessAbbsent">${hourAbsent}</td>
-        <td><button id="pulse-${sub}" class="btn btn-add btn-group btn-light button-pulse">1+</button> <button id="mines-${sub}" class="btn btn-add btn-group btn-light button-mines">1-</button></td>
+        <td class="d-flex"><button id="pulse-${sub}" class="btn btn-add btn-group btn-light button-pulse ms-2">1+</button> <button id="mines-${sub}" class="btn btn-add btn-group btn-light button-mines">1-</button></td>
         <td class="delete-icon" id="delete-${sub}"><i class="bi bi-x-lg"></i></td>
     </tr>
     `
