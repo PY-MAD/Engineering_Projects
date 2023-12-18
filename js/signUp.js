@@ -39,7 +39,14 @@ function blurBackground() {
   preloader.classList.add("none-preloader");
   blur.classList.add("show-blur");
 }
+function deleteCookies() {
+  var Cookies = document.cookie.split(';');
 
+  // set 1 Jan, 1970 expiry for every cookies
+  for (var i = 0; i < Cookies.length; i++)
+  document.cookie = Cookies[i] + "=;expires=" + new Date(0).toUTCString();
+  showCookies();
+}
 
   //get email
   function newEmail(email){
@@ -129,7 +136,7 @@ document.addEventListener("keypress", (key) => {
         update(userRef, {
           last_login: signInTime,
         });
-
+        deleteCookies()
         setTimeout(() => {
           window.open("/user/home.html", "_self");
         }, 700);
@@ -160,7 +167,7 @@ loginExistAccount.addEventListener('click', (e) => {
       update(userRef, {
         last_login: signInTime,
       });
-
+      deleteCookies()
       setTimeout(() => {
         window.open("/user/home.html", "_self");
       }, 700);

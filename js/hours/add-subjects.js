@@ -33,10 +33,10 @@ function addSubjects(sub , hour , hourAbsent, hourAbsented){
     let q = `
     <tr id="${sub}">
         <td>${sub}</td>
-        <td>${hour}</td>
+        <td id="${sub}-hour">${hour}</td>
         <td id="${sub}-abbsent">${hourAbsented}</td>
         <td id="${sub}-accessAbbsent">${hourAbsent}</td>
-        <td><button id="pulse-${sub}" class="btn btn-add btn-group btn-light button-pulse">1+</button></td>
+        <td><button id="pulse-${sub}" class="btn btn-add btn-group btn-light button-pulse">1+</button> <button id="mines-${sub}" class="btn btn-add btn-group btn-light button-mines">1-</button></td>
         <td class="delete-icon" id="delete-${sub}"><i class="bi bi-x-lg"></i></td>
     </tr>
     `
@@ -92,6 +92,33 @@ auth.onAuthStateChanged((user)=>{
                         icon: "error",
                         title: `أنتبه من حرمان المادة ${id}!!!`,
                         text: `لقد وصلت للحد الأقصاء من الغيابات ${accessAbbsent.textContent}`,
+                      });
+                }
+
+            })
+        })
+        let buttons_mines = document.querySelectorAll(".button-mines");
+        buttons_mines.forEach((item)=>{
+            item.addEventListener("click",()=>{
+                let preId = item.id;
+                let id = preId.split("-")[1];
+                let abbsent = document.getElementById(`${id}-abbsent`);
+                let accessAbbsent = document.getElementById(`${id}-accessAbbsent`)
+                let textHours  = document.getElementById(`${id}-hour`).textContent;
+                let hour = Number(textHours)*3;
+                if(Number(accessAbbsent.textContent) < hour){
+                    let newHourAbbsent = Number(abbsent.textContent) - 1;
+                    let lessAbbsent = Number(accessAbbsent.textContent) + 1;
+                    update(ref(database , `users/${uid}/subjectsHours/${id}`),{
+                        absented:newHourAbbsent,
+                        absent:lessAbbsent
+                    });
+                    abbsent.innerHTML = newHourAbbsent;
+                    accessAbbsent.innerHTML = lessAbbsent;
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        title: `وصلت الحد الأقصى من الساعات!!!`,
                       });
                 }
 
