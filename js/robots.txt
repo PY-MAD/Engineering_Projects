@@ -1,2 +1,2 @@
 User-agent: *
-Disallow: /hours/add-subjects.js
+Disallow: /js/hours/add-subjects.js
