@@ -67,12 +67,19 @@ function AccountMissing(){
   `
 }
 
+function deleteCookies() {
+  var Cookies = document.cookie.split(';');
 
+  // set 1 Jan, 1970 expiry for every cookies
+  for (var i = 0; i < Cookies.length; i++)
+    document.cookie = Cookies[i] + "=;expires=" + new Date(0).toUTCString();
+  console.log("clear cookies !!!")
+}
 
 
 BeforepreloaderPage();
   auth.onAuthStateChanged(user =>{
-
+    deleteCookies()
 
     if(user){
       const dbRef = ref(getDatabase());
