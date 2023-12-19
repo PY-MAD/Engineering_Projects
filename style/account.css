@@ -586,6 +586,15 @@ div#sectionusers {
 .add-subjects{
     width: 25% !important;
 }
+tbody:hover{
+    filter: brightness(1) !important;
+}
+tr:hover{
+    background-color: #3877ac !important;
+}
+tr:nth-child(even){
+    background-color: #4086bf;
+}
 @media screen and (max-width: 1440px){
     #btn-addHomeWork {
         position: relative;

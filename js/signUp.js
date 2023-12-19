@@ -177,4 +177,4 @@ loginExistAccount.addEventListener('click', (e) => {
       const errorMessage = error.message;
       alert(errorMessage);
     });
-});
+  });
