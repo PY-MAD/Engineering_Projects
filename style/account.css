@@ -713,7 +713,7 @@ tr:nth-child(even){
         justify-content: center;
     }
     .container-subjects-hours tr , .container-subjects-hours td , #table-admin th , #table-admin td{
-        font-size: 12px;
+        font-size: 9px;
     }
     #sectionhours-map{
         margin-top: 5rem;
