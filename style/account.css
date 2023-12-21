@@ -97,7 +97,7 @@ aside .name-data {
     display: flex;
     justify-content: start;
     align-items: center;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 600;
     padding: 6px;
 }
@@ -638,6 +638,25 @@ tr:nth-child(even){
     }
 }
 @media screen and (max-width: 450px) {
+    td , tr{
+        padding: 5px;
+    }
+    #user-table{
+        margin-top: 3rem;
+    }
+    #user-table tr , #user-table td {
+        font-size: 10px;
+    }
+    .level_box{
+        font-size: 28px;
+    }
+    .level_box , .subjects_box , .level_box::before{
+        height: 120px;
+        width: 120px;
+    }
+    .subjects_box span, .subjects_box_end span{
+        font-size: 12px;
+    }
     .profile-section, .container-sections {
         width: 100% !important;
         margin: 0 0;
@@ -655,8 +674,10 @@ tr:nth-child(even){
         overflow-x: scroll;
     }
     
-    .name-data{
-        font-size: 18px !important;
+    aside .name-data{
+        font-size: 13px !important;
+        margin-bottom: 0;
+        padding: 0 3px;
     }
     .container-section{
         flex-direction: column;
@@ -666,6 +687,8 @@ tr:nth-child(even){
         width: auto !important;
         justify-content: center;
         align-items: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
 
     }
     #sectionuser-data{
@@ -689,7 +712,7 @@ tr:nth-child(even){
     .level{
         justify-content: center;
     }
-    .container-subjects-hours tr , .container-subjects-hours td{
+    .container-subjects-hours tr , .container-subjects-hours td , #table-admin th , #table-admin td{
         font-size: 12px;
     }
     #sectionhours-map{
@@ -698,5 +721,25 @@ tr:nth-child(even){
     .add-subjects{
         margin-top: 3rem;
         width: 75% !important;
+    }
+    .choose-plane{
+        width: 100%;
+        padding-right: 2rem;
+    }
+    #getMajor{
+        width: 50% !important;
+    }
+    ::-webkit-scrollbar{
+        width: 3px !important;
+        height: 3px !important;
+    }
+    .request ul{
+        max-height: 60px;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+    #user-table td , #user-table tr{
+        padding: 0;
+        padding-bottom: 1rem;
     }
 }

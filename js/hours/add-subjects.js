@@ -42,6 +42,17 @@ function addSubjects(sub , hour , hourAbsent, hourAbsented){
     `
     return container.innerHTML += q;
 }
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 auth.onAuthStateChanged((user)=>{
     let uid = user.uid;
     let add = document.getElementById("add-subjects-hours");
@@ -58,6 +69,11 @@ auth.onAuthStateChanged((user)=>{
             addSubjects(sub , hour, hour*3,0);
             sub = ""
             hour = 0;
+            Toast.fire({
+                icon: "success",
+                title: `تم إضافة المادة ${sub} !!!`,
+                text: "الرجاء تحديث الصفحة"
+                });
         }else{
             Swal.fire({
                 icon: "error",
