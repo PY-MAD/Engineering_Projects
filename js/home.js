@@ -131,3 +131,11 @@ closeNav.addEventListener("click",()=>{
     navSide.classList.add("unactive-nav")
   }
 })
+let a = document.querySelectorAll(".middle a")
+let father = document.querySelector(".middle")
+a.forEach((item)=>{
+  if(item.textContent == "المناقشات"){
+    console.log(item)
+    father.removeChild(item);
+  }
+})
